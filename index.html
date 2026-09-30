@@ -1,2156 +1,3256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="theme-color" content="#071b31">
-
-    <meta name="description"
-          content="UnboxCrew — Premium adventure travel experiences. Unbox the World. Together.">
-
-    <title>UnboxCrew | Unbox the World. Together.</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
-          rel="stylesheet">
-
-    <style>
-
-        /* =========================
-           GLOBAL
-        ========================= */
-
-        :root {
-            --dark: #061321;
-            --dark2: #0a2037;
-
-            --blue: #20aef5;
-            --blue-light: #6bd8ff;
-
-            --white: #ffffff;
-            --text: #edf8ff;
-            --muted: #a9bdcd;
-
-            --glass: rgba(255,255,255,0.08);
-            --glass-border: rgba(255,255,255,0.16);
-
-            --shadow:
-                0 25px 80px rgba(0,0,0,0.40);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background:
-                radial-gradient(
-                    circle at 15% 0%,
-                    #17496e 0%,
-                    #0a2036 35%,
-                    #040d17 100%
-                );
-
-            color: var(--text);
-            font-family: "DM Sans", sans-serif;
-
-            overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
-        .container {
-            width: min(1180px, 92%);
-            margin: auto;
-        }
-
-        .glass {
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,0.11),
-                    rgba(255,255,255,0.035)
-                );
-
-            border: 1px solid var(--glass-border);
-
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-
-            box-shadow: var(--shadow);
-        }
-
-
-        /* =========================
-           NAVBAR
-        ========================= */
-
-        .navbar {
-            position: fixed;
-
-            top: 16px;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            width: min(1160px, 92%);
-
-            z-index: 1000;
-
-            padding: 9px 12px;
-
-            border-radius: 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            background: rgba(3,16,29,0.72);
-
-            border: 1px solid rgba(255,255,255,0.15);
-
-            backdrop-filter: blur(25px);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-
-            gap: 9px;
-
-            font-family: Manrope;
-            font-weight: 800;
-
-            letter-spacing: .5px;
-        }
-
-        .logo img {
-            width: 48px;
-            height: 48px;
-
-            object-fit: contain;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-
-            font-size: 14px;
-
-            color: #d7e7f2;
-        }
-
-        .nav-links a {
-            transition: .25s;
-        }
-
-        .nav-links a:hover {
-            color: white;
-        }
-
-        .nav-button {
-            background:
-                linear-gradient(
-                    135deg,
-                    #38c4ff,
-                    #168ae7
-                );
-
-            padding: 11px 17px;
-
-            border-radius: 14px;
-
-            font-size: 13px;
-            font-weight: 800;
-
-            box-shadow:
-                0 12px 35px rgba(20,140,230,.30);
-        }
-
-
-        /* =========================
-           HERO
-        ========================= */
-
-        .hero {
-            min-height: 100vh;
-
-            display: flex;
-            align-items: center;
-
-            position: relative;
-
-            padding-top: 120px;
-
-            overflow: hidden;
-        }
-
-        .hero-background {
-            position: absolute;
-
-            inset: 0;
-
-            z-index: -2;
-
-            background-image:
-                linear-gradient(
-                    90deg,
-                    rgba(2,11,20,.94),
-                    rgba(3,17,30,.55),
-                    rgba(3,12,21,.70)
-                ),
-                url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=90");
-
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero::after {
-            content: "";
-
-            position: absolute;
-
-            width: 600px;
-            height: 600px;
-
-            right: -250px;
-            top: -200px;
-
-            border-radius: 50%;
-
-            background: rgba(35,178,255,.20);
-
-            filter: blur(110px);
-
-            z-index: -1;
-        }
-
-        .hero-content {
-            max-width: 850px;
-        }
-
-        .eyebrow {
-            display: inline-flex;
-
-            padding: 8px 13px;
-
-            border-radius: 999px;
-
-            border: 1px solid rgba(108,215,255,.28);
-
-            background: rgba(255,255,255,.06);
-
-            color: #d8f6ff;
-
-            font-size: 11px;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1.5px;
-        }
-
-        .hero h1 {
-            font-family: Manrope;
-
-            font-size: clamp(50px, 7vw, 88px);
-
-            line-height: .98;
-
-            letter-spacing: -4px;
-
-            margin-top: 22px;
-        }
-
-        .hero h1 span {
-            color: var(--blue-light);
-        }
-
-        .hero-description {
-            max-width: 720px;
-
-            margin-top: 23px;
-
-            color: #c4d6e4;
-
-            font-size: 19px;
-
-            line-height: 1.7;
-        }
-
-        .buttons {
-            display: flex;
-
-            gap: 12px;
-
-            flex-wrap: wrap;
-
-            margin-top: 30px;
-        }
-
-        .btn {
-            padding: 15px 21px;
-
-            border-radius: 15px;
-
-            border: 1px solid var(--glass-border);
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-weight: 800;
-
-            transition: .25s;
-
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-        }
-
-        .btn-primary {
-            background:
-                linear-gradient(
-                    135deg,
-                    #38c4ff,
-                    #148ae7
-                );
-        }
-
-        .btn-secondary {
-            background: rgba(255,255,255,.07);
-
-            backdrop-filter: blur(15px);
-        }
-
-        .trust {
-            display: flex;
-
-            gap: 30px;
-
-            flex-wrap: wrap;
-
-            margin-top: 38px;
-
-            color: #c4d5e2;
-
-            font-size: 13px;
-        }
-
-        .trust strong {
-            display: block;
-
-            color: white;
-
-            font-size: 16px;
-
-            margin-bottom: 4px;
-        }
-
-
-        /* =========================
-           SECTIONS
-        ========================= */
-
-        section {
-            padding: 100px 0;
-        }
-
-        .section-heading {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: end;
-
-            gap: 25px;
-
-            margin-bottom: 35px;
-        }
-
-        .section-heading h2 {
-            font-family: Manrope;
-
-            font-size: clamp(35px,5vw,55px);
-
-            line-height: 1;
-
-            letter-spacing: -2px;
-
-            margin-top: 15px;
-        }
-
-        .section-heading p {
-            max-width: 520px;
-
-            color: var(--muted);
-
-            line-height: 1.65;
-        }
-
-
-        /* =========================
-           TRIPS
-        ========================= */
-
-        .trip-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
-        }
-
-        .trip-card {
-            position: relative;
-
-            min-height: 450px;
-
-            border-radius: 27px;
-
-            overflow: hidden;
-
-            cursor: pointer;
-
-            border: 1px solid var(--glass-border);
-
-            background: #092038;
-
-            box-shadow: var(--shadow);
-
-            transition: .35s;
-        }
-
-        .trip-card:hover {
-            transform:
-                translateY(-8px)
-                scale(1.01);
-
-            box-shadow:
-                0 40px 90px rgba(0,0,0,.55);
-        }
-
-        .trip-image {
-            position: absolute;
-
-            inset: 0;
-
-            background-size: cover;
-
-            background-position: center;
-
-            transition: .6s;
-        }
-
-        .trip-card:hover .trip-image {
-            transform: scale(1.08);
-        }
-
-        .trip-overlay {
-            position: absolute;
-
-            inset: 0;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    transparent 20%,
-                    rgba(1,8,15,.15) 35%,
-                    rgba(1,8,15,.95) 100%
-                );
-        }
-
-        .trip-content {
-            position: absolute;
-
-            left: 22px;
-            right: 22px;
-            bottom: 22px;
-
-            z-index: 2;
-        }
-
-        .trip-tag {
-            display: inline-block;
-
-            padding: 6px 10px;
-
-            border-radius: 999px;
-
-            background:
-                rgba(39,170,255,.17);
-
-            border:
-                1px solid rgba(105,219,255,.25);
-
-            font-size: 10px;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1px;
-        }
-
-        .trip-content h3 {
-            font-family: Manrope;
-
-            font-size: 28px;
-
-            margin-top: 12px;
-        }
-
-        .trip-content p {
-            color: #c3d4e0;
-
-            line-height: 1.55;
-
-            margin: 8px 0 15px;
-        }
-
-        .trip-link {
-            color: #7bdcff;
-
-            font-weight: 800;
-        }
-
-
-        /* =========================
-           WHY US
-        ========================= */
-
-        .features {
-            display: grid;
-
-            grid-template-columns:
-                repeat(4,1fr);
-
-            gap: 16px;
-        }
-
-        .feature {
-            padding: 27px;
-
-            border-radius: 24px;
-        }
-
-        .feature-icon {
-            font-size: 27px;
-        }
-
-        .feature h3 {
-            font-family: Manrope;
-
-            margin-top: 15px;
-
-            font-size: 18px;
-        }
-
-        .feature p {
-            color: var(--muted);
-
-            line-height: 1.6;
-
-            margin-top: 8px;
-
-            font-size: 14px;
-        }
-
-
-        /* =========================
-           ABOUT
-        ========================= */
-
-        .about-grid {
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap: 45px;
-
-            align-items: center;
-        }
-
-        .about h2 {
-            font-family: Manrope;
-
-            font-size: clamp(40px,5vw,63px);
-
-            line-height: 1;
-
-            letter-spacing: -2px;
-
-            margin: 18px 0;
-        }
-
-        .blue {
-            color: var(--blue-light);
-        }
-
-        .about p {
-            color: var(--muted);
-
-            line-height: 1.8;
-        }
-
-        .quote-box {
-            padding: 35px;
-
-            border-radius: 28px;
-        }
-
-        .quote-box h3 {
-            font-family: Manrope;
-
-            font-size: 29px;
-
-            line-height: 1.3;
-        }
-
-
-        /* =========================
-           CTA
-        ========================= */
-
-        .cta {
-            padding: 60px;
-
-            border-radius: 32px;
-
-            overflow: hidden;
-
-            position: relative;
-        }
-
-        .cta h2 {
-            font-family: Manrope;
-
-            font-size: clamp(36px,5vw,54px);
-
-            margin-top: 16px;
-        }
-
-        .cta p {
-            max-width: 680px;
-
-            color: var(--muted);
-
-            line-height: 1.7;
-
-            margin-top: 12px;
-        }
-
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
-            border-top:
-                1px solid rgba(255,255,255,.08);
-
-            padding: 45px 0 70px;
-
-            color: #91a6b7;
-        }
-
-        .footer-row {
-            display: flex;
-
-            justify-content: space-between;
-
-            gap: 20px;
-
-            flex-wrap: wrap;
-        }
-
-
-        /* =========================
-           TRIP DETAIL PAGE
-        ========================= */
-
-        .trip-detail {
-            display: none;
-
-            min-height: 100vh;
-
-            padding: 130px 0 80px;
-        }
-
-        .trip-detail.active {
-            display: block;
-        }
-
-        .home.hidden {
-            display: none;
-        }
-
-        .back-button {
-            color: #7edcff;
-
-            font-weight: 800;
-
-            display: inline-block;
-
-            margin-bottom: 20px;
-        }
-
-        .detail-hero {
-            min-height: 570px;
-
-            border-radius: 30px;
-
-            overflow: hidden;
-
-            position: relative;
-
-            background-size: cover;
-
-            background-position: center;
-
-            display: flex;
-
-            align-items: end;
-
-            padding: 40px;
-        }
-
-        .detail-hero::after {
-            content: "";
-
-            position: absolute;
-
-            inset: 0;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    transparent 20%,
-                    rgba(1,8,15,.95) 100%
-                );
-        }
-
-        .detail-title {
-            position: relative;
-
-            z-index: 2;
-
-            max-width: 800px;
-        }
-
-        .detail-title h1 {
-            font-family: Manrope;
-
-            font-size: clamp(45px,7vw,78px);
-
-            line-height: 1;
-
-            letter-spacing: -3px;
-
-            margin: 12px 0;
-        }
-
-        .detail-title p {
-            color: #d1dfe9;
-
-            font-size: 17px;
-
-            line-height: 1.7;
-        }
-
-        .detail-grid {
-            display: grid;
-
-            grid-template-columns:
-                1.4fr .75fr;
-
-            gap: 22px;
-
-            margin-top: 22px;
-        }
-
-        .detail-panel {
-            padding: 30px;
-
-            border-radius: 25px;
-        }
-
-        .detail-panel h2 {
-            font-family: Manrope;
-
-            font-size: 25px;
-
-            margin-bottom: 18px;
-        }
-
-        .detail-panel p {
-            color: var(--muted);
-
-            line-height: 1.8;
-        }
-
-        .itinerary {
-            display: grid;
-
-            gap: 0;
-
-            margin-top: 15px;
-        }
-
-        .itinerary div {
-            padding: 15px 0;
-
-            border-bottom:
-                1px solid rgba(255,255,255,.08);
-
-            color: #d5e3ed;
-        }
-
-        .facts div {
-            padding: 14px 0;
-
-            border-bottom:
-                1px solid rgba(255,255,255,.08);
-
-            color: #d5e3ed;
-        }
-
-        .price {
-            font-family: Manrope;
-
-            font-size: 40px;
-
-            font-weight: 800;
-
-            margin-top: 25px;
-        }
-
-        .whatsapp {
-            width: 100%;
-
-            background: #20ad68;
-
-            margin-top: 20px;
-        }
-
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media(max-width:900px) {
-
-            .nav-links {
-                display: none;
-            }
-
-            .trip-grid {
-                grid-template-columns:
-                    repeat(2,1fr);
-            }
-
-            .features {
-                grid-template-columns:
-                    repeat(2,1fr);
-            }
-
-            .about-grid,
-            .detail-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media(max-width:600px) {
-
-            .navbar {
-                top: 8px;
-            }
-
-            .logo img {
-                width: 40px;
-                height: 40px;
-            }
-
-            .logo span {
-                font-size: 14px;
-            }
-
-            .nav-button {
-                padding: 9px 12px;
-
-                font-size: 11px;
-            }
-
-            .hero {
-                padding-top: 120px;
-            }
-
-            .hero h1 {
-                letter-spacing: -2px;
-            }
-
-            .hero-description {
-                font-size: 16px;
-            }
-
-            .trip-grid,
-            .features {
-                grid-template-columns: 1fr;
-            }
-
-            .section-heading {
-                display: block;
-            }
-
-            .section-heading p {
-                margin-top: 15px;
-            }
-
-            .cta {
-                padding: 32px 24px;
-            }
-
-            .detail-hero {
-                min-height: 500px;
-
-                padding: 25px;
-            }
-
-            .detail-title h1 {
-                font-size: 46px;
-            }
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UnboxCrew — Unbox The World. Together.</title>
+
+<meta name="description" content="UnboxCrew creates premium small-group travel experiences, adventures and unforgettable memories.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   UNBOXCREW PREMIUM TRAVEL WEBSITE
+   Single-file version
+   ========================================================= */
+
+:root{
+    --blue:#0879e8;
+    --blue2:#35b8ff;
+    --navy:#071522;
+    --dark:#101b26;
+    --text:#14202b;
+    --muted:#687786;
+    --light:#f5f9fc;
+    --white:#ffffff;
+    --border:#e3ebf2;
+    --shadow:0 20px 60px rgba(7,21,34,.10);
+    --radius:26px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    color:var(--text);
+    background:#fff;
+    overflow-x:hidden;
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:78px;
+    z-index:1000;
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(10,30,50,.06);
+}
+
+.nav-inner{
+    height:100%;
+    width:min(1240px,94%);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:Manrope,sans-serif;
+    font-size:21px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+.logo-mark{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    background:linear-gradient(145deg,#159eff,#005acb);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:26px;
+    font-weight:800;
+    box-shadow:0 8px 25px rgba(0,120,240,.25);
+}
+
+.logo span{
+    color:#101d29;
+}
+
+.logo em{
+    color:var(--blue);
+    font-style:normal;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+    align-items:center;
+}
+
+.nav-links a{
+    color:#52616f;
+    font-size:13px;
+    font-weight:600;
+    transition:.25s;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--blue);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.search-button{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:white;
+    font-size:18px;
+}
+
+.primary-button{
+    border:0;
+    background:linear-gradient(135deg,#0b83ee,#0064d7);
+    color:white;
+    padding:13px 20px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:700;
+    box-shadow:0 12px 30px rgba(0,110,230,.22);
+    transition:.3s;
+}
+
+.primary-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 18px 35px rgba(0,110,230,.30);
+}
+
+.mobile-button{
+    display:none;
+    width:42px;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:50%;
+    background:white;
+    font-size:20px;
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.search-panel{
+    position:fixed;
+    top:88px;
+    right:4%;
+    width:min(400px,90%);
+    background:white;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    border-radius:20px;
+    padding:15px;
+    z-index:1200;
+    display:none;
+}
+
+.search-panel.show{
+    display:block;
+}
+
+.search-input{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    outline:none;
+}
+
+.search-results{
+    margin-top:10px;
+}
+
+.search-result{
+    padding:12px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.search-result:hover{
+    background:var(--light);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero{
+    min-height:780px;
+    padding-top:78px;
+    background:
+        radial-gradient(circle at 80% 20%,rgba(50,184,255,.16),transparent 30%),
+        linear-gradient(180deg,#f7fbff,#fff);
+    overflow:hidden;
+}
+
+.hero-inner{
+    width:min(1240px,94%);
+    margin:auto;
+    min-height:700px;
+    display:grid;
+    grid-template-columns:42% 58%;
+    align-items:center;
+    gap:20px;
+}
+
+.hero-copy{
+    padding:40px 0;
+}
+
+.eyebrow{
+    color:#6e7e8d;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:3px;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-family:Manrope,sans-serif;
+    font-size:clamp(45px,5.5vw,76px);
+    line-height:.98;
+    letter-spacing:-4px;
+    color:#101a24;
+    margin-bottom:24px;
+}
+
+.hero h1 span{
+    color:var(--blue);
+}
+
+.hero-description{
+    max-width:490px;
+    color:#697987;
+    line-height:1.8;
+    font-size:15px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+    margin-top:32px;
+    flex-wrap:wrap;
+}
+
+.secondary-button{
+    padding:13px 20px;
+    border:1px solid var(--border);
+    background:white;
+    border-radius:30px;
+    font-weight:700;
+    font-size:13px;
+}
+
+.hero-stats{
+    display:flex;
+    gap:32px;
+    margin-top:48px;
+}
+
+.hero-stat strong{
+    display:block;
+    font-size:18px;
+}
+
+.hero-stat span{
+    display:block;
+    color:#7b8995;
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* HERO VISUAL */
+
+.hero-gallery{
+    height:580px;
+    position:relative;
+    perspective:1400px;
+}
+
+.hero-card{
+    position:absolute;
+    overflow:hidden;
+    border-radius:34px;
+    box-shadow:0 30px 70px rgba(5,30,55,.22);
+    transform-style:preserve-3d;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.hero-card:hover{
+    transform:rotateY(-5deg) rotateX(5deg) translateY(-12px) scale(1.02);
+}
+
+.hero-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.hero-card:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent 35%,rgba(0,0,0,.65));
+}
+
+.hero-card-content{
+    position:absolute;
+    z-index:2;
+    bottom:22px;
+    left:22px;
+    right:22px;
+    color:white;
+}
+
+.hero-card-content small{
+    display:block;
+    opacity:.8;
+    margin-bottom:7px;
+}
+
+.hero-card-content strong{
+    font-family:Manrope;
+    font-size:24px;
+    line-height:1.05;
+}
+
+.hero-card-1{
+    width:240px;
+    height:390px;
+    left:4%;
+    top:80px;
+    transform:rotate(-5deg);
+}
+
+.hero-card-2{
+    width:270px;
+    height:470px;
+    left:29%;
+    top:20px;
+    z-index:2;
+}
+
+.hero-card-3{
+    width:235px;
+    height:390px;
+    right:2%;
+    top:105px;
+    transform:rotate(5deg);
+}
+
+/* =========================================================
+   TRUST BAR
+   ========================================================= */
+
+.trust{
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    background:white;
+}
+
+.trust-inner{
+    min-height:85px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    align-items:center;
+}
+
+.trust-item{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:#52616f;
+    font-size:12px;
+    font-weight:600;
+    border-right:1px solid var(--border);
+}
+
+.trust-item:last-child{
+    border-right:0;
+}
+
+.trust-icon{
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:#eef7ff;
+    color:var(--blue);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.section{
+    padding:100px 0;
+}
+
+.section-light{
+    background:#f7fafc;
+}
+
+.section-head{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:30px;
+    margin-bottom:35px;
+}
+
+.section-head h2{
+    font-family:Manrope;
+    font-size:42px;
+    letter-spacing:-2px;
+    line-height:1;
+}
+
+.section-head p{
+    max-width:450px;
+    color:#778591;
+    line-height:1.7;
+    font-size:14px;
+}
+
+.view-all{
+    padding:11px 18px;
+    border:1px solid var(--border);
+    border-radius:30px;
+    font-size:12px;
+    font-weight:700;
+}
+
+/* =========================================================
+   TRIP CARDS
+   ========================================================= */
+
+.trip-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.trip-card{
+    position:relative;
+    min-height:390px;
+    border-radius:24px;
+    overflow:hidden;
+    cursor:pointer;
+    box-shadow:0 15px 45px rgba(10,35,55,.10);
+    transform-style:preserve-3d;
+    transition:.5s;
+}
+
+.trip-card:hover{
+    transform:translateY(-10px) rotateX(2deg) rotateY(-2deg);
+    box-shadow:0 30px 60px rgba(10,35,55,.20);
+}
+
+.trip-card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.7s;
+}
+
+.trip-card:hover img{
+    transform:scale(1.08);
+}
+
+.trip-card:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent 25%,rgba(3,17,29,.88));
+}
+
+.trip-info{
+    position:absolute;
+    z-index:2;
+    bottom:18px;
+    left:18px;
+    right:18px;
+    color:white;
+}
+
+.trip-location{
+    font-size:10px;
+    opacity:.8;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.trip-title{
+    font-family:Manrope;
+    font-size:23px;
+    margin:6px 0;
+}
+
+.trip-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:11px;
+}
+
+.price{
+    font-weight:800;
+    font-size:14px;
+}
+
+.trip-arrow{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:rgba(255,255,255,.25);
+    backdrop-filter:blur(10px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* =========================================================
+   DESTINATIONS
+   ========================================================= */
+
+.destination-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    grid-auto-rows:220px;
+    gap:18px;
+}
+
+.destination{
+    position:relative;
+    overflow:hidden;
+    border-radius:24px;
+    cursor:pointer;
+}
+
+.destination.large{
+    grid-row:span 2;
+}
+
+.destination img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.6s;
+}
+
+.destination:hover img{
+    transform:scale(1.08);
+}
+
+.destination:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent 30%,rgba(0,0,0,.7));
+}
+
+.destination-info{
+    position:absolute;
+    z-index:2;
+    bottom:22px;
+    left:22px;
+    color:white;
+}
+
+.destination-info h3{
+    font-family:Manrope;
+    font-size:25px;
+}
+
+.destination-info p{
+    opacity:.8;
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.about-photo{
+    position:relative;
+}
+
+.about-photo img{
+    width:100%;
+    height:560px;
+    object-fit:cover;
+    border-radius:30px;
+    box-shadow:var(--shadow);
+}
+
+.about-badge{
+    position:absolute;
+    bottom:25px;
+    right:-20px;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    width:180px;
+}
+
+.about-badge strong{
+    display:block;
+    font-size:25px;
+    color:var(--blue);
+}
+
+.about-badge span{
+    color:#758391;
+    font-size:11px;
+}
+
+.about-text h2{
+    font-family:Manrope;
+    font-size:48px;
+    letter-spacing:-2px;
+    line-height:1.02;
+    margin-bottom:24px;
+}
+
+.about-text h2 span{
+    color:var(--blue);
+}
+
+.about-text p{
+    color:#6c7c88;
+    line-height:1.9;
+    font-size:15px;
+}
+
+.pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:25px 0;
+}
+
+.pill{
+    background:#eef7ff;
+    color:#0874d7;
+    padding:9px 13px;
+    border-radius:30px;
+    font-size:11px;
+    font-weight:700;
+}
+
+/* =========================================================
+   REVIEWS
+   ========================================================= */
+
+.reviews{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.review{
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:24px;
+    background:white;
+}
+
+.stars{
+    color:#ffb31c;
+    letter-spacing:3px;
+    margin-bottom:18px;
+}
+
+.review p{
+    color:#566674;
+    line-height:1.8;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+.review strong{
+    font-size:12px;
+}
+
+/* =========================================================
+   FINAL CTA
+   ========================================================= */
+
+.final-cta{
+    position:relative;
+    overflow:hidden;
+    padding:80px 50px;
+    border-radius:35px;
+    background:
+        radial-gradient(circle at 80% 20%,rgba(51,190,255,.5),transparent 30%),
+        linear-gradient(135deg,#061522,#0a3151);
+    color:white;
+    text-align:center;
+}
+
+.final-cta h2{
+    font-family:Manrope;
+    font-size:50px;
+    line-height:1;
+    letter-spacing:-2px;
+    margin:15px 0;
+}
+
+.final-cta p{
+    color:#bdcfdd;
+    max-width:550px;
+    margin:0 auto 28px;
+    line-height:1.7;
+    font-size:14px;
+}
+
+.white-button{
+    display:inline-block;
+    padding:14px 24px;
+    background:white;
+    color:#071522;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:800;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer{
+    background:#06131e;
+    color:white;
+    padding:55px 0 30px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-logo{
+    font-family:Manrope;
+    font-size:23px;
+    font-weight:800;
+}
+
+.footer-brand-description{
+    color:#8293a1;
+    font-size:13px;
+    line-height:1.7;
+    max-width:320px;
+    margin-top:12px;
+}
+
+.footer-column h4{
+    font-size:12px;
+    margin-bottom:16px;
+}
+
+.footer-column a{
+    display:block;
+    color:#8d9da9;
+    font-size:12px;
+    margin:10px 0;
+}
+
+.footer-bottom{
+    border-top:1px solid rgba(255,255,255,.08);
+    margin-top:40px;
+    padding-top:20px;
+    color:#657682;
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+}
+
+/* =========================================================
+   PAGE SYSTEM
+   ========================================================= */
+
+.page{
+    display:none;
+    padding-top:78px;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-hero{
+    min-height:380px;
+    display:flex;
+    align-items:center;
+    background:
+        radial-gradient(circle at 80% 20%,rgba(38,175,255,.16),transparent 35%),
+        #f5f9fc;
+}
+
+.page-hero h1{
+    font-family:Manrope;
+    font-size:65px;
+    letter-spacing:-3px;
+}
+
+.page-hero p{
+    margin-top:18px;
+    max-width:650px;
+    color:#697987;
+    line-height:1.8;
+}
+
+/* =========================================================
+   TRIP DETAIL
+   ========================================================= */
+
+.detail-hero{
+    position:relative;
+    height:580px;
+    overflow:hidden;
+}
+
+.detail-hero img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.detail-hero:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg,rgba(0,0,0,.75),rgba(0,0,0,.15));
+}
+
+.detail-content{
+    position:absolute;
+    z-index:2;
+    left:6%;
+    bottom:80px;
+    color:white;
+    max-width:650px;
+}
+
+.detail-content h1{
+    font-family:Manrope;
+    font-size:65px;
+    line-height:.98;
+    letter-spacing:-3px;
+}
+
+.detail-content p{
+    margin-top:18px;
+    color:#e1eaf0;
+    line-height:1.7;
+}
+
+.detail-layout{
+    display:grid;
+    grid-template-columns:1fr 350px;
+    gap:40px;
+}
+
+.detail-main h2{
+    font-family:Manrope;
+    font-size:32px;
+    margin-bottom:18px;
+}
+
+.detail-main p{
+    color:#687987;
+    line-height:1.8;
+    font-size:14px;
+}
+
+.itinerary{
+    margin-top:30px;
+}
+
+.day{
+    display:grid;
+    grid-template-columns:80px 1fr;
+    gap:20px;
+    padding:22px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.day-number{
+    color:var(--blue);
+    font-weight:800;
+}
+
+.day h3{
+    margin-bottom:7px;
+}
+
+.day p{
+    font-size:13px;
+}
+
+.booking-card{
+    position:sticky;
+    top:100px;
+    align-self:start;
+    padding:25px;
+    border:1px solid var(--border);
+    border-radius:25px;
+    box-shadow:var(--shadow);
+    background:white;
+}
+
+.booking-card h3{
+    font-family:Manrope;
+    font-size:25px;
+}
+
+.booking-price{
+    font-size:32px;
+    font-weight:800;
+    margin:15px 0;
+}
+
+.booking-price small{
+    font-size:11px;
+    color:#778592;
+    font-weight:500;
+}
+
+.booking-info{
+    padding:15px 0;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    line-height:2;
+    font-size:12px;
+    color:#667684;
+}
+
+.whatsapp{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    padding:14px;
+    border-radius:30px;
+    background:#19b866;
+    color:white;
+    font-size:13px;
+    font-weight:800;
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+}
+
+.contact-box{
+    padding:30px;
+    background:#f6faff;
+    border-radius:25px;
+}
+
+.contact-box h2{
+    font-family:Manrope;
+    font-size:40px;
+    margin-bottom:15px;
+}
+
+.contact-box p{
+    color:#687987;
+    line-height:1.8;
+    font-size:14px;
+}
+
+.contact-detail{
+    margin-top:25px;
+}
+
+.contact-detail strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.contact-detail span{
+    color:#667684;
+    font-size:13px;
+}
+
+.form{
+    display:grid;
+    gap:14px;
+}
+
+.form input,
+.form textarea,
+.form select{
+    width:100%;
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    outline:none;
+    background:white;
+}
+
+.form textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+
+.faq{
+    max-width:800px;
+    margin:auto;
+}
+
+.faq-item{
+    border-bottom:1px solid var(--border);
+}
+
+.faq-question{
+    width:100%;
+    padding:20px 0;
+    background:none;
+    border:0;
+    display:flex;
+    justify-content:space-between;
+    font-weight:700;
+    text-align:left;
+}
+
+.faq-answer{
+    display:none;
+    padding:0 0 20px;
+    color:#697987;
+    font-size:13px;
+    line-height:1.7;
+}
+
+.faq-item.open .faq-answer{
+    display:block;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+        position:absolute;
+        top:78px;
+        left:0;
+        right:0;
+        background:white;
+        padding:20px;
+        flex-direction:column;
+        box-shadow:0 15px 30px rgba(0,0,0,.08);
+    }
+
+    .nav-links.show{
+        display:flex;
+    }
+
+    .mobile-button{
+        display:block;
+    }
+
+    .nav-right .primary-button{
+        display:none;
+    }
+
+    .hero-inner{
+        grid-template-columns:1fr;
+        padding-top:40px;
+    }
+
+    .hero-copy{
+        text-align:center;
+    }
+
+    .hero-description{
+        margin:auto;
+    }
+
+    .hero-buttons,
+    .hero-stats{
+        justify-content:center;
+    }
+
+    .hero-gallery{
+        height:500px;
+    }
+
+    .trip-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .trust-inner{
+        grid-template-columns:repeat(2,1fr);
+        padding:20px 0;
+        gap:15px;
+    }
+
+    .trust-item{
+        border:0;
+    }
+
+    .about-grid,
+    .contact-grid,
+    .detail-layout{
+        grid-template-columns:1fr;
+    }
+
+    .booking-card{
+        position:relative;
+        top:auto;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:650px){
+
+    .navbar{
+        height:68px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .logo-mark{
+        width:36px;
+        height:36px;
+    }
+
+    .page{
+        padding-top:68px;
+    }
+
+    .hero{
+        padding-top:68px;
+    }
+
+    .hero-inner{
+        min-height:auto;
+        padding:50px 0 30px;
+    }
+
+    .hero h1{
+        font-size:45px;
+        letter-spacing:-2px;
+    }
+
+    .hero-stats{
+        gap:18px;
+    }
+
+    .hero-gallery{
+        height:430px;
+        transform:scale(.88);
+        margin:-25px -30px;
+    }
+
+    .hero-card-1{
+        width:170px;
+        height:290px;
+    }
+
+    .hero-card-2{
+        width:190px;
+        height:330px;
+    }
+
+    .hero-card-3{
+        width:165px;
+        height:285px;
+    }
+
+    .section{
+        padding:70px 0;
+    }
+
+    .section-head{
+        display:block;
+    }
+
+    .section-head h2{
+        font-size:34px;
+        margin-bottom:15px;
+    }
+
+    .view-all{
+        display:inline-block;
+        margin-top:15px;
+    }
+
+    .trip-grid{
+        grid-template-columns:1fr;
+    }
+
+    .trip-card{
+        min-height:430px;
+    }
+
+    .destination-grid{
+        grid-template-columns:1fr;
+        grid-auto-rows:230px;
+    }
+
+    .destination.large{
+        grid-row:auto;
+    }
+
+    .about-text h2{
+        font-size:38px;
+    }
+
+    .about-photo img{
+        height:420px;
+    }
+
+    .reviews{
+        grid-template-columns:1fr;
+    }
+
+    .final-cta{
+        padding:60px 25px;
+    }
+
+    .final-cta h2{
+        font-size:38px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .page-hero h1{
+        font-size:45px;
+    }
+
+    .detail-hero{
+        height:520px;
+    }
+
+    .detail-content{
+        left:5%;
+        right:5%;
+        bottom:45px;
+    }
+
+    .detail-content h1{
+        font-size:46px;
+    }
+
+    .detail-layout{
+        gap:25px;
+    }
+}
+
+</style>
 </head>
-
 
 <body>
 
 
-<!-- =========================
+<!-- ======================================================
      NAVBAR
-========================= -->
+     ====================================================== -->
 
-<nav class="navbar">
+<header class="navbar">
 
-    <a href="#"
-       class="logo"
-       onclick="showHome(); return false;">
+<div class="nav-inner">
 
-        <!-- YOUR LOGO -->
-        <img src="assets/logo.png"
-             alt="UnboxCrew">
+<a href="#home" class="logo" onclick="navigate('home')">
 
-        <span>UNBOXCREW</span>
+<div class="logo-mark">
+U
+</div>
 
-    </a>
+<span>
+UNBOX<em>CREW</em>
+</span>
 
-
-    <div class="nav-links">
-
-        <a href="#trips">
-            Trips
-        </a>
-
-        <a href="#why">
-            Why Us
-        </a>
-
-        <a href="#about">
-            About
-        </a>
-
-        <a href="#contact">
-            Contact
-        </a>
-
-    </div>
+</a>
 
 
-    <a class="nav-button"
-       href="https://wa.me/919625131595?text=Hi%20UnboxCrew%2C%20I%20want%20to%20plan%20a%20trip."
-       target="_blank">
+<nav class="nav-links" id="navLinks">
 
-        Plan My Trip
+<a href="#home" onclick="navigate('home')">Home</a>
 
-    </a>
+<a href="#trips" onclick="navigate('trips')">Trips</a>
+
+<a href="#destinations" onclick="navigate('destinations')">
+Destinations
+</a>
+
+<a href="#about" onclick="navigate('about')">About</a>
+
+<a href="#reviews" onclick="navigate('reviews')">Reviews</a>
+
+<a href="#contact" onclick="navigate('contact')">Contact</a>
 
 </nav>
 
 
+<div class="nav-right">
 
-<!-- =========================
-     HOME
-========================= -->
+<button class="search-button" onclick="toggleSearch()">
+⌕
+</button>
 
-<main id="home" class="home">
+<button class="primary-button" onclick="navigate('contact')">
+Plan Your Trip →
+</button>
+
+<button class="mobile-button" onclick="toggleMenu()">
+☰
+</button>
+
+</div>
+
+</div>
+
+</header>
 
 
-<!-- HERO -->
+<!-- ======================================================
+     SEARCH
+     ====================================================== -->
+
+<div class="search-panel" id="searchPanel">
+
+<input
+class="search-input"
+id="searchInput"
+placeholder="Search trips or destinations..."
+oninput="performSearch()"
+>
+
+<div class="search-results" id="searchResults"></div>
+
+</div>
+
+
+<!-- ======================================================
+     HOME PAGE
+     ====================================================== -->
+
+<main id="home" class="page active">
+
 
 <section class="hero">
 
-    <div class="hero-background"></div>
+<div class="hero-inner">
 
 
-    <div class="container">
+<div class="hero-copy">
 
-        <div class="hero-content">
+<div class="eyebrow">
+SMALL GROUPS · REAL EXPERIENCES · BIG STORIES
+</div>
 
-            <div class="eyebrow">
-                ✦ Premium Adventure Travel
-            </div>
+<h1>
+More Than Trips.
+<br>
+A <span>Community.</span>
+</h1>
 
+<p class="hero-description">
 
-            <h1>
+Travel beyond the ordinary.
 
-                Don't just
-                <span>travel.</span>
+Meet people who love adventure,
+discover places differently and
+collect stories worth telling again and again.
 
-                <br>
-
-                Unbox the experience.
-
-            </h1>
-
-
-            <p class="hero-description">
-
-                Curated escapes, real adventures and
-                unforgettable moments — designed for
-                people who want more than a regular trip.
-
-            </p>
+</p>
 
 
-            <div class="buttons">
+<div class="hero-buttons">
 
-                <a href="#trips"
-                   class="btn btn-primary">
+<button class="primary-button" onclick="navigate('trips')">
+Explore Trips →
+</button>
 
-                    Explore Trips →
+<button class="secondary-button" onclick="navigate('about')">
+▶ How It Works
+</button>
 
-                </a>
-
-
-                <a href="https://wa.me/919625131595?text=Hi%20UnboxCrew%2C%20help%20me%20choose%20a%20trip."
-                   target="_blank"
-                   class="btn btn-secondary">
-
-                    Talk to a Trip Expert
-
-                </a>
-
-            </div>
+</div>
 
 
-            <div class="trust">
+<div class="hero-stats">
 
-                <div>
+<div class="hero-stat">
+<strong>Curated</strong>
+<span>Experiences</span>
+</div>
 
-                    <strong>
-                        Curated
-                    </strong>
+<div class="hero-stat">
+<strong>Small</strong>
+<span>Travel Groups</span>
+</div>
 
-                    Handpicked experiences
+<div class="hero-stat">
+<strong>24/7</strong>
+<span>Support</span>
+</div>
 
-                </div>
+</div>
 
-
-                <div>
-
-                    <strong>
-                        Small Groups
-                    </strong>
-
-                    Travel with your crew
-
-                </div>
+</div>
 
 
-                <div>
+<div class="hero-gallery">
 
-                    <strong>
-                        Adventure
-                    </strong>
 
-                    Stories worth keeping
+<div class="hero-card hero-card-1">
 
-                </div>
+<img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=90">
 
-            </div>
+<div class="hero-card-content">
 
-        </div>
+<small>ADVENTURE</small>
 
-    </div>
+<strong>
+Chase The Wild.
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="hero-card hero-card-2">
+
+<img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=90">
+
+<div class="hero-card-content">
+
+<small>UNBOXCREW</small>
+
+<strong>
+Explore.
+<br>
+Experience.
+<br>
+Belong.
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="hero-card hero-card-3">
+
+<img src="https://images.unsplash.com/photo-1521336575822-6da63fb45455?auto=format&fit=crop&w=900&q=90">
+
+<div class="hero-card-content">
+
+<small>MEMORIES</small>
+
+<strong>
+Stories Over Selfies.
+</strong>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
 
 </section>
 
 
+<section class="trust">
 
-<!-- TRIPS -->
+<div class="container trust-inner">
 
-<section id="trips">
+<div class="trust-item">
+<div class="trust-icon">✦</div>
+Handpicked Itineraries
+</div>
 
-    <div class="container">
+<div class="trust-item">
+<div class="trust-icon">✓</div>
+Verified Stays
+</div>
 
+<div class="trust-item">
+<div class="trust-icon">◆</div>
+Trusted Transport
+</div>
 
-        <div class="section-heading">
+<div class="trust-item">
+<div class="trust-icon">♧</div>
+Small Groups
+</div>
 
-            <div>
+<div class="trust-item">
+<div class="trust-icon">24</div>
+24/7 Support
+</div>
 
-                <div class="eyebrow">
-                    Your Next Escape
-                </div>
-
-                <h2>
-                    Trips worth leaving
-                    home for.
-                </h2>
-
-            </div>
-
-
-            <p>
-
-                Choose an escape, explore the full
-                itinerary and discover everything
-                included in your journey.
-
-            </p>
-
-        </div>
-
-
-        <div id="tripGrid"
-             class="trip-grid">
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
+<section class="section">
 
-<!-- WHY US -->
+<div class="container">
 
-<section id="why">
+<div class="section-head">
 
-    <div class="container">
+<div>
 
+<div class="eyebrow">
+YOUR NEXT ESCAPE
+</div>
 
-        <div class="section-heading">
+<h2>
+Trending Experiences
+</h2>
 
-            <div>
+</div>
 
-                <div class="eyebrow">
-                    The UnboxCrew Way
-                </div>
+<button class="view-all" onclick="navigate('trips')">
+View All Trips →
+</button>
 
-                <h2>
-                    Travel should feel
-                    like a story.
-                </h2>
-
-            </div>
-
-        </div>
-
+</div>
 
 
-        <div class="features">
+<div class="trip-grid" id="homeTrips"></div>
 
-
-            <div class="feature glass">
-
-                <div class="feature-icon">
-                    ✦
-                </div>
-
-                <h3>
-                    Curated, Not Crowded
-                </h3>
-
-                <p>
-
-                    Experiences designed around
-                    the journey — not a rushed
-                    checklist of tourist spots.
-
-                </p>
-
-            </div>
-
-
-
-            <div class="feature glass">
-
-                <div class="feature-icon">
-                    ◈
-                </div>
-
-                <h3>
-                    Adventure Included
-                </h3>
-
-                <p>
-
-                    Games, exploration, adrenaline
-                    and experiences designed
-                    to create memories.
-
-                </p>
-
-            </div>
-
-
-
-            <div class="feature glass">
-
-                <div class="feature-icon">
-                    ⌁
-                </div>
-
-                <h3>
-                    Easy Booking
-                </h3>
-
-                <p>
-
-                    Clear trip information and
-                    direct WhatsApp support
-                    whenever you need it.
-
-                </p>
-
-            </div>
-
-
-
-            <div class="feature glass">
-
-                <div class="feature-icon">
-                    ♡
-                </div>
-
-                <h3>
-                    Made For Your Crew
-                </h3>
-
-                <p>
-
-                    Meet new people, explore
-                    together and return with
-                    stories worth sharing.
-
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
+<section class="section section-light">
 
-<!-- ABOUT -->
+<div class="container">
 
-<section id="about">
+<div class="section-head">
 
-    <div class="container about-grid">
+<div>
 
+<div class="eyebrow">
+WHERE WILL YOU UNBOX NEXT?
+</div>
 
-        <div>
+<h2>
+Destinations
+</h2>
 
-            <div class="eyebrow">
-                Our Philosophy
-            </div>
+</div>
 
+<p>
+From mountain escapes to riverside adventures,
+discover places designed for stories.
+</p>
 
-            <h2>
-
-                Unbox the world.
-
-                <br>
-
-                <span class="blue">
-                    Together.
-                </span>
-
-            </h2>
+</div>
 
 
-            <p>
+<div class="destination-grid" id="homeDestinations"></div>
 
-                UnboxCrew is built for travellers
-                who want more than just a destination.
-
-                <br><br>
-
-                From mountain escapes to river
-                adventures, we create experiences
-                that feel premium, social and
-                genuinely memorable.
-
-            </p>
-
-        </div>
-
-
-
-        <div class="quote-box glass">
-
-            <h3>
-
-                The best souvenirs aren't things.
-
-                They're stories you keep telling.
-
-            </h3>
-
-
-            <p style="margin-top:18px">
-
-                Come for the destination.
-
-                Stay for the people,
-                the adrenaline and
-                the moments you never planned for.
-
-            </p>
-
-
-            <div class="buttons">
-
-                <a href="https://wa.me/919625131595?text=Hi%20UnboxCrew%2C%20I%20want%20to%20plan%20an%20escape."
-                   target="_blank"
-                   class="btn btn-primary">
-
-                    Start Your Escape →
-
-                </a>
-
-            </div>
-
-        </div>
-
-
-    </div>
+</div>
 
 </section>
 
 
+<section class="section">
 
-<!-- CONTACT -->
+<div class="container about-grid">
 
-<section id="contact">
+<div class="about-photo">
 
-    <div class="container">
+<img src="https://images.unsplash.com/photo-1533130061792-64b345e4a833?auto=format&fit=crop&w=1200&q=90">
 
+<div class="about-badge">
+<strong>100%</strong>
+<span>Experience focused travel</span>
+</div>
 
-        <div class="cta glass">
-
-            <div class="eyebrow">
-                Ready When You Are
-            </div>
-
-
-            <h2>
-                Your next story
-                starts here.
-            </h2>
+</div>
 
 
-            <p>
+<div class="about-text">
 
-                Tell us your dates, budget and
-                travel vibe. We'll help you find
-                the right UnboxCrew escape.
+<div class="eyebrow">
+THE UNBOXCREW WAY
+</div>
 
-            </p>
+<h2>
+Don't just visit a place.
+<br>
+<span>Live the story.</span>
+</h2>
+
+<p>
+
+UnboxCrew is for travellers who believe that
+the best trips are not just about destinations.
+
+They're about the people you meet,
+the things you experience and the stories
+you bring back home.
+
+</p>
 
 
-            <div class="buttons">
+<div class="pills">
 
-                <a href="https://wa.me/919625131595?text=Hi%20UnboxCrew%2C%20I%20want%20to%20book%20a%20trip."
-                   target="_blank"
-                   class="btn btn-primary">
+<span class="pill">Adventure</span>
 
-                    WhatsApp Us
+<span class="pill">Community</span>
 
-                </a>
+<span class="pill">Curated Routes</span>
+
+<span class="pill">Real Moments</span>
+
+</div>
 
 
-                <a href="mailto:bookings@unboxcrew.com"
-                   class="btn btn-secondary">
+<button class="primary-button" onclick="navigate('about')">
+Discover UnboxCrew →
+</button>
 
-                    bookings@unboxcrew.com
+</div>
 
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
+
+<section class="section section-light">
+
+<div class="container">
+
+<div class="section-head">
+
+<div>
+
+<div class="eyebrow">
+FROM THE CREW
+</div>
+
+<h2>
+Stories After The Trip.
+</h2>
+
+</div>
+
+<button class="view-all" onclick="navigate('reviews')">
+Read Reviews →
+</button>
+
+</div>
+
+
+<div class="reviews">
+
+<div class="review">
+
+<div class="stars">
+★★★★★
+</div>
+
+<p>
+“The best part wasn't just the destination.
+It was meeting people who were just as excited
+to explore.”
+</p>
+
+<strong>
+Aarav · Traveller
+</strong>
+
+</div>
+
+
+<div class="review">
+
+<div class="stars">
+★★★★★
+</div>
+
+<p>
+“Everything felt thoughtfully planned without
+feeling like we were being rushed.”
+</p>
+
+<strong>
+Riya · Traveller
+</strong>
+
+</div>
+
+
+<div class="review">
+
+<div class="stars">
+★★★★★
+</div>
+
+<p>
+“Came for the mountains.
+Came back with a whole new travel crew.”
+</p>
+
+<strong>
+Karan · Traveller
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="container">
+
+<div class="final-cta">
+
+<div class="eyebrow">
+YOUR NEXT STORY STARTS HERE
+</div>
+
+<h2>
+Ready to unbox
+<br>
+something unforgettable?
+</h2>
+
+<p>
+Tell us where you want to go,
+what you want to experience and
+who you're travelling with.
+</p>
+
+<button class="white-button" onclick="navigate('contact')">
+Talk To UnboxCrew →
+</button>
+
+</div>
+
+</div>
+
+</section>
 
 </main>
 
 
+<!-- ======================================================
+     TRIPS PAGE
+     ====================================================== -->
 
-<!-- =========================
-     TRIP DETAIL
-========================= -->
+<section id="trips" class="page">
 
-<section id="tripDetail"
-         class="trip-detail">
+<div class="page-hero">
 
-    <div class="container">
+<div class="container">
 
+<div class="eyebrow">
+CURATED ESCAPES
+</div>
 
-        <a href="#"
-           class="back-button"
-           onclick="showHome(); return false;">
+<h1>
+Trips Made For Stories.
+</h1>
 
-            ← Back to all trips
+<p>
+Choose your next escape.
+Every UnboxCrew journey is designed around
+experiences, people and memories.
+</p>
 
-        </a>
+</div>
 
-
-
-        <div id="detailHero"
-             class="detail-hero">
-
-            <div class="detail-title">
-
-
-                <div id="detailTag"
-                     class="trip-tag">
-
-                </div>
+</div>
 
 
-                <h1 id="detailName">
-                </h1>
+<section class="section">
 
+<div class="container">
 
-                <p id="detailIntro">
-                </p>
+<div class="trip-grid" id="allTrips"></div>
 
+</div>
 
-            </div>
-
-        </div>
-
-
-
-        <div class="detail-grid">
-
-
-            <div class="detail-panel glass">
-
-                <h2>
-                    About This Experience
-                </h2>
-
-
-                <div id="detailDescription">
-                </div>
-
-
-                <h2 style="margin-top:30px">
-
-                    Itinerary
-
-                </h2>
-
-
-                <div id="detailItinerary"
-                     class="itinerary">
-
-                </div>
-
-            </div>
-
-
-
-            <div class="detail-panel glass">
-
-                <h2>
-                    Trip Details
-                </h2>
-
-
-                <div id="detailFacts"
-                     class="facts">
-
-                </div>
-
-
-                <div id="detailPrice"
-                     class="price">
-
-                </div>
-
-
-                <p style="font-size:12px">
-
-                    Starting price.
-                    Contact UnboxCrew for
-                    current availability.
-
-                </p>
-
-
-                <a id="bookButton"
-                   href="#"
-                   target="_blank"
-                   class="btn whatsapp">
-
-                    Book / Enquire on WhatsApp
-
-                </a>
-
-
-                <a href="mailto:bookings@unboxcrew.com"
-                   class="btn btn-secondary"
-                   style="width:100%;margin-top:10px">
-
-                    Email Booking
-
-                </a>
-
-            </div>
-
-
-        </div>
-
-    </div>
+</section>
 
 </section>
 
 
+<!-- ======================================================
+     DESTINATIONS PAGE
+     ====================================================== -->
 
-<!-- FOOTER -->
+<section id="destinations" class="page">
+
+<div class="page-hero">
+
+<div class="container">
+
+<div class="eyebrow">
+EXPLORE INDIA DIFFERENTLY
+</div>
+
+<h1>
+Places Worth Unboxing.
+</h1>
+
+<p>
+Discover destinations where adventure,
+culture and community come together.
+</p>
+
+</div>
+
+</div>
+
+
+<section class="section">
+
+<div class="container">
+
+<div class="destination-grid" id="allDestinations"></div>
+
+</div>
+
+</section>
+
+</section>
+
+
+<!-- ======================================================
+     ABOUT PAGE
+     ====================================================== -->
+
+<section id="about" class="page">
+
+<div class="page-hero">
+
+<div class="container">
+
+<div class="eyebrow">
+OUR STORY
+</div>
+
+<h1>
+Travel is better together.
+</h1>
+
+<p>
+UnboxCrew is building a travel community
+around experiences instead of ordinary packages.
+</p>
+
+</div>
+
+</div>
+
+
+<section class="section">
+
+<div class="container about-grid">
+
+<div class="about-photo">
+
+<img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1200&q=90">
+
+</div>
+
+
+<div class="about-text">
+
+<div class="eyebrow">
+WHY UNBOXCREW
+</div>
+
+<h2>
+We create trips.
+<br>
+<span>You create stories.</span>
+</h2>
+
+<p>
+
+We believe travel should feel exciting before
+the journey even begins.
+
+That's why every UnboxCrew trip focuses on
+carefully planned experiences, comfortable
+travel, meaningful places and a community
+of people who actually want to explore.
+
+</p>
+
+
+<div class="pills">
+
+<span class="pill">Small Groups</span>
+
+<span class="pill">Adventure</span>
+
+<span class="pill">Local Experiences</span>
+
+<span class="pill">Curated Itineraries</span>
+
+<span class="pill">Community</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section section-light">
+
+<div class="container">
+
+<div class="section-head">
+
+<div>
+
+<div class="eyebrow">
+OUR PHILOSOPHY
+</div>
+
+<h2>
+Unbox the world.
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="reviews">
+
+<div class="review">
+<strong>01 · EXPLORE</strong>
+<p>
+Go beyond the obvious.
+Discover places through experiences.
+</p>
+</div>
+
+<div class="review">
+<strong>02 · EXPERIENCE</strong>
+<p>
+Adventure, culture, food and moments
+that turn into stories.
+</p>
+</div>
+
+<div class="review">
+<strong>03 · BELONG</strong>
+<p>
+Meet travellers who become part
+of your journey.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</section>
+
+
+<!-- ======================================================
+     REVIEWS PAGE
+     ====================================================== -->
+
+<section id="reviews" class="page">
+
+<div class="page-hero">
+
+<div class="container">
+
+<div class="eyebrow">
+TRAVEL STORIES
+</div>
+
+<h1>
+What The Crew Says.
+</h1>
+
+<p>
+Real experiences. Real people.
+Real memories.
+</p>
+
+</div>
+
+</div>
+
+
+<section class="section">
+
+<div class="container">
+
+<div class="reviews">
+
+<div class="review">
+<div class="stars">★★★★★</div>
+<p>
+“UnboxCrew made the whole trip feel effortless.
+The itinerary was fun and the group was amazing.”
+</p>
+<strong>Aditya · Traveller</strong>
+</div>
+
+<div class="review">
+<div class="stars">★★★★★</div>
+<p>
+“I went expecting a normal trip and came back
+with some of my favourite memories.”
+</p>
+<strong>Megha · Traveller</strong>
+</div>
+
+<div class="review">
+<div class="stars">★★★★★</div>
+<p>
+“The combination of adventure and community
+made the trip completely different.”
+</p>
+<strong>Rahul · Traveller</strong>
+</div>
+
+<div class="review">
+<div class="stars">★★★★★</div>
+<p>
+“Beautiful locations, great planning and
+a genuinely fun group.”
+</p>
+<strong>Simran · Traveller</strong>
+</div>
+
+<div class="review">
+<div class="stars">★★★★★</div>
+<p>
+“Exactly the kind of travel experience
+I was looking for.”
+</p>
+<strong>Vansh · Traveller</strong>
+</div>
+
+<div class="review">
+<div class="stars">★★★★★</div>
+<p>
+“Would definitely travel with the crew again.”
+</p>
+<strong>Priya · Traveller</strong>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</section>
+
+
+<!-- ======================================================
+     CONTACT PAGE
+     ====================================================== -->
+
+<section id="contact" class="page">
+
+<div class="page-hero">
+
+<div class="container">
+
+<div class="eyebrow">
+LET'S PLAN SOMETHING
+</div>
+
+<h1>
+Your next adventure starts here.
+</h1>
+
+<p>
+Have a question, want to join a trip or
+want a custom travel experience?
+Talk to the UnboxCrew.
+</p>
+
+</div>
+
+</div>
+
+
+<section class="section">
+
+<div class="container contact-grid">
+
+
+<div class="contact-box">
+
+<div class="eyebrow">
+GET IN TOUCH
+</div>
+
+<h2>
+Let's talk travel.
+</h2>
+
+<p>
+Tell us what you're looking for and
+our team will help you plan your next escape.
+</p>
+
+
+<div class="contact-detail">
+
+<strong>WhatsApp</strong>
+
+<span>
++91 96251 31595
+</span>
+
+</div>
+
+
+<div class="contact-detail">
+
+<strong>Email</strong>
+
+<span>
+bookings@unboxcrew.com
+</span>
+
+</div>
+
+
+<div class="contact-detail">
+
+<strong>Tagline</strong>
+
+<span>
+Unbox the world. Together.
+</span>
+
+</div>
+
+</div>
+
+
+<div>
+
+<form class="form" onsubmit="sendWhatsApp(event)">
+
+<input
+id="name"
+type="text"
+placeholder="Your Name"
+required
+>
+
+<input
+id="phone"
+type="tel"
+placeholder="Phone Number"
+required
+>
+
+<input
+id="email"
+type="email"
+placeholder="Email Address"
+>
+
+<select id="interest">
+
+<option value="">
+What are you interested in?
+</option>
+
+<option>Rishikesh</option>
+
+<option>Mussoorie</option>
+
+<option>Manali</option>
+
+<option>Kasol</option>
+
+<option>Custom Trip</option>
+
+</select>
+
+<textarea
+id="message"
+placeholder="Tell us about your travel plan..."
+></textarea>
+
+<button class="primary-button" type="submit">
+Send Enquiry on WhatsApp →
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section section-light">
+
+<div class="container">
+
+<div class="section-head">
+
+<div>
+
+<div class="eyebrow">
+QUICK ANSWERS
+</div>
+
+<h2>
+Frequently Asked Questions
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="faq">
+
+<div class="faq-item">
+
+<button class="faq-question" onclick="faq(this)">
+How do I book a trip?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+Choose a trip, open its details and contact
+UnboxCrew through WhatsApp to confirm availability
+and booking information.
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<button class="faq-question" onclick="faq(this)">
+Can I join alone?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+Absolutely. UnboxCrew is designed around
+small travel groups, so solo travellers are welcome.
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<button class="faq-question" onclick="faq(this)">
+Can you create custom trips?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+Yes. Contact the team with your destination,
+group size and preferred dates.
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<button class="faq-question" onclick="faq(this)">
+How will I receive booking information?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+After your enquiry, the team will share
+availability, pricing and booking instructions
+through WhatsApp.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</section>
+
+
+<!-- ======================================================
+     TRIP DETAIL PAGE
+     ====================================================== -->
+
+<section id="trip-detail" class="page">
+
+<div id="tripDetailContent"></div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
 
 <footer>
 
-    <div class="container footer-row">
+<div class="container">
 
-        <div>
-
-            © 2026 UnboxCrew
-
-            <br>
-
-            Unbox the World. Together.
-
-        </div>
+<div class="footer-grid">
 
 
-        <div>
+<div>
 
-            <a href="mailto:bookings@unboxcrew.com">
-                bookings@unboxcrew.com
-            </a>
+<div class="footer-logo">
+UNBOX<span style="color:#2caaff">CREW</span>
+</div>
 
-            &nbsp; · &nbsp;
+<p class="footer-brand-description">
 
-            <a href="https://wa.me/919625131595"
-               target="_blank">
+Unbox the world. Together.
 
-                WhatsApp
+Premium small-group adventures,
+experiences and travel stories.
 
-            </a>
+</p>
 
-        </div>
+</div>
 
-    </div>
+
+<div class="footer-column">
+
+<h4>Explore</h4>
+
+<a href="#home" onclick="navigate('home')">
+Home
+</a>
+
+<a href="#trips" onclick="navigate('trips')">
+Trips
+</a>
+
+<a href="#destinations" onclick="navigate('destinations')">
+Destinations
+</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>Company</h4>
+
+<a href="#about" onclick="navigate('about')">
+About
+</a>
+
+<a href="#reviews" onclick="navigate('reviews')">
+Reviews
+</a>
+
+<a href="#contact" onclick="navigate('contact')">
+Contact
+</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>Contact</h4>
+
+<a href="https://wa.me/919625131595" target="_blank">
+WhatsApp
+</a>
+
+<a href="mailto:bookings@unboxcrew.com">
+Email
+</a>
+
+<a href="tel:+919625131595">
+Call Us
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="footer-bottom">
+
+<span>
+© 2026 UnboxCrew. All rights reserved.
+</span>
+
+<span>
+Unbox the world. Together.
+</span>
+
+</div>
+
+</div>
 
 </footer>
 
 
-
 <script>
 
-/*
-=====================================================
-UNBOXCREW TRIP DATA
+/* =========================================================
+   UNBOXCREW DATA
+   =========================================================
 
-ABHI DEMO DATA HAI.
+   LATER THIS OBJECT WILL BE REPLACED BY
+   PHP + MYSQL API FROM YOUR ADMIN PANEL.
 
-BAAD ME YE DATA HOSTINGER API SE AAYEGA.
-
-Admin panel se trip add/edit karoge
-aur website automatically update hogi.
-=====================================================
-*/
+   DO NOT DELETE THIS STRUCTURE.
+   ========================================================= */
 
 
 const trips = [
 
-    {
-
-        id: 1,
-
-        title: "Rishikesh Adventure",
-
-        slug: "rishikesh",
-
-        destination: "Rishikesh",
-
-        shortDescription:
-        "River, mountains, adventure and a crew you'll never forget.",
-
-        description:
-        "A high-energy escape from Delhi combining river experiences, mountain views, adventure activities and unforgettable crew moments.",
-
-        image:
-        "https://images.unsplash.com/photo-1533693397690-362cb9666fc2?auto=format&fit=crop&w=1500&q=90",
-
-        duration:
-        "2 Days / 1 Night",
-
-        price:
-        "₹3,000",
-
-        booking:
-        "₹1,000",
-
-        itinerary: [
-
-            "Day 1 — Delhi departure",
-
-            "Arrival in Rishikesh",
-
-            "Explore local highlights",
-
-            "Ganga-side experience",
-
-            "Adventure activity",
-
-            "Evening crew games",
-
-            "Day 2 — Sunrise & breakfast",
-
-            "Final experiences",
-
-            "Return journey to Delhi"
-
-        ]
-
-    },
-
-
-    {
-
-        id: 2,
-
-        title: "Mussoorie • Landour",
-
-        slug: "mussoorie-landour",
-
-        destination: "Mussoorie",
-
-        shortDescription:
-        "Clouds, cafés, viewpoints and slow mountain mornings.",
-
-        description:
-        "A premium mountain escape combining Mussoorie's iconic viewpoints, Landour's old-world charm and a memorable Rishikesh stop.",
-
-        image:
-        "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1500&q=90",
-
-        duration:
-        "3 Days / 2 Nights",
-
-        price:
-        "₹4,700",
-
-        booking:
-        "₹1,000",
-
-        itinerary: [
-
-            "Day 1 — Delhi → Mussoorie",
-
-            "Kempty Falls",
-
-            "Company Garden",
-
-            "George Everest",
-
-            "Day 2 — Gun Hill",
-
-            "Camel's Back Road",
-
-            "Mall Road & Shopping",
-
-            "Landour",
-
-            "Char Dukan",
-
-            "Lal Tibba",
-
-            "Sisters' Bazaar",
-
-            "Day 3 — Rishikesh",
-
-            "Triveni Ghat Aarti",
-
-            "Return to Delhi"
-
-        ]
-
-    },
-
-
-    {
-
-        id: 3,
-
-        title: "Braj Darshan",
-
-        slug: "braj-darshan",
-
-        destination: "Braj",
-
-        shortDescription:
-        "Barsana and Vrindavan through a thoughtfully planned escape.",
-
-        description:
-        "Explore the cultural heart of Braj with a comfortable journey through Barsana and Vrindavan.",
-
-        image:
-        "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1500&q=90",
-
-        duration:
-        "2 Days / 1 Night",
-
-        price:
-        "₹4,000",
-
-        booking:
-        "₹1,000",
-
-        itinerary: [
-
-            "Barsana",
-
-            "Radha Rani Temple",
-
-            "Man Mandir",
-
-            "Ghevar Kund",
-
-            "Vrindavan",
-
-            "Banke Bihari Mandir",
-
-            "Nidhivan",
-
-            "Kesi Ghat",
-
-            "Prem Mandir",
-
-            "Return journey"
-
-        ]
-
-    }
+{
+id:"rishikesh",
+title:"Rishikesh Adventure",
+location:"Rishikesh, Uttarakhand",
+price:"₹3,499",
+duration:"2 Days / 1 Night",
+image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=90",
+
+short:"River adventures, mountain views and unforgettable nights.",
+
+description:
+"An action-packed Rishikesh escape designed for travellers who want adventure, nature and a great travel crew.",
+
+itinerary:[
+["Day 01","Delhi → Rishikesh","Travel from Delhi, check-in, explore riverside areas and enjoy the evening experience."],
+["Day 02","Adventure Day","Rafting, local exploration, Triveni Ghat and return towards Delhi."]
+]
+
+},
+
+{
+id:"mussoorie",
+title:"Mussoorie Weekend",
+location:"Mussoorie, Uttarakhand",
+price:"₹4,999",
+duration:"3 Days / 2 Nights",
+image:"https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=90",
+
+short:"Clouds, mountains, Landour lanes and slow Himalayan mornings.",
+
+description:
+"Escape to the hills with a premium weekend covering Mussoorie, Landour and beautiful mountain experiences.",
+
+itinerary:[
+["Day 01","Delhi → Mussoorie","Travel from Delhi, hotel check-in and evening exploration around Mall Road."],
+["Day 02","Mussoorie + Landour","Kempty Falls, George Everest, Landour, Char Dukan, Lal Tibba and sunset."],
+["Day 03","Morning Escape","Breakfast, final mountain views and return towards Delhi."]
+]
+
+},
+
+{
+id:"manali",
+title:"Manali Escape",
+location:"Manali, Himachal Pradesh",
+price:"₹7,999",
+duration:"3 Days / 2 Nights",
+image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=90",
+
+short:"Snow peaks, mountain roads and a Himalayan escape.",
+
+description:
+"Experience the beauty of Manali with scenic mountain routes, local exploration and adventure.",
+
+itinerary:[
+["Day 01","Arrival","Reach Manali, check-in and explore Old Manali."],
+["Day 02","Mountain Adventure","Explore scenic mountain locations and enjoy local experiences."],
+["Day 03","Goodbye Mountains","Breakfast, final exploration and departure."]
+]
+
+},
+
+{
+id:"kasol",
+title:"Kasol Vibes",
+location:"Kasol, Himachal Pradesh",
+price:"₹7,999",
+duration:"3 Days / 2 Nights",
+image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=90",
+
+short:"Riverside nights, forest trails and the slow mountain life.",
+
+description:
+"A relaxed yet adventurous escape into the Parvati Valley for travellers looking for nature and community.",
+
+itinerary:[
+["Day 01","Delhi → Kasol","Overnight journey towards Kasol and arrival in the valley."],
+["Day 02","Valley Exploration","Kasol exploration, riverside walks and local experiences."],
+["Day 03","Mountain Morning","Breakfast, final valley views and departure."]
+]
+
+}
 
 ];
 
 
+const destinations = [
 
-/*
-=====================================================
-RENDER TRIPS
-=====================================================
-*/
+{
+name:"Rishikesh",
+type:"Adventure · River · Nature",
+image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=90",
+trip:"rishikesh"
+},
 
+{
+name:"Mussoorie",
+type:"Mountains · Landour · Escape",
+image:"https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=90",
+trip:"mussoorie"
+},
 
-function renderTrips() {
+{
+name:"Manali",
+type:"Himalayas · Snow · Adventure",
+image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=90",
+trip:"manali"
+},
 
-    const grid =
-        document.getElementById("tripGrid");
+{
+name:"Kasol",
+type:"Parvati Valley · Nature",
+image:"https://images.unsplash.com/photo-1521336575822-6da63fb45455?auto=format&fit=crop&w=1200&q=90",
+trip:"kasol"
+},
 
-
-    grid.innerHTML = "";
-
-
-    trips.forEach(trip => {
-
-
-        const card =
-            document.createElement("article");
-
-
-        card.className =
-            "trip-card";
-
-
-        card.onclick =
-            () => openTrip(trip.slug);
-
-
-        card.innerHTML = `
-
-            <div class="trip-image"
-                 style="background-image:url('${trip.image}')">
-            </div>
-
-            <div class="trip-overlay"></div>
-
-            <div class="trip-content">
-
-                <span class="trip-tag">
-
-                    ${trip.destination}
-
-                </span>
-
-
-                <h3>
-
-                    ${trip.title}
-
-                </h3>
-
-
-                <p>
-
-                    ${trip.shortDescription}
-
-                </p>
-
-
-                <span class="trip-link">
-
-                    View Trip Details →
-
-                </span>
-
-            </div>
-
-        `;
-
-
-        grid.appendChild(card);
-
-    });
-
+{
+name:"Himalayan Escapes",
+type:"Mountains · Adventure",
+image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=90",
+trip:"manali"
 }
 
+];
 
 
-/*
-=====================================================
-OPEN TRIP
-=====================================================
-*/
+/* =========================================================
+   PAGE NAVIGATION
+   ========================================================= */
 
+function navigate(page){
 
-function openTrip(slug) {
+    document.querySelectorAll(".page").forEach(p=>{
+        p.classList.remove("active");
+    });
 
+    const selected=document.getElementById(page);
 
-    const trip =
-        trips.find(
-            item => item.slug === slug
-        );
-
-
-    if (!trip) {
-
-        return;
-
+    if(selected){
+        selected.classList.add("active");
     }
 
-
-    document
-        .getElementById("home")
-        .classList
-        .add("hidden");
-
-
-    document
-        .getElementById("tripDetail")
-        .classList
-        .add("active");
-
-
-    document
-        .getElementById("detailHero")
-        .style
-        .backgroundImage =
-
-        `linear-gradient(
-            90deg,
-            rgba(3,13,24,.2),
-            rgba(3,13,24,.35)
-        ),
-        url("${trip.image}")`;
-
-
-    document
-        .getElementById("detailTag")
-        .textContent =
-        trip.destination;
-
-
-    document
-        .getElementById("detailName")
-        .textContent =
-        trip.title;
-
-
-    document
-        .getElementById("detailIntro")
-        .textContent =
-        trip.shortDescription;
-
-
-    document
-        .getElementById("detailDescription")
-        .innerHTML =
-
-        `<p>
-            ${trip.description}
-        </p>`;
-
-
-    const itinerary =
-        document.getElementById(
-            "detailItinerary"
-        );
-
-
-    itinerary.innerHTML = "";
-
-
-    trip.itinerary.forEach(item => {
-
-        const div =
-            document.createElement("div");
-
-
-        div.innerHTML =
-            `✦ ${item}`;
-
-
-        itinerary.appendChild(div);
-
-    });
-
-
-    document
-        .getElementById("detailFacts")
-        .innerHTML = `
-
-            <div>
-                ✓ ${trip.duration}
-            </div>
-
-            <div>
-                ✓ Booking amount ${trip.booking}
-            </div>
-
-            <div>
-                ✓ Premium group experience
-            </div>
-
-            <div>
-                ✓ WhatsApp trip support
-            </div>
-
-        `;
-
-
-    document
-        .getElementById("detailPrice")
-        .textContent =
-        trip.price;
-
-
-    document
-        .getElementById("bookButton")
-        .href =
-
-        "https://wa.me/919625131595?text=" +
-
-        encodeURIComponent(
-            "Hi UnboxCrew, I want to enquire about the " +
-            trip.title +
-            " trip."
-        );
-
-
-    history.pushState(
-        {},
-        "",
-        "?trip=" + trip.slug
-    );
-
+    document.getElementById("navLinks").classList.remove("show");
 
     window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
+        top:0,
+        behavior:"smooth"
     });
+
+    history.replaceState(null,"","#"+page);
+}
+
+
+/* =========================================================
+   LOAD TRIPS
+   ========================================================= */
+
+function tripCard(trip){
+
+return `
+
+<article class="trip-card" onclick="openTrip('${trip.id}')">
+
+<img src="${trip.image}" alt="${trip.title}">
+
+<div class="trip-info">
+
+<div class="trip-location">
+${trip.location}
+</div>
+
+<div class="trip-title">
+${trip.title}
+</div>
+
+<div class="trip-meta">
+
+<span>
+${trip.duration}
+</span>
+
+<span class="price">
+${trip.price}
+</span>
+
+<span class="trip-arrow">
+→
+</span>
+
+</div>
+
+</div>
+
+</article>
+
+`;
 
 }
 
 
+function loadTrips(){
 
-/*
-=====================================================
-BACK TO HOME
-=====================================================
-*/
+const home=document.getElementById("homeTrips");
 
+const all=document.getElementById("allTrips");
 
-function showHome() {
+if(home){
 
+home.innerHTML=trips
+.slice(0,4)
+.map(tripCard)
+.join("");
 
-    document
-        .getElementById("home")
-        .classList
-        .remove("hidden");
+}
 
+if(all){
 
-    document
-        .getElementById("tripDetail")
-        .classList
-        .remove("active");
+all.innerHTML=trips
+.map(tripCard)
+.join("");
 
-
-    history.pushState(
-        {},
-        "",
-        location.pathname
-    );
-
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
+}
 
 }
 
 
+/* =========================================================
+   LOAD DESTINATIONS
+   ========================================================= */
 
-/*
-=====================================================
-DIRECT URL TRIP OPENING
+function destinationCard(destination,index){
 
-Example:
+return `
 
-?trip=rishikesh
+<div class="destination ${index===0?"large":""}"
+onclick="openTrip('${destination.trip}')">
 
-?trip=mussoorie-landour
-=====================================================
-*/
+<img
+src="${destination.image}"
+alt="${destination.name}"
+>
+
+<div class="destination-info">
+
+<h3>
+${destination.name}
+</h3>
+
+<p>
+${destination.type}
+</p>
+
+</div>
+
+</div>
+
+`;
+
+}
 
 
-window.addEventListener(
-    "DOMContentLoaded",
-    () => {
+function loadDestinations(){
 
-        renderTrips();
+const home=document.getElementById("homeDestinations");
+
+const all=document.getElementById("allDestinations");
+
+if(home){
+
+home.innerHTML=destinations
+.slice(0,5)
+.map(destinationCard)
+.join("");
+
+}
+
+if(all){
+
+all.innerHTML=destinations
+.map(destinationCard)
+.join("");
+
+}
+
+}
 
 
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
+/* =========================================================
+   OPEN TRIP DETAIL
+   ========================================================= */
+
+function openTrip(id){
+
+const trip=trips.find(t=>t.id===id);
+
+if(!trip)return;
 
 
-        const slug =
-            params.get("trip");
+const content=document.getElementById("tripDetailContent");
 
 
-        if (slug) {
+content.innerHTML=`
 
-            openTrip(slug);
+<div class="detail-hero">
 
-        }
+<img src="${trip.image}" alt="${trip.title}">
 
-    }
+<div class="detail-content">
+
+<div class="eyebrow" style="color:#dbeeff">
+${trip.location}
+</div>
+
+<h1>
+${trip.title}
+</h1>
+
+<p>
+${trip.short}
+</p>
+
+</div>
+
+</div>
+
+
+<section class="section">
+
+<div class="container detail-layout">
+
+
+<div class="detail-main">
+
+<div class="eyebrow">
+THE EXPERIENCE
+</div>
+
+<h2>
+${trip.title}
+</h2>
+
+<p>
+${trip.description}
+</p>
+
+
+<div class="itinerary">
+
+<div class="eyebrow">
+ITINERARY
+</div>
+
+${trip.itinerary.map((day,i)=>`
+
+<div class="day">
+
+<div class="day-number">
+${day[0]}
+</div>
+
+<div>
+
+<h3>
+${day[1]}
+</h3>
+
+<p>
+${day[2]}
+</p>
+
+</div>
+
+</div>
+
+`).join("")}
+
+</div>
+
+
+<div style="margin-top:35px">
+
+<div class="eyebrow">
+WHY YOU'LL LOVE IT
+</div>
+
+<div class="pills">
+
+<span class="pill">
+Curated Route
+</span>
+
+<span class="pill">
+Small Group
+</span>
+
+<span class="pill">
+Adventure
+</span>
+
+<span class="pill">
+Local Experiences
+</span>
+
+<span class="pill">
+Travel Support
+</span>
+
+</div>
+
+</div>
+
+
+<div style="margin-top:45px">
+
+<button
+class="secondary-button"
+onclick="navigate('trips')"
+>
+← Back To Trips
+</button>
+
+</div>
+
+</div>
+
+
+<aside class="booking-card">
+
+<div class="eyebrow">
+START YOUR JOURNEY
+</div>
+
+<h3>
+${trip.title}
+</h3>
+
+<div class="booking-price">
+${trip.price}
+<small>per person*</small>
+</div>
+
+<div class="booking-info">
+
+<div>
+📍 ${trip.location}
+</div>
+
+<div>
+◷ ${trip.duration}
+</div>
+
+<div>
+✓ Curated Experience
+</div>
+
+<div>
+✓ Small Group
+</div>
+
+<div>
+✓ Trip Support
+</div>
+
+</div>
+
+<a
+class="whatsapp"
+href="https://wa.me/919625131595?text=${encodeURIComponent(
+"Hi UnboxCrew! I am interested in the "+trip.title+" trip. Please share booking details."
+)}"
+target="_blank"
+>
+Book / Enquire on WhatsApp
+</a>
+
+</aside>
+
+</div>
+
+</section>
+
+`;
+
+
+navigate("trip-detail");
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+function toggleSearch(){
+
+document
+.getElementById("searchPanel")
+.classList.toggle("show");
+
+if(document
+.getElementById("searchPanel")
+.classList.contains("show")){
+
+document
+.getElementById("searchInput")
+.focus();
+
+}
+
+}
+
+
+function performSearch(){
+
+const query=document
+.getElementById("searchInput")
+.value
+.toLowerCase()
+.trim();
+
+const results=document
+.getElementById("searchResults");
+
+
+if(!query){
+
+results.innerHTML="";
+
+return;
+
+}
+
+
+const matches=trips.filter(t=>
+
+t.title.toLowerCase().includes(query) ||
+
+t.location.toLowerCase().includes(query) ||
+
+t.short.toLowerCase().includes(query)
+
 );
 
 
+if(!matches.length){
 
-/*
-=====================================================
-BROWSER BACK BUTTON
-=====================================================
-*/
+results.innerHTML=`
 
-window.addEventListener(
-    "popstate",
-    () => {
+<div style="padding:12px;color:#71808c;font-size:13px">
+No trips found.
+</div>
 
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
+`;
+
+return;
+
+}
 
 
-        const slug =
-            params.get("trip");
+results.innerHTML=matches.map(t=>`
+
+<div
+class="search-result"
+onclick="openTrip('${t.id}');toggleSearch()"
+>
+
+<strong>
+${t.title}
+</strong>
+
+<div style="font-size:11px;color:#788792;margin-top:4px">
+${t.location} · ${t.price}
+</div>
+
+</div>
+
+`).join("");
+
+}
 
 
-        if (slug) {
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
 
-            openTrip(slug);
+function toggleMenu(){
 
-        } else {
+document
+.getElementById("navLinks")
+.classList.toggle("show");
 
-            showHome();
+}
 
-        }
 
-    }
+/* =========================================================
+   FAQ
+   ========================================================= */
+
+function faq(button){
+
+const item=button.parentElement;
+
+item.classList.toggle("open");
+
+const span=button.querySelector("span");
+
+span.textContent=
+item.classList.contains("open")
+? "−"
+: "+";
+
+}
+
+
+/* =========================================================
+   WHATSAPP CONTACT FORM
+   ========================================================= */
+
+function sendWhatsApp(event){
+
+event.preventDefault();
+
+const name=document.getElementById("name").value;
+
+const phone=document.getElementById("phone").value;
+
+const email=document.getElementById("email").value;
+
+const interest=document.getElementById("interest").value;
+
+const message=document.getElementById("message").value;
+
+
+const text=
+
+`Hello UnboxCrew!
+
+I want to enquire about a trip.
+
+Name: ${name}
+
+Phone: ${phone}
+
+Email: ${email}
+
+Interested In: ${interest}
+
+Message:
+${message}`;
+
+
+window.open(
+"https://wa.me/919625131595?text="+encodeURIComponent(text),
+"_blank"
 );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+loadTrips();
+
+loadDestinations();
+
+
+/* =========================================================
+   HASH ROUTING
+   ========================================================= */
+
+const initialHash=
+window.location.hash.replace("#","");
+
+
+if(
+initialHash &&
+document.getElementById(initialHash)
+){
+
+navigate(initialHash);
+
+}
+
+
+/* =========================================================
+   CLOSE SEARCH WHEN CLICKING OUTSIDE
+   ========================================================= */
+
+document.addEventListener("click",function(event){
+
+const panel=document.getElementById("searchPanel");
+
+const button=document.querySelector(".search-button");
+
+if(
+panel.classList.contains("show") &&
+!panel.contains(event.target) &&
+!button.contains(event.target)
+){
+
+panel.classList.remove("show");
+
+}
+
+});
 
 </script>
-
 
 </body>
 </html>
