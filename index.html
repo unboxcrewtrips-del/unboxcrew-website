@@ -1524,7 +1524,145 @@ footer{
         width:92%;
     }
 }
+/* 3 IMAGE HERO */
 
+.hero-image-collage{
+    width:100%;
+    height:500px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:13px;
+    perspective:1200px;
+}
+
+.hero-image-card{
+    position:relative;
+    height:430px;
+    flex:1;
+    min-width:0;
+    overflow:hidden;
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,.85);
+    box-shadow:
+        0 25px 55px rgba(5,40,75,.16),
+        0 8px 20px rgba(5,40,75,.08);
+    transition:.45s ease;
+}
+
+.hero-image-card.card-two{
+    height:475px;
+    transform:scale(1.025);
+    z-index:3;
+}
+
+.hero-image-card.card-one{
+    transform:perspective(1000px)
+    rotateY(5deg)
+    translateY(8px);
+}
+
+.hero-image-card.card-three{
+    transform:perspective(1000px)
+    rotateY(-5deg)
+    translateY(8px);
+}
+
+.hero-image-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.7s ease;
+}
+
+.hero-image-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to top,
+        rgba(3,18,35,.82),
+        rgba(3,18,35,.15) 55%,
+        transparent 75%
+    );
+}
+
+.hero-image-card:hover{
+    transform:translateY(-12px) scale(1.035);
+    z-index:10;
+}
+
+.hero-image-card:hover img{
+    transform:scale(1.09);
+}
+
+.image-glass-label{
+    position:absolute;
+    z-index:5;
+    left:13px;
+    right:13px;
+    bottom:13px;
+    padding:14px;
+    border-radius:17px;
+    background:rgba(255,255,255,.18);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,.28);
+    color:white;
+}
+
+.image-glass-label span{
+    display:block;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1.7px;
+    color:#8cddff;
+    margin-bottom:5px;
+}
+
+.image-glass-label strong{
+    display:block;
+    font-size:12px;
+}
+
+@media(max-width:900px){
+    .hero-image-collage{
+        height:430px;
+        gap:9px;
+    }
+
+    .hero-image-card{
+        height:370px;
+    }
+
+    .hero-image-card.card-two{
+        height:410px;
+    }
+}
+
+@media(max-width:600px){
+    .hero-image-collage{
+        height:360px;
+        gap:7px;
+    }
+
+    .hero-image-card{
+        height:315px;
+        border-radius:18px;
+    }
+
+    .hero-image-card.card-two{
+        height:345px;
+    }
+
+    .image-glass-label{
+        padding:8px;
+    }
+
+    .image-glass-label strong{
+        font-size:8px;
+    }
+}
 </style>
 </head>
 
@@ -1609,51 +1747,46 @@ footer{
         </div>
 
 
-        <div class="hero-visual reveal">
+       <div class="hero-visual reveal">
 
-            <div class="hero-card-main">
+    <div class="hero-image-collage">
 
-                <img
-                    src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85"
-                    alt="Mountain Adventure"
-                >
-
-                <div class="hero-card-content">
-
-                    <small>UNBOXCREW EXPERIENCE</small>
-
-                    <h3>Mountains. People. Stories.</h3>
-
-                </div>
-
+        <div class="hero-image-card card-one">
+            <img
+                src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=90"
+                alt="Explore Mountains"
+            >
+            <div class="image-glass-label">
+                <span>EXPLORE</span>
+                <strong>Go beyond the usual.</strong>
             </div>
+        </div>
 
-
-            <div class="floating-card one">
-
-                <div class="float-icon">🏔️</div>
-
-                <strong>Adventure First</strong>
-
-                <p>Not just sightseeing</p>
-
+        <div class="hero-image-card card-two">
+            <img
+                src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=900&q=90"
+                alt="Adventure Travel"
+            >
+            <div class="image-glass-label">
+                <span>ADVENTURE</span>
+                <strong>Make every moment count.</strong>
             </div>
+        </div>
 
-
-            <div class="floating-card two">
-
-                <div class="float-icon">👥</div>
-
-                <strong>Find Your Crew</strong>
-
-                <p>Travel with people</p>
-
+        <div class="hero-image-card card-three">
+            <img
+                src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=90"
+                alt="Travel Crew"
+            >
+            <div class="image-glass-label">
+                <span>CONNECT</span>
+                <strong>Find your crew.</strong>
             </div>
-
         </div>
 
     </div>
 
+</div>
 </section>
 
 
