@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>UnboxCrew — Unbox the World. Together.</title>
 
-<meta name="description" content="UnboxCrew — Curated group travel experiences from Delhi.">
+<meta name="description"
+content="UnboxCrew creates cinematic group travel experiences, adventures and unforgettable escapes.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
 /* =========================================================
-   UNBOXCREW — SINGLE FILE WEBSITE
-========================================================= */
+   UNBOXCREW — PREMIUM TRAVEL EXPERIENCE
+   Single File Version
+   ========================================================= */
 
 :root{
-    --bg:#050b10;
-    --bg2:#09151e;
-    --bg3:#0d1c26;
+    --bg:#071016;
+    --bg-soft:#0b171e;
+    --card:rgba(255,255,255,.055);
+    --card-border:rgba(255,255,255,.11);
 
-    --text:#f5f3ec;
-    --muted:#9ca8ae;
+    --white:#f5f8f9;
+    --muted:#9caeb7;
 
-    --line:rgba(255,255,255,.12);
+    --blue:#55b7ff;
+    --blue2:#177cc4;
+    --gold:#d8ad67;
 
-    --accent:#d9ff52;
+    --radius:24px;
+    --nav-height:82px;
 
-    --max:1200px;
+    --shadow:0 25px 70px rgba(0,0,0,.35);
 }
 
 *{
@@ -47,9 +52,13 @@ html{
 
 body{
     background:var(--bg);
-    color:var(--text);
+    color:var(--white);
     font-family:"DM Sans",sans-serif;
     overflow-x:hidden;
+}
+
+body.locked{
+    overflow:hidden;
 }
 
 a{
@@ -57,2070 +66,2777 @@ a{
     text-decoration:none;
 }
 
-button,
-input,
-select,
-textarea{
+button{
     font-family:inherit;
 }
 
-
-/* =========================================================
-   CONTAINER
-========================================================= */
-
-.container{
-    width:min(90%,var(--max));
-    margin:auto;
+img{
+    max-width:100%;
+    display:block;
 }
 
+/* =========================
+   BACKGROUND
+========================= */
 
-/* =========================================================
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(40,150,220,.08),transparent 30%),
+        radial-gradient(circle at 90% 30%,rgba(216,173,103,.06),transparent 25%);
+    z-index:-2;
+}
+
+.noise{
+    position:fixed;
+    inset:0;
+    opacity:.025;
+    pointer-events:none;
+    z-index:1000;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+/* =========================
+   CURSOR
+========================= */
+
+.cursor{
+    position:fixed;
+    width:18px;
+    height:18px;
+    border:1px solid rgba(255,255,255,.65);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9999;
+    transform:translate(-50%,-50%);
+    transition:width .25s,height .25s,background .25s;
+    mix-blend-mode:difference;
+}
+
+.cursor.active{
+    width:55px;
+    height:55px;
+    background:#fff;
+}
+
+/* =========================
    NAVBAR
-========================================================= */
+========================= */
 
 .navbar{
     position:fixed;
     top:0;
     left:0;
-    width:100%;
-    height:82px;
-    z-index:999;
-
-    background:linear-gradient(
-        rgba(5,11,16,.92),
-        rgba(5,11,16,.55),
-        transparent
-    );
-
-    backdrop-filter:blur(14px);
-
-    border-bottom:1px solid rgba(255,255,255,.04);
-}
-
-.nav-container{
-    width:90%;
-    max-width:1400px;
-    height:100%;
-    margin:auto;
+    right:0;
+    height:var(--nav-height);
+    z-index:500;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
+
+    padding:0 5vw;
+
+    background:rgba(5,13,18,.52);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+
+    transition:.35s ease;
 }
 
-
-/* LOGO */
+.navbar.scrolled{
+    background:rgba(5,13,18,.88);
+}
 
 .logo{
     display:flex;
     align-items:center;
     gap:10px;
+    font-family:"Manrope",sans-serif;
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:-1px;
 }
 
-.logo-box{
-    width:36px;
-    height:36px;
-
+.logo-mark{
+    width:34px;
+    height:34px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:10px;
     display:grid;
     place-items:center;
-
-    border:1px solid var(--accent);
-    border-radius:10px;
-
-    color:var(--accent);
-
-    font-family:Manrope;
-    font-size:10px;
-    font-weight:800;
-
-    transform:rotate(-6deg);
+    transform:rotate(-8deg);
 }
 
-.logo-text{
-    font-family:Manrope;
-    font-size:20px;
-    font-weight:800;
-    letter-spacing:-.06em;
+.logo-mark::after{
+    content:"";
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--blue),var(--gold));
 }
-
-.logo-text span{
-    color:#9aa7ad;
-    font-weight:500;
-}
-
-
-/* NAV */
 
 .nav-links{
     display:flex;
     align-items:center;
-    gap:34px;
+    gap:28px;
 }
 
 .nav-links a{
-    color:#c6ced2;
+    color:#c8d3d8;
     font-size:13px;
+    font-weight:600;
+    position:relative;
     transition:.25s;
 }
 
-.nav-links a:hover{
-    color:var(--accent);
-}
-
-.nav-button{
-    padding:13px 18px;
-
-    border:1px solid var(--line);
-    border-radius:100px;
-
-    font-size:12px;
-    font-weight:700;
-
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    bottom:-8px;
+    left:0;
+    width:0;
+    height:1px;
+    background:var(--blue);
     transition:.3s;
 }
 
-.nav-button:hover{
-    border-color:var(--accent);
-    color:var(--accent);
+.nav-links a:hover{
+    color:white;
 }
 
-.menu-button{
-    display:none;
+.nav-links a:hover::after{
+    width:100%;
+}
 
+.nav-cta{
+    padding:11px 18px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:999px;
+    background:rgba(255,255,255,.07);
+}
+
+.menu{
+    display:none;
     background:none;
     border:0;
-
     color:white;
-    font-size:25px;
-
+    font-size:26px;
     cursor:pointer;
 }
 
-
-/* MOBILE MENU */
-
-.mobile-menu{
-    display:none;
-
-    position:absolute;
-    top:82px;
-    left:0;
-    width:100%;
-
-    background:#071018;
-    border-top:1px solid var(--line);
-
-    padding:25px;
-}
-
-.mobile-menu.active{
-    display:flex;
-    flex-direction:column;
-}
-
-.mobile-menu a{
-    padding:15px 0;
-
-    border-bottom:1px solid var(--line);
-
-    color:white;
-}
-
-
-/* =========================================================
+/* =========================
    HERO
-========================================================= */
+========================= */
 
 .hero{
-    position:relative;
-
     min-height:100vh;
-
+    position:relative;
     display:flex;
-    align-items:center;
-
+    align-items:flex-end;
+    padding:150px 5vw 75px;
     overflow:hidden;
 }
 
-.hero-image{
+.hero-video{
     position:absolute;
     inset:0;
-
-    background-image:
-        url(
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=90"
-        );
-
-    background-size:cover;
-    background-position:center;
-
-    transform:scale(1.08);
-
-    animation:
-        heroZoom 12s ease-out forwards;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-4;
+    filter:saturate(.9);
 }
 
-@keyframes heroZoom{
+.hero-fallback{
+    position:absolute;
+    inset:0;
+    z-index:-5;
 
-    from{
-        transform:scale(1.12);
-    }
-
-    to{
-        transform:scale(1);
-    }
-
+    background:
+        linear-gradient(180deg,rgba(3,11,16,.25),rgba(3,10,14,.92)),
+        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=90")
+        center/cover;
 }
-
 
 .hero-overlay{
     position:absolute;
     inset:0;
-
     background:
-        linear-gradient(
-            90deg,
-            rgba(2,7,12,.97),
-            rgba(2,7,12,.58),
-            rgba(2,7,12,.15)
-        ),
-
-        linear-gradient(
-            0deg,
-            #050b10,
-            transparent 45%
-        );
+        linear-gradient(90deg,rgba(2,9,13,.85),rgba(2,9,13,.18) 65%),
+        linear-gradient(0deg,#071016 0%,transparent 42%);
+    z-index:-3;
 }
 
+.hero-grid{
+    position:absolute;
+    inset:0;
+    opacity:.12;
+    background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+    background-size:100px 100px;
+    mask-image:linear-gradient(to bottom,transparent,#000 30%,transparent);
+}
 
 .hero-content{
+    max-width:920px;
     position:relative;
-    z-index:2;
-
-    width:min(90%,var(--max));
-
-    margin:auto;
-
-    padding-top:70px;
 }
 
-
-.hero-label{
-    display:flex;
+.eyebrow{
+    display:inline-flex;
     align-items:center;
     gap:9px;
-
-    color:#aeb8bd;
-
-    font-size:10px;
-    font-weight:700;
-
-    letter-spacing:.18em;
+    padding:8px 12px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:999px;
+    background:rgba(255,255,255,.055);
+    backdrop-filter:blur(15px);
+    color:#dce8ec;
+    font-size:11px;
+    letter-spacing:1.7px;
+    text-transform:uppercase;
+    margin-bottom:25px;
 }
 
-.hero-dot{
+.eyebrow-dot{
     width:6px;
     height:6px;
-
+    background:#72d5ff;
     border-radius:50%;
-
-    background:var(--accent);
-
-    box-shadow:
-        0 0 18px var(--accent);
+    box-shadow:0 0 16px #72d5ff;
 }
 
-
-.hero h1{
-    max-width:850px;
-
-    margin:25px 0;
-
-    font-family:Manrope;
-
-    font-size:
-        clamp(70px,10vw,150px);
-
+.hero-title{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(52px,8vw,125px);
+    line-height:.88;
+    letter-spacing:-6px;
     font-weight:800;
-
-    line-height:.82;
-
-    letter-spacing:-.075em;
+    max-width:950px;
 }
 
-.hero h1 span{
+.hero-title span{
     display:block;
-    color:var(--accent);
+    overflow:hidden;
 }
 
-.hero-description{
-    max-width:500px;
+.hero-title .outline{
+    color:transparent;
+    -webkit-text-stroke:1px rgba(255,255,255,.65);
+}
 
-    color:#ccd4d7;
+.hero-title .gradient{
+    background:linear-gradient(100deg,#fff,#9bd9ff 50%,#d8ad67);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
 
+.hero-subtitle{
+    margin-top:28px;
+    max-width:620px;
+    color:#b9c8ce;
+    line-height:1.7;
     font-size:16px;
-
-    line-height:1.8;
 }
 
 .hero-actions{
+    margin-top:34px;
     display:flex;
-    align-items:center;
-
-    gap:22px;
-
-    margin-top:30px;
+    gap:13px;
+    flex-wrap:wrap;
 }
 
-
-/* BUTTONS */
-
 .btn{
+    border:0;
+    cursor:pointer;
+    padding:15px 23px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:13px;
+    transition:.3s ease;
     display:inline-flex;
     align-items:center;
     justify-content:center;
-
-    gap:14px;
-
-    padding:14px 20px;
-
-    border-radius:100px;
-
-    border:1px solid var(--line);
-
-    font-size:12px;
-    font-weight:700;
-
-    transition:.3s;
+    gap:9px;
 }
 
 .btn-primary{
-    background:var(--accent);
-
-    border-color:var(--accent);
-
-    color:#071006;
+    background:white;
+    color:#061015;
 }
 
 .btn-primary:hover{
     transform:translateY(-3px);
-
-    box-shadow:
-        0 15px 40px rgba(217,255,82,.16);
+    box-shadow:0 12px 35px rgba(255,255,255,.16);
 }
 
-.btn-outline:hover{
-    border-color:var(--accent);
-    color:var(--accent);
+.btn-glass{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    color:white;
+    backdrop-filter:blur(15px);
 }
 
-.hero-link{
-    font-size:12px;
-    color:#dce3e5;
-}
-
-.hero-link:hover{
-    color:var(--accent);
-}
-
-
-/* HERO SIDE */
-
-.hero-location{
-    position:absolute;
-
-    right:5%;
-    top:50%;
-
-    writing-mode:vertical-rl;
-
-    transform:rotate(180deg);
-
-    font-size:9px;
-
-    letter-spacing:.2em;
-
-    color:#aeb8bc;
+.btn-glass:hover{
+    background:rgba(255,255,255,.14);
+    transform:translateY(-3px);
 }
 
 .hero-bottom{
     position:absolute;
-
-    right:5%;
-    bottom:50px;
-
+    bottom:35px;
+    right:5vw;
     display:flex;
     align-items:center;
-
-    gap:15px;
-
-    color:#9da8ad;
-
-    font-size:9px;
-
-    letter-spacing:.15em;
+    gap:13px;
+    color:#92a2aa;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
 }
 
-.hero-bottom strong{
-    color:white;
-    font-size:16px;
-}
-
-.hero-line{
-    width:80px;
+.scroll-line{
+    width:50px;
     height:1px;
-
-    background:var(--line);
+    background:#71818a;
 }
 
-.hero-line::after{
-    content:"";
-
-    display:block;
-
-    width:30%;
-    height:1px;
-
-    background:var(--accent);
-}
-
-
-/* =========================================================
-   SECTION
-========================================================= */
+/* =========================
+   GENERAL
+========================= */
 
 .section{
-    padding:130px 0;
+    padding:120px 5vw;
+    position:relative;
 }
 
-.eyebrow{
-    color:#9da8ad;
-
-    font-size:10px;
-
-    font-weight:700;
-
-    letter-spacing:.18em;
-}
-
-
-/* =========================================================
-   INTRO
-========================================================= */
-
-.intro{
-    background:var(--bg);
-}
-
-.intro-grid{
-    display:grid;
-
-    grid-template-columns:
-        1fr 2fr;
-
-    gap:7vw;
-}
-
-.intro h2{
-    font-family:Manrope;
-
-    font-size:
-        clamp(45px,6vw,85px);
-
-    line-height:.93;
-
-    letter-spacing:-.07em;
-
-    margin-bottom:30px;
-}
-
-.intro h2 span{
-    display:block;
-    color:var(--accent);
-}
-
-.intro p{
-    max-width:650px;
-
-    color:var(--muted);
-
-    font-size:16px;
-
-    line-height:1.9;
-
-    margin-bottom:15px;
-}
-
-
-/* =========================================================
-   TRIPS
-========================================================= */
-
-.trips{
-    background:var(--bg2);
-}
-
-.section-header{
+.section-head{
     display:flex;
-
     justify-content:space-between;
     align-items:end;
-
-    margin-bottom:45px;
+    gap:30px;
+    margin-bottom:55px;
 }
 
-.section-header h2{
-    font-family:Manrope;
-
-    font-size:
-        clamp(45px,6vw,85px);
-
-    line-height:.9;
-
-    letter-spacing:-.07em;
-
-    margin-top:14px;
+.section-label{
+    color:var(--blue);
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:12px;
 }
 
-.section-header h2 span{
-    color:var(--accent);
+.section-title{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(35px,5vw,70px);
+    line-height:.95;
+    letter-spacing:-3px;
 }
 
-.view-all{
-    font-size:12px;
+.section-description{
+    max-width:430px;
+    color:var(--muted);
+    line-height:1.7;
+    font-size:14px;
 }
 
-.view-all:hover{
-    color:var(--accent);
-}
-
-
-/* TRIP GRID */
-
-.trip-grid{
-    display:grid;
-
-    grid-template-columns:
-        1.2fr .8fr;
-
-    grid-template-rows:
-        440px 440px;
-
-    gap:16px;
-}
-
-.trip-card{
-    position:relative;
-
-    overflow:hidden;
-
-    border-radius:22px;
-
-    background:#111c24;
-}
-
-.trip-card.large{
-    grid-row:span 2;
-}
-
-.trip-image{
-    position:absolute;
-
-    inset:0;
-
-    background-size:cover;
-
-    background-position:center;
-
-    transition:
-        transform .9s
-        cubic-bezier(.2,.7,.2,1);
-}
-
-.trip-card:hover .trip-image{
-    transform:scale(1.07);
-}
-
-.trip-overlay{
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            0deg,
-            rgba(2,7,12,.95),
-            transparent 67%
-        );
-}
-
-.trip-number{
-    position:absolute;
-
-    top:22px;
-    left:24px;
-
-    z-index:2;
-
-    color:var(--accent);
-
-    font-size:10px;
-
-    letter-spacing:.15em;
-}
-
-.trip-duration{
-    position:absolute;
-
-    top:22px;
-    right:24px;
-
-    z-index:2;
-
-    font-size:9px;
-
-    letter-spacing:.15em;
-}
-
-.trip-content{
-    position:absolute;
-
-    left:25px;
-    right:25px;
-    bottom:24px;
-
-    z-index:3;
-}
-
-.trip-category{
-    font-size:9px;
-
-    letter-spacing:.17em;
-
-    color:#c5cdd0;
-}
-
-.trip-content h3{
-    margin:10px 0 23px;
-
-    font-family:Manrope;
-
-    font-size:
-        clamp(38px,4.7vw,70px);
-
-    line-height:.86;
-
-    letter-spacing:-.07em;
-}
-
-.trip-content h3 span{
-    display:block;
-    color:var(--accent);
-}
-
-.trip-footer{
-    display:flex;
-
-    justify-content:space-between;
-
-    border-top:1px solid rgba(255,255,255,.15);
-
-    padding-top:14px;
-
-    font-size:12px;
-}
-
-.trip-footer span:last-child{
-    color:var(--accent);
-}
-
-
-/* =========================================================
+/* =========================
    MARQUEE
-========================================================= */
+========================= */
 
 .marquee{
     overflow:hidden;
-
-    padding:25px 0;
-
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
+    border-top:1px solid rgba(255,255,255,.08);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    padding:19px 0;
+    background:#09141a;
 }
 
 .marquee-track{
     width:max-content;
-
     display:flex;
-
-    align-items:center;
-
-    gap:35px;
-
-    font-family:Manrope;
-
-    font-size:
-        clamp(35px,5vw,75px);
-
-    font-weight:800;
-
-    letter-spacing:-.06em;
-
-    animation:
-        marquee 25s linear infinite;
+    animation:marquee 25s linear infinite;
 }
 
-.marquee-track b{
-    color:var(--accent);
+.marquee-item{
+    padding:0 35px;
+    font-family:"Manrope",sans-serif;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#a7b7be;
+}
+
+.marquee-item span{
+    color:var(--gold);
 }
 
 @keyframes marquee{
-
-    to{
-        transform:translateX(-50%);
-    }
-
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
 }
 
+/* =========================
+   TRIP CARDS
+========================= */
 
-/* =========================================================
+.trips-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:18px;
+}
+
+.trip-card{
+    grid-column:span 6;
+    height:560px;
+    position:relative;
+    overflow:hidden;
+    border-radius:var(--radius);
+    border:1px solid var(--card-border);
+    background:#0c181e;
+    cursor:pointer;
+    transform-style:preserve-3d;
+    transition:transform .15s ease;
+}
+
+.trip-card.large{
+    grid-column:span 7;
+}
+
+.trip-card.small{
+    grid-column:span 5;
+}
+
+.trip-card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.trip-card:hover img{
+    transform:scale(1.09);
+}
+
+.trip-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(0deg,rgba(2,8,11,.92),rgba(2,8,11,.05) 65%),
+        linear-gradient(90deg,rgba(0,0,0,.18),transparent);
+}
+
+.trip-content{
+    position:absolute;
+    z-index:2;
+    bottom:28px;
+    left:28px;
+    right:28px;
+    transform:translateZ(45px);
+}
+
+.trip-meta{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:12px;
+}
+
+.pill{
+    padding:7px 10px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;
+    background:rgba(0,0,0,.22);
+    backdrop-filter:blur(12px);
+    font-size:10px;
+    color:#d4e0e5;
+}
+
+.trip-name{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(27px,4vw,48px);
+    line-height:1;
+    letter-spacing:-2px;
+    margin-bottom:12px;
+}
+
+.trip-desc{
+    color:#b5c1c6;
+    font-size:13px;
+    line-height:1.55;
+    max-width:480px;
+}
+
+.trip-bottom{
+    margin-top:18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.trip-price{
+    font-size:19px;
+    font-weight:800;
+}
+
+.trip-price small{
+    color:#94a5ad;
+    font-size:11px;
+    font-weight:500;
+}
+
+.arrow-btn{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.2);
+    display:grid;
+    place-items:center;
+    background:rgba(255,255,255,.09);
+}
+
+/* =========================
    EXPERIENCE
-========================================================= */
+========================= */
 
 .experience{
-    background:var(--bg3);
-}
-
-.experience-grid{
     display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:10vw;
-
-    margin-top:50px;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
 }
 
-.experience h2{
-    font-family:Manrope;
-
-    font-size:
-        clamp(45px,6vw,85px);
-
-    line-height:.92;
-
-    letter-spacing:-.07em;
+.experience-visual{
+    min-height:650px;
+    position:relative;
 }
 
-.experience h2 span{
-    display:block;
-    color:var(--accent);
+.orb{
+    position:absolute;
+    width:430px;
+    height:430px;
+    border-radius:50%;
+    background:
+        radial-gradient(circle at 30% 30%,rgba(112,211,255,.55),transparent 25%),
+        radial-gradient(circle at 65% 65%,rgba(216,173,103,.25),transparent 35%),
+        rgba(20,91,130,.22);
+    filter:blur(2px);
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    animation:float 7s ease-in-out infinite;
 }
 
-.experience-description{
-    max-width:500px;
+@keyframes float{
+    0%,100%{transform:translate(-50%,-50%) rotate(0deg)}
+    50%{transform:translate(-50%,-56%) rotate(8deg)}
+}
 
-    margin:30px 0;
+.floating-card{
+    position:absolute;
+    width:250px;
+    padding:16px;
+    background:rgba(255,255,255,.065);
+    border:1px solid rgba(255,255,255,.13);
+    backdrop-filter:blur(18px);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+}
 
+.floating-card img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
+    border-radius:15px;
+}
+
+.floating-card:nth-child(2){
+    top:55px;
+    left:0;
+    transform:rotate(-7deg);
+    animation:floatCard1 6s ease-in-out infinite;
+}
+
+.floating-card:nth-child(3){
+    right:0;
+    bottom:80px;
+    transform:rotate(7deg);
+    animation:floatCard2 7s ease-in-out infinite;
+}
+
+@keyframes floatCard1{
+    50%{transform:rotate(-4deg) translateY(-18px)}
+}
+
+@keyframes floatCard2{
+    50%{transform:rotate(4deg) translateY(18px)}
+}
+
+.float-label{
+    padding-top:12px;
+    font-size:12px;
+    color:#c9d5da;
+}
+
+.experience-copy h2{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(40px,5vw,72px);
+    line-height:.96;
+    letter-spacing:-3px;
+}
+
+.experience-copy h2 em{
+    color:var(--gold);
+    font-style:normal;
+}
+
+.experience-copy p{
+    margin-top:25px;
     color:var(--muted);
-
     line-height:1.8;
+    max-width:520px;
 }
 
 .feature-list{
-    border-top:1px solid var(--line);
+    margin-top:35px;
+    display:grid;
+    gap:13px;
 }
 
 .feature{
-    display:grid;
-
-    grid-template-columns:45px 1fr;
-
-    gap:20px;
-
-    padding:26px 0;
-
-    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    color:#cad5d9;
+    font-size:13px;
 }
 
 .feature-number{
-    color:var(--accent);
-
+    width:29px;
+    height:29px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:var(--blue);
     font-size:10px;
 }
 
-.feature h3{
-    font-family:Manrope;
+/* =========================
+   GALLERY
+========================= */
 
-    font-size:23px;
-
-    margin-bottom:8px;
+.gallery-grid{
+    columns:3 250px;
+    column-gap:14px;
 }
 
-.feature p{
-    color:var(--muted);
-
-    font-size:13px;
-
-    line-height:1.7;
-}
-
-
-/* =========================================================
-   CTA
-========================================================= */
-
-.cta-section{
-    position:relative;
-
-    min-height:70vh;
-
-    display:grid;
-
-    place-items:center;
-
-    text-align:center;
-
+.gallery-item{
+    break-inside:avoid;
+    margin-bottom:14px;
     overflow:hidden;
-}
-
-.cta-background{
-    position:absolute;
-
-    inset:0;
-
-    background:
-        url(
-        "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2200&q=90"
-        )
-        center/cover;
-}
-
-.cta-overlay{
-    position:absolute;
-
-    inset:0;
-
-    background:rgba(2,7,12,.80);
-}
-
-.cta-content{
+    border-radius:17px;
+    cursor:pointer;
     position:relative;
-
-    z-index:2;
-
-    padding:50px 20px;
 }
 
-.cta-content h2{
-    font-family:Manrope;
-
-    font-size:
-        clamp(60px,9vw,135px);
-
-    line-height:.85;
-
-    letter-spacing:-.07em;
-
-    margin:20px 0 25px;
+.gallery-item img{
+    width:100%;
+    transition:.7s ease;
 }
 
-.cta-content h2 span{
-    display:block;
-
-    color:var(--accent);
+.gallery-item:hover img{
+    transform:scale(1.06);
 }
 
-.cta-content p{
-    color:var(--muted);
+/* =========================
+   REVIEWS
+========================= */
 
-    margin-bottom:30px;
-}
-
-.cta-buttons{
-    display:flex;
-
-    justify-content:center;
-
-    gap:15px;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer{
-    padding:60px 0 25px;
-
-    border-top:1px solid var(--line);
-
-    background:#03080c;
-}
-
-.footer-grid{
+.reviews-grid{
     display:grid;
-
-    grid-template-columns:
-        2fr 1fr 1.5fr 1fr;
-
-    gap:40px;
+    grid-template-columns:repeat(3,1fr);
+    gap:17px;
 }
 
-.footer-brand p{
-    color:var(--muted);
-
-    font-size:13px;
-
-    margin-top:15px;
+.review{
+    padding:28px;
+    min-height:250px;
+    border:1px solid var(--card-border);
+    border-radius:22px;
+    background:var(--card);
+    cursor:pointer;
+    transition:.35s;
 }
 
-.footer-column{
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
+.review:hover{
+    transform:translateY(-7px);
+    background:rgba(255,255,255,.075);
 }
 
-.footer-column h4{
-    color:white;
-
-    font-size:11px;
-
-    letter-spacing:.15em;
-
-    margin-bottom:8px;
-}
-
-.footer-column a{
-    color:var(--muted);
-
+.stars{
+    color:var(--gold);
+    letter-spacing:3px;
     font-size:12px;
 }
 
-.footer-column a:hover{
-    color:var(--accent);
+.review-text{
+    margin-top:25px;
+    color:#c4d0d5;
+    line-height:1.7;
+    font-size:14px;
+}
+
+.reviewer{
+    margin-top:25px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#1a6e9e,#d8ad67);
+    font-size:12px;
+    font-weight:800;
+}
+
+.reviewer-info{
+    font-size:12px;
+}
+
+.reviewer-info small{
+    display:block;
+    color:#7f929b;
+    margin-top:3px;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.final-cta{
+    margin:30px 5vw 100px;
+    min-height:500px;
+    border-radius:30px;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    align-items:center;
+    padding:70px;
+
+    background:
+        linear-gradient(90deg,rgba(2,9,13,.95),rgba(2,9,13,.3)),
+        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=85")
+        center/cover;
+}
+
+.final-cta h2{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(45px,7vw,95px);
+    letter-spacing:-5px;
+    line-height:.9;
+    max-width:780px;
+}
+
+.final-cta p{
+    color:#b4c1c6;
+    max-width:480px;
+    line-height:1.7;
+    margin:25px 0;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+}
+
+.contact-info h2{
+    font-family:"Manrope",sans-serif;
+    font-size:55px;
+    letter-spacing:-3px;
+}
+
+.contact-info p{
+    margin-top:20px;
+    color:var(--muted);
+    line-height:1.8;
+    max-width:480px;
+}
+
+.contact-form{
+    display:grid;
+    gap:13px;
+}
+
+.input,
+.textarea{
+    width:100%;
+    padding:16px 17px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.12);
+    color:white;
+    border-radius:13px;
+    outline:none;
+    font-family:inherit;
+}
+
+.input:focus,
+.textarea:focus{
+    border-color:rgba(85,183,255,.7);
+}
+
+.textarea{
+    min-height:150px;
+    resize:vertical;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:50px 5vw 30px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.footer-top{
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.footer-brand{
+    max-width:350px;
+}
+
+.footer-brand p{
+    margin-top:15px;
+    color:#7e919a;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.footer-links{
+    display:flex;
+    gap:40px;
+}
+
+.footer-links a{
+    color:#8da0a9;
+    font-size:12px;
 }
 
 .footer-bottom{
-    width:min(90%,var(--max));
-
-    margin:50px auto 0;
-
+    margin-top:50px;
     padding-top:20px;
-
-    border-top:1px solid var(--line);
-
+    border-top:1px solid rgba(255,255,255,.07);
     display:flex;
-
     justify-content:space-between;
-
-    color:#6f7c82;
-
+    color:#63757e;
     font-size:11px;
 }
 
+/* =========================
+   MODALS
+========================= */
 
-/* =========================================================
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(20px);
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    width:min(950px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:#0b171d;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:27px;
+    box-shadow:0 40px 120px rgba(0,0,0,.6);
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:40px;
+    height:40px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:50%;
+    background:rgba(0,0,0,.35);
+    color:white;
+    z-index:3;
+    cursor:pointer;
+}
+
+.trip-detail-image{
+    width:100%;
+    height:370px;
+    object-fit:cover;
+}
+
+.trip-detail-content{
+    padding:35px;
+}
+
+.trip-detail-content h2{
+    font-family:"Manrope",sans-serif;
+    font-size:48px;
+    letter-spacing:-2px;
+}
+
+.detail-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin:25px 0;
+}
+
+.detail-box{
+    padding:15px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:15px;
+    background:rgba(255,255,255,.035);
+}
+
+.detail-box small{
+    color:#78909b;
+    display:block;
+    margin-bottom:5px;
+}
+
+.detail-box strong{
+    font-size:14px;
+}
+
+.itinerary{
+    margin-top:30px;
+}
+
+.itinerary h3{
+    margin-bottom:15px;
+}
+
+.itinerary-item{
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;
+    gap:15px;
+    color:#bbc9ce;
+    font-size:13px;
+}
+
+.itinerary-item b{
+    color:var(--blue);
+}
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+.lightbox img{
+    max-width:92vw;
+    max-height:85vh;
+    border-radius:15px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%) translateY(100px);
+    padding:14px 20px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:999px;
+    background:rgba(10,22,28,.9);
+    backdrop-filter:blur(15px);
+    z-index:2000;
+    color:#dce8ec;
+    font-size:12px;
+    transition:.4s;
+}
+
+.toast.show{
+    transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
+   REVEAL ANIMATION
+========================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:opacity .8s ease,transform .8s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* =========================
    MOBILE
-========================================================= */
+========================= */
 
-@media(max-width:800px){
+@media(max-width:850px){
 
-    .nav-links,
-    .nav-button{
-        display:none;
+    .navbar{
+        padding:0 20px;
     }
 
-    .menu-button{
+    .nav-links{
+        position:fixed;
+        top:var(--nav-height);
+        left:15px;
+        right:15px;
+        padding:20px;
+        background:rgba(7,16,22,.96);
+        backdrop-filter:blur(20px);
+        border:1px solid rgba(255,255,255,.1);
+        border-radius:18px;
+
+        flex-direction:column;
+        align-items:flex-start;
+
+        opacity:0;
+        pointer-events:none;
+        transform:translateY(-10px);
+        transition:.3s;
+    }
+
+    .nav-links.open{
+        opacity:1;
+        pointer-events:auto;
+        transform:translateY(0);
+    }
+
+    .menu{
         display:block;
+    }
+
+    .nav-cta{
+        display:none;
     }
 
     .hero{
-        min-height:780px;
+        padding:140px 22px 70px;
+        min-height:95vh;
     }
 
-    .hero h1{
-        font-size:70px;
+    .hero-title{
+        letter-spacing:-3px;
+        font-size:clamp(48px,15vw,75px);
     }
 
-    .hero-location{
-        display:none;
+    .hero-subtitle{
+        font-size:14px;
     }
 
     .hero-bottom{
-        bottom:25px;
-    }
-
-    .hero-actions{
-        flex-direction:column;
-
-        align-items:flex-start;
-
-        gap:16px;
+        display:none;
     }
 
     .section{
-        padding:90px 0;
+        padding:85px 22px;
     }
 
-    .intro-grid,
-    .experience-grid{
-        grid-template-columns:1fr;
-
-        gap:40px;
-    }
-
-    .section-header{
+    .section-head{
         display:block;
+        margin-bottom:35px;
     }
 
-    .view-all{
-        display:inline-block;
-
-        margin-top:20px;
+    .section-description{
+        margin-top:18px;
     }
 
-    .trip-grid{
+    .trips-grid{
         display:block;
     }
 
     .trip-card,
-    .trip-card.large{
-        height:480px;
-
+    .trip-card.large,
+    .trip-card.small{
+        width:100%;
+        height:500px;
         margin-bottom:15px;
     }
 
-    .footer-grid{
-        grid-template-columns:1fr 1fr;
+    .experience{
+        display:flex;
+        flex-direction:column;
+    }
+
+    .experience-visual{
+        width:100%;
+        min-height:480px;
+    }
+
+    .floating-card{
+        width:190px;
+    }
+
+    .floating-card img{
+        height:130px;
+    }
+
+    .reviews-grid{
+        grid-template-columns:1fr;
+    }
+
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .final-cta{
+        margin:10px 22px 70px;
+        padding:45px 25px;
+        min-height:460px;
+    }
+
+    .final-cta h2{
+        letter-spacing:-3px;
+    }
+
+    .footer-top{
+        flex-direction:column;
+    }
+
+    .footer-links{
+        flex-wrap:wrap;
+        gap:18px;
     }
 
     .footer-bottom{
         flex-direction:column;
-
         gap:10px;
     }
 
+    .detail-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .trip-detail-image{
+        height:260px;
+    }
+
+    .trip-detail-content{
+        padding:24px;
+    }
+
+    .trip-detail-content h2{
+        font-size:36px;
+    }
+
+    .cursor{
+        display:none;
+    }
 }
 
+@media(max-width:480px){
 
-@media(max-width:500px){
-
-    .hero h1{
-        font-size:60px;
-    }
-
-    .hero-description{
-        font-size:14px;
-    }
-
-    .footer-grid{
+    .detail-grid{
         grid-template-columns:1fr;
     }
 
-    .cta-buttons{
+    .hero-actions{
         flex-direction:column;
-
-        align-items:center;
+        align-items:stretch;
     }
 
+    .btn{
+        width:100%;
+    }
 }
 
 </style>
 </head>
 
-
 <body>
 
+<div class="noise"></div>
+<div class="cursor"></div>
 
-<!-- =====================================================
+<!-- =========================================================
      NAVBAR
-===================================================== -->
+========================================================= -->
 
-<header class="navbar">
+<header class="navbar" id="navbar">
 
-<div class="nav-container">
+    <a href="#home" class="logo">
+        <span class="logo-mark"></span>
+        UNBOXCREW
+    </a>
 
-<a href="#" class="logo">
+    <nav class="nav-links" id="navLinks">
 
-<div class="logo-box">
-UC
-</div>
+        <a href="#home">Home</a>
+        <a href="#trips">Trips</a>
+        <a href="#adventures">Adventures</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#about">About</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
 
-<div class="logo-text">
-unbox<span>crew</span>
-</div>
+    </nav>
 
-</a>
+    <a href="#trips" class="nav-cta">Explore Trips →</a>
 
-
-<nav class="nav-links">
-
-<a href="#home">
-Home
-</a>
-
-<a href="#trips">
-Trips
-</a>
-
-<a href="#experience">
-Experience
-</a>
-
-<a href="#contact">
-Contact
-</a>
-
-</nav>
-
-
-<a href="#trips" class="nav-button">
-Explore Trips ↗
-</a>
-
-
-<button
-class="menu-button"
-id="menuButton"
->
-☰
-</button>
-
-</div>
-
-
-<div class="mobile-menu" id="mobileMenu">
-
-<a href="#home">
-Home
-</a>
-
-<a href="#trips">
-Trips
-</a>
-
-<a href="#experience">
-Experience
-</a>
-
-<a href="#contact">
-Contact
-</a>
-
-<a href="#trips">
-Book a Trip
-</a>
-
-</div>
+    <button class="menu" id="menu">☰</button>
 
 </header>
 
 
-
-<!-- =====================================================
+<!-- =========================================================
      HERO
-===================================================== -->
+========================================================= -->
+
+<main>
 
 <section class="hero" id="home">
 
-<div class="hero-image"></div>
+    <!--
+        FUTURE ADMIN FIELD:
+        hero.video
+        hero.poster
+    -->
 
-<div class="hero-overlay"></div>
+    <div class="hero-fallback"></div>
 
+    <!--
+        Replace this URL later with your own cinematic
+        mountain MP4/video.
+    -->
 
-<div class="hero-content">
+    <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=90">
 
-<div class="hero-label">
+        <!-- Example:
+        <source src="YOUR-MOUNTAIN-VIDEO.mp4" type="video/mp4">
+        -->
 
-<span class="hero-dot"></span>
+    </video>
 
-CURATED GROUP TRAVEL
+    <div class="hero-overlay"></div>
+    <div class="hero-grid"></div>
 
-<span class="separator">
-•
-</span>
+    <div class="hero-content reveal">
 
-INDIA
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Travel differently
+        </div>
 
-</div>
+        <h1 class="hero-title">
 
+            <span>DON'T JUST</span>
 
-<h1>
+            <span class="outline">
+                TRAVEL.
+            </span>
 
-Your next
+            <span class="gradient">
+                UNBOX IT.
+            </span>
 
-<span>
-escape
-</span>
+        </h1>
 
-starts here.
+        <p class="hero-subtitle">
+            Curated escapes, wild adventures and unforgettable
+            stories — built for people who'd rather collect
+            moments than things.
+        </p>
 
-</h1>
+        <div class="hero-actions">
 
+            <a href="#trips" class="btn btn-primary">
+                Explore the journey →
+            </a>
 
-<p class="hero-description">
+            <a href="#about" class="btn btn-glass">
+                Why UnboxCrew
+            </a>
 
-Curated journeys. New people.
-Incredible places and stories worth
-bringing home.
+        </div>
 
-</p>
+    </div>
 
-
-<div class="hero-actions">
-
-<a
-href="#trips"
-class="btn btn-primary"
->
-Explore Trips ↗
-</a>
-
-
-<a
-href="#experience"
-class="hero-link"
->
-Discover UnboxCrew ↓
-</a>
-
-</div>
-
-</div>
-
-
-<div class="hero-location">
-
-DELHI → EVERYWHERE
-
-</div>
-
-
-<div class="hero-bottom">
-
-<strong>
-01
-</strong>
-
-<div class="hero-line"></div>
-
-<span>
-SCROLL TO EXPLORE
-</span>
-
-</div>
+    <div class="hero-bottom">
+        Scroll to explore
+        <span class="scroll-line"></span>
+    </div>
 
 </section>
 
 
-
-<!-- =====================================================
-     INTRO
-===================================================== -->
-
-<section class="section intro">
-
-<div class="container intro-grid">
-
-<div class="eyebrow">
-
-01 — THE UNBOXCREW WAY
-
-</div>
-
-
-<div>
-
-<h2>
-
-Don't just visit a place.
-
-<span>
-Live the journey.
-</span>
-
-</h2>
-
-
-<p>
-
-UnboxCrew creates thoughtfully planned
-group journeys where the destination
-is only part of the story.
-
-</p>
-
-
-<p>
-
-Meet people, chase views, discover
-local experiences, laugh too much
-and come back with memories that last.
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
-     TRIPS
-===================================================== -->
-
-<section
-class="section trips"
-id="trips"
->
-
-<div class="container">
-
-
-<div class="section-header">
-
-<div>
-
-<div class="eyebrow">
-02 — UPCOMING ESCAPES
-</div>
-
-<h2>
-
-Pick your
-
-<span>
-escape.
-</span>
-
-</h2>
-
-</div>
-
-
-<a
-href="#trips"
-class="view-all"
->
-View all trips ↗
-</a>
-
-</div>
-
-
-
-<div class="trip-grid">
-
-
-<!-- MUSSOORIE -->
-
-<article class="trip-card large">
-
-<a href="#mussoorie">
-
-
-<div
-class="trip-image"
-style="
-background-image:url(
-'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=90'
-);
-"
-></div>
-
-
-<div class="trip-overlay"></div>
-
-
-<div class="trip-number">
-01
-</div>
-
-
-<div class="trip-duration">
-3 DAYS / 2 NIGHTS
-</div>
-
-
-<div class="trip-content">
-
-<div class="trip-category">
-MOUNTAINS • ADVENTURE
-</div>
-
-
-<h3>
-
-Mussoorie
-
-<span>
-Escape
-</span>
-
-</h3>
-
-
-<div class="trip-footer">
-
-<strong>
-From ₹4,700
-</strong>
-
-<span>
-View Trip ↗
-</span>
-
-</div>
-
-</div>
-
-</a>
-
-</article>
-
-
-
-<!-- RISHIKESH -->
-
-<article class="trip-card">
-
-<a href="#rishikesh">
-
-<div
-class="trip-image"
-style="
-background-image:url(
-'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=90'
-);
-"
-></div>
-
-
-<div class="trip-overlay"></div>
-
-
-<div class="trip-number">
-02
-</div>
-
-
-<div class="trip-duration">
-2 DAYS / 1 NIGHT
-</div>
-
-
-<div class="trip-content">
-
-<div class="trip-category">
-RIVER • ADVENTURE
-</div>
-
-
-<h3>
-
-Rishikesh
-
-<span>
-Unplugged
-</span>
-
-</h3>
-
-
-<div class="trip-footer">
-
-<strong>
-From ₹2,999
-</strong>
-
-<span>
-View Trip ↗
-</span>
-
-</div>
-
-</div>
-
-</a>
-
-</article>
-
-
-
-<!-- BRAJ -->
-
-<article class="trip-card">
-
-<a href="#braj">
-
-<div
-class="trip-image"
-style="
-background-image:url(
-'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1400&q=90'
-);
-"
-></div>
-
-
-<div class="trip-overlay"></div>
-
-
-<div class="trip-number">
-03
-</div>
-
-
-<div class="trip-duration">
-2 DAYS / 1 NIGHT
-</div>
-
-
-<div class="trip-content">
-
-<div class="trip-category">
-HERITAGE • CULTURE
-</div>
-
-
-<h3>
-
-Heart of
-
-<span>
-Braj
-</span>
-
-</h3>
-
-
-<div class="trip-footer">
-
-<strong>
-From ₹3,999
-</strong>
-
-<span>
-View Trip ↗
-</span>
-
-</div>
-
-</div>
-
-</a>
-
-</article>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
+<!-- =========================================================
      MARQUEE
-===================================================== -->
+========================================================= -->
 
-<section class="marquee">
+<div class="marquee">
 
-<div class="marquee-track">
+    <div class="marquee-track">
 
-<span>
-UNBOX THE WORLD
-</span>
+        <div class="marquee-item">
+            <span>01</span> Adventure
+        </div>
 
-<b>✦</b>
+        <div class="marquee-item">
+            <span>02</span> Mountains
+        </div>
 
-<span>
-MEET YOUR PEOPLE
-</span>
+        <div class="marquee-item">
+            <span>03</span> New People
+        </div>
 
-<b>✦</b>
+        <div class="marquee-item">
+            <span>04</span> Wild Stories
+        </div>
 
-<span>
-MAKE STORIES
-</span>
+        <div class="marquee-item">
+            <span>05</span> Unforgettable Nights
+        </div>
 
-<b>✦</b>
+        <div class="marquee-item">
+            <span>06</span> Adventure
+        </div>
 
-<span>
-GO SOMEWHERE NEW
-</span>
+        <div class="marquee-item">
+            <span>07</span> Mountains
+        </div>
 
-<b>✦</b>
+        <div class="marquee-item">
+            <span>08</span> New People
+        </div>
 
-<span>
-UNBOX THE WORLD
-</span>
-
-<b>✦</b>
+    </div>
 
 </div>
+
+
+<!-- =========================================================
+     TRIPS
+========================================================= -->
+
+<section class="section" id="trips">
+
+    <div class="section-head reveal">
+
+        <div>
+
+            <div class="section-label">
+                Upcoming escapes
+            </div>
+
+            <h2 class="section-title">
+                Pick your<br>
+                next story.
+            </h2>
+
+        </div>
+
+        <p class="section-description">
+            Not another generic tour package.
+            Every UnboxCrew trip is designed around
+            experiences, people and places you'll actually
+            remember.
+        </p>
+
+    </div>
+
+
+    <div class="trips-grid" id="tripGrid">
+
+        <!-- JavaScript dynamically creates trips -->
+
+    </div>
 
 </section>
 
 
+<!-- =========================================================
+     EXPERIENCE / ADVENTURES
+========================================================= -->
 
-<!-- =====================================================
-     EXPERIENCE
-===================================================== -->
+<section class="section" id="adventures">
 
-<section
-class="section experience"
-id="experience"
->
+    <div class="experience">
 
-<div class="container">
+        <div class="experience-visual reveal">
 
-<div class="eyebrow">
-03 — THE EXPERIENCE
-</div>
+            <div class="orb"></div>
 
+            <div class="floating-card">
 
-<div class="experience-grid">
+                <img
+                src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=85"
+                alt="Mountain Adventure">
 
+                <div class="float-label">
+                    Find your people.
+                </div>
 
-<div>
+            </div>
 
-<h2>
+            <div class="floating-card">
 
-Less itinerary.
+                <img
+                src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=900&q=85"
+                alt="Travel Experience">
 
-<span>
-More memories.
-</span>
+                <div class="float-label">
+                    Leave ordinary behind.
+                </div>
 
-</h2>
+            </div>
 
+        </div>
 
-<p class="experience-description">
 
-We handle the route, stays,
-transport and trip coordination.
+        <div class="experience-copy reveal">
 
-You focus on the people,
-places and moments that make
-the journey yours.
+            <div class="section-label">
+                The UnboxCrew mindset
+            </div>
 
-</p>
+            <h2>
+                The trip is not
+                the destination.
+                It's the <em>story.</em>
+            </h2>
 
+            <p>
+                We create trips for curious people who want
+                more than sightseeing. Mountains, music,
+                strangers becoming friends, spontaneous plans
+                and stories you'll still talk about months later.
+            </p>
 
-<a
-href="https://wa.me/919625131595?text=Hi%20UnboxCrew%2C%20I%20want%20to%20know%20more%20about%20your%20trips."
-target="_blank"
-class="btn btn-outline"
->
+            <div class="feature-list">
 
-Talk to UnboxCrew ↗
+                <div class="feature">
+                    <span class="feature-number">01</span>
+                    Curated destinations
+                </div>
 
-</a>
+                <div class="feature">
+                    <span class="feature-number">02</span>
+                    Small-group experiences
+                </div>
 
-</div>
+                <div class="feature">
+                    <span class="feature-number">03</span>
+                    Adventure-first itineraries
+                </div>
 
+                <div class="feature">
+                    <span class="feature-number">04</span>
+                    People you'll actually vibe with
+                </div>
 
+            </div>
 
-<div class="feature-list">
+        </div>
 
-
-<div class="feature">
-
-<div class="feature-number">
-01
-</div>
-
-<div>
-
-<h3>
-Curated Routes
-</h3>
-
-<p>
-Places worth stopping for,
-not just ticking off.
-</p>
-
-</div>
-
-</div>
-
-
-
-<div class="feature">
-
-<div class="feature-number">
-02
-</div>
-
-<div>
-
-<h3>
-Small Group Energy
-</h3>
-
-<p>
-Meet fellow travellers
-and make the journey personal.
-</p>
-
-</div>
-
-</div>
-
-
-
-<div class="feature">
-
-<div class="feature-number">
-03
-</div>
-
-<div>
-
-<h3>
-Everything Planned
-</h3>
-
-<p>
-Transport, stays and
-coordination handled.
-</p>
-
-</div>
-
-</div>
-
-
-
-<div class="feature">
-
-<div class="feature-number">
-04
-</div>
-
-<div>
-
-<h3>
-One Crew
-</h3>
-
-<p>
-One team from booking
-until you return home.
-</p>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
+<!-- =========================================================
+     GALLERY
+========================================================= -->
 
-<!-- =====================================================
-     CONTACT / CTA
-===================================================== -->
+<section class="section" id="gallery">
 
-<section
-class="cta-section"
-id="contact"
->
+    <div class="section-head reveal">
 
-<div class="cta-background"></div>
+        <div>
 
-<div class="cta-overlay"></div>
+            <div class="section-label">
+                From the road
+            </div>
 
+            <h2 class="section-title">
+                Moments<br>
+                we unboxed.
+            </h2>
 
-<div class="cta-content">
+        </div>
 
-<div class="eyebrow">
-READY?
-</div>
+        <p class="section-description">
+            The best travel memories rarely fit inside
+            a perfectly planned itinerary.
+        </p>
 
-
-<h2>
-
-Let's plan your
-
-<span>
-next story.
-</span>
-
-</h2>
+    </div>
 
 
-<p>
-Questions or ready to book?
-We're just one message away.
-</p>
+    <div class="gallery-grid reveal" id="galleryGrid">
 
+        <!-- Gallery dynamically generated -->
 
-<div class="cta-buttons">
-
-
-<a
-href="https://wa.me/919625131595?text=Hi%20UnboxCrew%2C%20I%20want%20to%20know%20about%20your%20upcoming%20trips."
-target="_blank"
-class="btn btn-primary"
->
-WhatsApp Us ↗
-</a>
-
-
-<a
-href="mailto:bookings@unboxcrew.com"
-class="btn btn-outline"
->
-bookings@unboxcrew.com
-</a>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
+<!-- =========================================================
+     REVIEWS
+========================================================= -->
 
-<!-- =====================================================
+<section class="section" id="reviews">
+
+    <div class="section-head reveal">
+
+        <div>
+
+            <div class="section-label">
+                Traveller stories
+            </div>
+
+            <h2 class="section-title">
+                Don't take<br>
+                our word for it.
+            </h2>
+
+        </div>
+
+        <p class="section-description">
+            Real experiences from people who chose
+            to leave the ordinary behind.
+        </p>
+
+    </div>
+
+
+    <div class="reviews-grid" id="reviewsGrid">
+
+        <!-- Reviews dynamically generated -->
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL CTA
+========================================================= -->
+
+<section class="final-cta reveal">
+
+    <div>
+
+        <div class="section-label">
+            Your next escape
+        </div>
+
+        <h2>
+            Your next story
+            starts here.
+        </h2>
+
+        <p>
+            One trip. New places. New people.
+            Maybe a version of yourself you haven't met yet.
+        </p>
+
+        <a href="#trips" class="btn btn-primary">
+            Find my trip →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section class="section" id="contact">
+
+    <div class="contact-grid">
+
+        <div class="contact-info reveal">
+
+            <div class="section-label">
+                Let's talk
+            </div>
+
+            <h2>
+                Have a trip
+                in mind?
+            </h2>
+
+            <p>
+                Want to join a trip, plan a private group escape,
+                collaborate with UnboxCrew or simply ask something?
+                Drop us a message.
+            </p>
+
+            <br>
+
+            <p>
+                <strong>Email</strong><br>
+                hello@unboxcrew.com
+            </p>
+
+            <br>
+
+            <p>
+                <strong>WhatsApp</strong><br>
+                +91 XXXXX XXXXX
+            </p>
+
+        </div>
+
+
+        <form class="contact-form reveal" id="contactForm">
+
+            <input
+                class="input"
+                type="text"
+                placeholder="Your name"
+                required>
+
+            <input
+                class="input"
+                type="email"
+                placeholder="Email address"
+                required>
+
+            <input
+                class="input"
+                type="tel"
+                placeholder="WhatsApp number">
+
+            <textarea
+                class="textarea"
+                placeholder="Tell us what you're looking for..."
+                required></textarea>
+
+            <button class="btn btn-primary" type="submit">
+                Send message →
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
      FOOTER
-===================================================== -->
+========================================================= -->
 
 <footer>
 
-<div class="container footer-grid">
+    <div class="footer-top">
+
+        <div class="footer-brand">
+
+            <a href="#home" class="logo">
+                <span class="logo-mark"></span>
+                UNBOXCREW
+            </a>
+
+            <p>
+                Unbox the world. Together.
+                Modern travel experiences for people
+                who want stories, not souvenirs.
+            </p>
+
+        </div>
 
 
-<div>
+        <div class="footer-links">
 
-<a href="#" class="logo">
+            <a href="#trips">Trips</a>
+            <a href="#adventures">Adventures</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#about">About</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#contact">Contact</a>
 
-<div class="logo-box">
-UC
-</div>
+        </div>
 
-<div class="logo-text">
-unbox<span>crew</span>
-</div>
-
-</a>
-
-
-<p class="footer-description">
-Unbox the world. Together.
-</p>
-
-</div>
+    </div>
 
 
+    <div class="footer-bottom">
 
-<div class="footer-column">
+        <span>
+            © 2026 UnboxCrew. All rights reserved.
+        </span>
 
-<h4>
-EXPLORE
-</h4>
+        <span>
+            Unbox the world. Together.
+        </span>
 
-<a href="#home">
-Home
-</a>
-
-<a href="#trips">
-Trips
-</a>
-
-<a href="#experience">
-Experience
-</a>
-
-</div>
-
-
-
-<div class="footer-column">
-
-<h4>
-CONTACT
-</h4>
-
-<a href="tel:+919625131595">
-+91 96251 31595
-</a>
-
-<a href="mailto:bookings@unboxcrew.com">
-bookings@unboxcrew.com
-</a>
-
-<a
-href="https://wa.me/919625131595"
-target="_blank"
->
-WhatsApp ↗
-</a>
-
-</div>
-
-
-
-<div class="footer-column">
-
-<h4>
-BRAND
-</h4>
-
-<a href="#">
-Instagram ↗
-</a>
-
-<a href="#">
-Facebook ↗
-</a>
-
-</div>
-
-
-</div>
-
-
-<div class="footer-bottom">
-
-<span>
-© 2026 UnboxCrew
-</span>
-
-<span>
-Unbox the world. Together.
-</span>
-
-</div>
+    </div>
 
 </footer>
 
 
+<!-- =========================================================
+     TRIP MODAL
+========================================================= -->
 
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
+<div class="modal" id="tripModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModal('tripModal')">
+            ×
+        </button>
+
+        <img
+            class="trip-detail-image"
+            id="detailImage"
+            src=""
+            alt="Trip">
+
+        <div class="trip-detail-content">
+
+            <div class="section-label">
+                Trip details
+            </div>
+
+            <h2 id="detailTitle"></h2>
+
+            <p
+                id="detailDescription"
+                style="margin-top:15px;color:#aebdc3;line-height:1.7">
+            </p>
+
+
+            <div class="detail-grid">
+
+                <div class="detail-box">
+                    <small>Duration</small>
+                    <strong id="detailDuration"></strong>
+                </div>
+
+                <div class="detail-box">
+                    <small>Starting from</small>
+                    <strong id="detailPrice"></strong>
+                </div>
+
+                <div class="detail-box">
+                    <small>Group</small>
+                    <strong id="detailGroup"></strong>
+                </div>
+
+            </div>
+
+
+            <div class="itinerary">
+
+                <h3>
+                    Itinerary
+                </h3>
+
+                <div id="detailItinerary"></div>
+
+            </div>
+
+
+            <br>
+
+            <button
+                class="btn btn-primary"
+                onclick="bookCurrentTrip()">
+
+                Book this adventure →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     REVIEW MODAL
+========================================================= -->
+
+<div class="modal" id="reviewModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModal('reviewModal')">
+            ×
+        </button>
+
+        <div class="trip-detail-content">
+
+            <div class="section-label">
+                Traveller review
+            </div>
+
+            <h2 id="reviewName"></h2>
+
+            <div
+                class="stars"
+                style="margin-top:15px">
+                ★★★★★
+            </div>
+
+            <p
+                id="reviewFull"
+                style="margin-top:25px;color:#b9c7cc;line-height:1.8">
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     LIGHTBOX
+========================================================= -->
+
+<div class="modal lightbox" id="lightbox">
+
+    <button
+        class="close"
+        onclick="closeModal('lightbox')">
+        ×
+    </button>
+
+    <img id="lightboxImage" src="" alt="Gallery">
+
+</div>
+
+
+<div class="toast" id="toast">
+    Message sent successfully.
+</div>
+
 
 <script>
 
+/* =========================================================
+   UNBOXCREW DATA LAYER
 
-/* =====================================================
-   MOBILE MENU
-===================================================== */
+   IMPORTANT:
+   This section is intentionally centralized.
 
-const menuButton =
-document.getElementById("menuButton");
+   TODAY:
+   Website reads data from JavaScript.
 
-const mobileMenu =
-document.getElementById("mobileMenu");
+   FUTURE:
+   Admin panel → API → Database → this frontend.
+
+   Therefore don't scatter trip information throughout
+   HTML. Keep content here.
+   ========================================================= */
 
 
-menuButton.addEventListener(
-"click",
-function(){
+/* =========================
+   SITE SETTINGS
+========================= */
 
-mobileMenu.classList.toggle("active");
+const siteData = {
+
+    brand:{
+        name:"UnboxCrew",
+        tagline:"Unbox the world. Together.",
+        email:"hello@unboxcrew.com",
+        whatsapp:"919999999999"
+    },
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    hero:{
+        eyebrow:"Travel differently",
+
+        titleLine1:"DON'T JUST",
+        titleLine2:"TRAVEL.",
+        titleLine3:"UNBOX IT.",
+
+        description:
+        "Curated escapes, wild adventures and unforgettable stories — built for people who'd rather collect moments than things.",
+
+        video:"",
+        poster:
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=90"
+    },
+
+
+    /* =========================
+       TRIPS
+
+       Future Admin:
+       Add/Edit/Delete trips here
+       will eventually happen from
+       Admin Panel.
+    ========================= */
+
+    trips:[
+
+        {
+            id:"rishikesh-adventure",
+
+            name:"Rishikesh Adventure",
+
+            location:"Rishikesh, Uttarakhand",
+
+            category:"Adventure",
+
+            duration:"2 Days / 1 Night",
+
+            price:"₹3,499",
+
+            group:"Small Group",
+
+            image:
+            "https://images.unsplash.com/photo-1596178060810-72f53ce9a65d?auto=format&fit=crop&w=1400&q=85",
+
+            video:"",
+
+            description:
+            "Rafting, mountains, riverside sunsets, music and a crew you'll remember. A high-energy escape into the adventure capital of India.",
+
+            itinerary:[
+
+                {
+                    day:"01",
+                    text:"Delhi → Rishikesh → Check-in → River Rafting → Riverside sunset"
+                },
+
+                {
+                    day:"02",
+                    text:"Adventure activities → Café hopping → Triveni Ghat Aarti → Delhi"
+                }
+
+            ]
+
+        },
+
+
+        {
+            id:"mussoorie-escape",
+
+            name:"Mussoorie Escape",
+
+            location:"Mussoorie • Landour",
+
+            category:"Mountains",
+
+            duration:"3 Days / 2 Nights",
+
+            price:"₹4,700",
+
+            group:"Small Group",
+
+            image:
+            "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1400&q=85",
+
+            video:"",
+
+            description:
+            "Mountain roads, old cafés, misty viewpoints and the slow charm of Landour.",
+
+            itinerary:[
+
+                {
+                    day:"01",
+                    text:"Delhi → Mussoorie → Hotel → Mall Road → Evening exploration"
+                },
+
+                {
+                    day:"02",
+                    text:"Kempty Falls → Company Garden → George Everest → Landour"
+                },
+
+                {
+                    day:"03",
+                    text:"Lal Tibba → Char Dukan → Rishikesh → Delhi"
+                }
+
+            ]
+
+        },
+
+
+        {
+            id:"braj-darshan",
+
+            name:"Braj Experience",
+
+            location:"Barsana • Vrindavan",
+
+            category:"Culture",
+
+            duration:"2 Days / 1 Night",
+
+            price:"₹3,999",
+
+            group:"Small Group",
+
+            image:
+            "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1400&q=85",
+
+            video:"",
+
+            description:
+            "A soulful journey through the colours, temples, stories and energy of Braj.",
+
+            itinerary:[
+
+                {
+                    day:"01",
+                    text:"Delhi → Barsana → Radha Rani Temple → Man Mandir → Vrindavan"
+                },
+
+                {
+                    day:"02",
+                    text:"Banke Bihari → Nidhivan → Kesi Ghat → Prem Mandir → Delhi"
+                }
+
+            ]
+
+        }
+
+    ],
+
+
+    /* =========================
+       GALLERY
+    ========================= */
+
+    gallery:[
+
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85",
+
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1000&q=85",
+
+        "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=85",
+
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=85",
+
+        "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1000&q=85",
+
+        "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=85",
+
+        "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1000&q=85",
+
+        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1000&q=85"
+
+    ],
+
+
+    /* =========================
+       REVIEWS
+    ========================= */
+
+    reviews:[
+
+        {
+            name:"Aarav",
+
+            trip:"Rishikesh Adventure",
+
+            short:
+            "The trip didn't feel like a tour. It felt like a group of friends randomly decided to disappear for a weekend.",
+
+            full:
+            "The entire Rishikesh experience was energetic from the beginning. Rafting, cafés, the river, music and meeting completely new people made it feel less like a packaged tour and more like a spontaneous adventure with friends."
+        },
+
+
+        {
+            name:"Mehak",
+
+            trip:"Mussoorie Escape",
+
+            short:
+            "Landour was beautiful, but honestly the people and vibe made the trip.",
+
+            full:
+            "I had been to Mussoorie before, but this experience felt completely different. The itinerary wasn't rushed and there was enough time to actually enjoy the cafés, viewpoints and conversations."
+        },
+
+
+        {
+            name:"Rohan",
+
+            trip:"Braj Experience",
+
+            short:
+            "Beautiful planning and a really fun group. Would definitely travel with them again.",
+
+            full:
+            "The Braj trip had a great balance of temples, local experiences and time to explore. The group energy was amazing and the coordination made everything easy."
+        }
+
+    ]
+
+};
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const tripGrid =
+document.getElementById("tripGrid");
+
+const galleryGrid =
+document.getElementById("galleryGrid");
+
+const reviewsGrid =
+document.getElementById("reviewsGrid");
+
+
+/* =========================================================
+   RENDER TRIPS
+========================================================= */
+
+function renderTrips(){
+
+    tripGrid.innerHTML = "";
+
+    siteData.trips.forEach((trip,index)=>{
+
+        const card = document.createElement("article");
+
+        card.className =
+        `trip-card ${index === 0 ? "large" : "small"} reveal`;
+
+        card.innerHTML = `
+
+            <img
+                src="${trip.image}"
+                alt="${trip.name}"
+                loading="lazy">
+
+            <div class="trip-content">
+
+                <div class="trip-meta">
+
+                    <span class="pill">
+                        ${trip.category}
+                    </span>
+
+                    <span class="pill">
+                        ${trip.duration}
+                    </span>
+
+                </div>
+
+                <h3 class="trip-name">
+                    ${trip.name}
+                </h3>
+
+                <p class="trip-desc">
+                    ${trip.description}
+                </p>
+
+                <div class="trip-bottom">
+
+                    <div class="trip-price">
+                        ${trip.price}
+                        <small>/ person</small>
+                    </div>
+
+                    <div class="arrow-btn">
+                        ↗
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+        card.addEventListener("click",()=>{
+
+            openTrip(trip.id);
+
+        });
+
+
+        tripGrid.appendChild(card);
+
+        addTilt(card);
+
+    });
+
+    observeReveals();
 
 }
-);
 
 
-/* CLOSE MENU AFTER CLICK */
+/* =========================================================
+   OPEN TRIP
+========================================================= */
+
+let currentTrip = null;
+
+function openTrip(id){
+
+    const trip =
+    siteData.trips.find(t=>t.id === id);
+
+    if(!trip) return;
+
+    currentTrip = trip;
+
+    document.getElementById("detailImage").src =
+    trip.image;
+
+    document.getElementById("detailTitle").textContent =
+    trip.name;
+
+    document.getElementById("detailDescription").textContent =
+    trip.description;
+
+    document.getElementById("detailDuration").textContent =
+    trip.duration;
+
+    document.getElementById("detailPrice").textContent =
+    trip.price;
+
+    document.getElementById("detailGroup").textContent =
+    trip.group;
+
+
+    const itinerary =
+    document.getElementById("detailItinerary");
+
+    itinerary.innerHTML = "";
+
+    trip.itinerary.forEach(item=>{
+
+        const row =
+        document.createElement("div");
+
+        row.className =
+        "itinerary-item";
+
+        row.innerHTML = `
+            <b>${item.day}</b>
+            <span>${item.text}</span>
+        `;
+
+        itinerary.appendChild(row);
+
+    });
+
+
+    openModal("tripModal");
+
+}
+
+
+/* =========================================================
+   BOOK TRIP
+========================================================= */
+
+function bookCurrentTrip(){
+
+    if(!currentTrip) return;
+
+    const message =
+    encodeURIComponent(
+        `Hi UnboxCrew! I want to book ${currentTrip.name}. Please share booking details.`
+    );
+
+    window.open(
+        `https://wa.me/${siteData.brand.whatsapp}?text=${message}`,
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+function renderGallery(){
+
+    galleryGrid.innerHTML = "";
+
+    siteData.gallery.forEach((image,index)=>{
+
+        const item =
+        document.createElement("div");
+
+        item.className =
+        "gallery-item";
+
+        item.innerHTML = `
+            <img
+                src="${image}"
+                alt="UnboxCrew travel moment ${index+1}"
+                loading="lazy">
+        `;
+
+        item.addEventListener("click",()=>{
+
+            document.getElementById("lightboxImage").src =
+            image;
+
+            openModal("lightbox");
+
+        });
+
+        galleryGrid.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================================================
+   REVIEWS
+========================================================= */
+
+function renderReviews(){
+
+    reviewsGrid.innerHTML = "";
+
+    siteData.reviews.forEach(review=>{
+
+        const card =
+        document.createElement("article");
+
+        card.className =
+        "review reveal";
+
+        const initials =
+        review.name
+        .split(" ")
+        .map(n=>n[0])
+        .join("");
+
+        card.innerHTML = `
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p class="review-text">
+                “${review.short}”
+            </p>
+
+            <div class="reviewer">
+
+                <div class="avatar">
+                    ${initials}
+                </div>
+
+                <div class="reviewer-info">
+
+                    ${review.name}
+
+                    <small>
+                        ${review.trip}
+                    </small>
+
+                </div>
+
+            </div>
+
+        `;
+
+        card.addEventListener("click",()=>{
+
+            document.getElementById("reviewName")
+            .textContent =
+            review.name;
+
+            document.getElementById("reviewFull")
+            .textContent =
+            review.full;
+
+            openModal("reviewModal");
+
+        });
+
+        reviewsGrid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+function openModal(id){
+
+    document
+    .getElementById(id)
+    .classList.add("active");
+
+    document.body.classList.add("locked");
+
+}
+
+function closeModal(id){
+
+    document
+    .getElementById(id)
+    .classList.remove("active");
+
+    document.body.classList.remove("locked");
+
+}
+
+
+document.querySelectorAll(".modal")
+.forEach(modal=>{
+
+    modal.addEventListener("click",(e)=>{
+
+        if(e.target === modal){
+
+            modal.classList.remove("active");
+
+            document.body.classList.remove("locked");
+
+        }
+
+    });
+
+});
+
+
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key === "Escape"){
+
+        document.querySelectorAll(".modal")
+        .forEach(modal=>{
+            modal.classList.remove("active");
+        });
+
+        document.body.classList.remove("locked");
+
+    }
+
+});
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const menu =
+document.getElementById("menu");
+
+const navLinks =
+document.getElementById("navLinks");
+
+menu.addEventListener("click",()=>{
+
+    navLinks.classList.toggle("open");
+
+});
+
+
+navLinks.querySelectorAll("a")
+.forEach(link=>{
+
+    link.addEventListener("click",()=>{
+
+        navLinks.classList.remove("open");
+
+    });
+
+});
+
+
+/* =========================================================
+   NAVBAR SCROLL
+========================================================= */
+
+window.addEventListener("scroll",()=>{
+
+    const navbar =
+    document.getElementById("navbar");
+
+    if(window.scrollY > 50){
+
+        navbar.classList.add("scrolled");
+
+    }else{
+
+        navbar.classList.remove("scrolled");
+
+    }
+
+});
+
+
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
+
+function observeReveals(){
+
+    const elements =
+    document.querySelectorAll(".reveal:not(.observed)");
+
+    const observer =
+    new IntersectionObserver(
+
+        entries=>{
+
+            entries.forEach(entry=>{
+
+                if(entry.isIntersecting){
+
+                    entry.target
+                    .classList.add("visible");
+
+                    entry.target
+                    .classList.add("observed");
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold:.12
+        }
+
+    );
+
+    elements.forEach(el=>{
+
+        observer.observe(el);
+
+    });
+
+}
+
+
+/* =========================================================
+   3D TILT EFFECT
+========================================================= */
+
+function addTilt(element){
+
+    element.addEventListener("mousemove",(e)=>{
+
+        if(window.innerWidth < 850) return;
+
+        const rect =
+        element.getBoundingClientRect();
+
+        const x =
+        e.clientX - rect.left;
+
+        const y =
+        e.clientY - rect.top;
+
+        const centerX =
+        rect.width / 2;
+
+        const centerY =
+        rect.height / 2;
+
+        const rotateX =
+        ((y-centerY)/centerY)*-4;
+
+        const rotateY =
+        ((x-centerX)/centerX)*4;
+
+        element.style.transform =
+        `perspective(1000px)
+         rotateX(${rotateX}deg)
+         rotateY(${rotateY}deg)
+         scale3d(1.015,1.015,1.015)`;
+
+    });
+
+
+    element.addEventListener("mouseleave",()=>{
+
+        element.style.transform =
+        "";
+
+    });
+
+}
+
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+const cursor =
+document.querySelector(".cursor");
+
+window.addEventListener("mousemove",(e)=>{
+
+    cursor.style.left =
+    e.clientX + "px";
+
+    cursor.style.top =
+    e.clientY + "px";
+
+});
+
+
+document.querySelectorAll("a,button,.trip-card,.review,.gallery-item")
+.forEach(el=>{
+
+    el.addEventListener("mouseenter",()=>{
+        cursor.classList.add("active");
+    });
+
+    el.addEventListener("mouseleave",()=>{
+        cursor.classList.remove("active");
+    });
+
+});
+
+
+/* =========================================================
+   CONTACT FORM
+========================================================= */
 
 document
-.querySelectorAll(".mobile-menu a")
-.forEach(function(link){
+.getElementById("contactForm")
+.addEventListener("submit",(e)=>{
 
-link.addEventListener(
-"click",
-function(){
+    e.preventDefault();
 
-mobileMenu.classList.remove("active");
+    showToast(
+        "Thanks! We'll get back to you shortly."
+    );
 
-}
-);
-
-});
-
-
-
-/* =====================================================
-   HERO PARALLAX
-===================================================== */
-
-const heroImage =
-document.querySelector(".hero-image");
-
-
-window.addEventListener(
-"scroll",
-function(){
-
-const scroll =
-window.scrollY;
-
-if(heroImage){
-
-heroImage.style.transform =
-`translateY(${scroll * .10}px) scale(1.02)`;
-
-}
-
-}
-);
-
-
-
-/* =====================================================
-   TRIP CARD CLICK
-===================================================== */
-
-const tripCards =
-document.querySelectorAll(".trip-card");
-
-
-tripCards.forEach(function(card){
-
-card.addEventListener(
-"mouseenter",
-function(){
-
-card.style.transform =
-"translateY(-4px)";
-
-}
-);
-
-
-card.addEventListener(
-"mouseleave",
-function(){
-
-card.style.transform =
-"translateY(0)";
-
-}
-);
+    e.target.reset();
 
 });
 
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message){
+
+    const toast =
+    document.getElementById("toast");
+
+    toast.textContent =
+    message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3500);
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+renderTrips();
+renderGallery();
+renderReviews();
+
+observeReveals();
+
+
+/* =========================================================
+   SMOOTH HASH NAVIGATION
+========================================================= */
+
+document.querySelectorAll('a[href^="#"]')
+.forEach(link=>{
+
+    link.addEventListener("click",(e)=>{
+
+        const target =
+        document.querySelector(
+            link.getAttribute("href")
+        );
+
+        if(target){
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+                behavior:"smooth"
+            });
+
+        }
+
+    });
+
+});
 
 </script>
 
