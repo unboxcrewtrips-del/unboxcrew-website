@@ -1,602 +1,2128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>UnboxCrew — Unbox the World. Together.</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="description"
-    content="UnboxCrew — Curated group trips from Delhi. Unbox the world. Together."
-  >
+<title>UnboxCrew — Unbox the World. Together.</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="description" content="UnboxCrew — Curated group travel experiences from Delhi.">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
-    rel="stylesheet"
-  >
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   UNBOXCREW — SINGLE FILE WEBSITE
+========================================================= */
+
+:root{
+    --bg:#050b10;
+    --bg2:#09151e;
+    --bg3:#0d1c26;
+
+    --text:#f5f3ec;
+    --muted:#9ca8ae;
+
+    --line:rgba(255,255,255,.12);
+
+    --accent:#d9ff52;
+
+    --max:1200px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+    width:min(90%,var(--max));
+    margin:auto;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:82px;
+    z-index:999;
+
+    background:linear-gradient(
+        rgba(5,11,16,.92),
+        rgba(5,11,16,.55),
+        transparent
+    );
+
+    backdrop-filter:blur(14px);
+
+    border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.nav-container{
+    width:90%;
+    max-width:1400px;
+    height:100%;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+
+/* LOGO */
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-box{
+    width:36px;
+    height:36px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--accent);
+    border-radius:10px;
+
+    color:var(--accent);
+
+    font-family:Manrope;
+    font-size:10px;
+    font-weight:800;
+
+    transform:rotate(-6deg);
+}
+
+.logo-text{
+    font-family:Manrope;
+    font-size:20px;
+    font-weight:800;
+    letter-spacing:-.06em;
+}
+
+.logo-text span{
+    color:#9aa7ad;
+    font-weight:500;
+}
+
+
+/* NAV */
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:34px;
+}
+
+.nav-links a{
+    color:#c6ced2;
+    font-size:13px;
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:var(--accent);
+}
+
+.nav-button{
+    padding:13px 18px;
+
+    border:1px solid var(--line);
+    border-radius:100px;
+
+    font-size:12px;
+    font-weight:700;
+
+    transition:.3s;
+}
+
+.nav-button:hover{
+    border-color:var(--accent);
+    color:var(--accent);
+}
+
+.menu-button{
+    display:none;
+
+    background:none;
+    border:0;
+
+    color:white;
+    font-size:25px;
+
+    cursor:pointer;
+}
+
+
+/* MOBILE MENU */
+
+.mobile-menu{
+    display:none;
+
+    position:absolute;
+    top:82px;
+    left:0;
+    width:100%;
+
+    background:#071018;
+    border-top:1px solid var(--line);
+
+    padding:25px;
+}
+
+.mobile-menu.active{
+    display:flex;
+    flex-direction:column;
+}
+
+.mobile-menu a{
+    padding:15px 0;
+
+    border-bottom:1px solid var(--line);
+
+    color:white;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.hero-image{
+    position:absolute;
+    inset:0;
+
+    background-image:
+        url(
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=90"
+        );
+
+    background-size:cover;
+    background-position:center;
+
+    transform:scale(1.08);
+
+    animation:
+        heroZoom 12s ease-out forwards;
+}
+
+@keyframes heroZoom{
+
+    from{
+        transform:scale(1.12);
+    }
+
+    to{
+        transform:scale(1);
+    }
+
+}
+
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(2,7,12,.97),
+            rgba(2,7,12,.58),
+            rgba(2,7,12,.15)
+        ),
+
+        linear-gradient(
+            0deg,
+            #050b10,
+            transparent 45%
+        );
+}
+
+
+.hero-content{
+    position:relative;
+    z-index:2;
+
+    width:min(90%,var(--max));
+
+    margin:auto;
+
+    padding-top:70px;
+}
+
+
+.hero-label{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    color:#aeb8bd;
+
+    font-size:10px;
+    font-weight:700;
+
+    letter-spacing:.18em;
+}
+
+.hero-dot{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+
+    box-shadow:
+        0 0 18px var(--accent);
+}
+
+
+.hero h1{
+    max-width:850px;
+
+    margin:25px 0;
+
+    font-family:Manrope;
+
+    font-size:
+        clamp(70px,10vw,150px);
+
+    font-weight:800;
+
+    line-height:.82;
+
+    letter-spacing:-.075em;
+}
+
+.hero h1 span{
+    display:block;
+    color:var(--accent);
+}
+
+.hero-description{
+    max-width:500px;
+
+    color:#ccd4d7;
+
+    font-size:16px;
+
+    line-height:1.8;
+}
+
+.hero-actions{
+    display:flex;
+    align-items:center;
+
+    gap:22px;
+
+    margin-top:30px;
+}
+
+
+/* BUTTONS */
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:14px;
+
+    padding:14px 20px;
+
+    border-radius:100px;
+
+    border:1px solid var(--line);
+
+    font-size:12px;
+    font-weight:700;
+
+    transition:.3s;
+}
+
+.btn-primary{
+    background:var(--accent);
+
+    border-color:var(--accent);
+
+    color:#071006;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 40px rgba(217,255,82,.16);
+}
+
+.btn-outline:hover{
+    border-color:var(--accent);
+    color:var(--accent);
+}
+
+.hero-link{
+    font-size:12px;
+    color:#dce3e5;
+}
+
+.hero-link:hover{
+    color:var(--accent);
+}
+
+
+/* HERO SIDE */
+
+.hero-location{
+    position:absolute;
+
+    right:5%;
+    top:50%;
+
+    writing-mode:vertical-rl;
+
+    transform:rotate(180deg);
+
+    font-size:9px;
+
+    letter-spacing:.2em;
+
+    color:#aeb8bc;
+}
+
+.hero-bottom{
+    position:absolute;
+
+    right:5%;
+    bottom:50px;
+
+    display:flex;
+    align-items:center;
+
+    gap:15px;
+
+    color:#9da8ad;
+
+    font-size:9px;
+
+    letter-spacing:.15em;
+}
+
+.hero-bottom strong{
+    color:white;
+    font-size:16px;
+}
+
+.hero-line{
+    width:80px;
+    height:1px;
+
+    background:var(--line);
+}
+
+.hero-line::after{
+    content:"";
+
+    display:block;
+
+    width:30%;
+    height:1px;
+
+    background:var(--accent);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+    padding:130px 0;
+}
+
+.eyebrow{
+    color:#9da8ad;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    letter-spacing:.18em;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro{
+    background:var(--bg);
+}
+
+.intro-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 2fr;
+
+    gap:7vw;
+}
+
+.intro h2{
+    font-family:Manrope;
+
+    font-size:
+        clamp(45px,6vw,85px);
+
+    line-height:.93;
+
+    letter-spacing:-.07em;
+
+    margin-bottom:30px;
+}
+
+.intro h2 span{
+    display:block;
+    color:var(--accent);
+}
+
+.intro p{
+    max-width:650px;
+
+    color:var(--muted);
+
+    font-size:16px;
+
+    line-height:1.9;
+
+    margin-bottom:15px;
+}
+
+
+/* =========================================================
+   TRIPS
+========================================================= */
+
+.trips{
+    background:var(--bg2);
+}
+
+.section-header{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:end;
+
+    margin-bottom:45px;
+}
+
+.section-header h2{
+    font-family:Manrope;
+
+    font-size:
+        clamp(45px,6vw,85px);
+
+    line-height:.9;
+
+    letter-spacing:-.07em;
+
+    margin-top:14px;
+}
+
+.section-header h2 span{
+    color:var(--accent);
+}
+
+.view-all{
+    font-size:12px;
+}
+
+.view-all:hover{
+    color:var(--accent);
+}
+
+
+/* TRIP GRID */
+
+.trip-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.2fr .8fr;
+
+    grid-template-rows:
+        440px 440px;
+
+    gap:16px;
+}
+
+.trip-card{
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:22px;
+
+    background:#111c24;
+}
+
+.trip-card.large{
+    grid-row:span 2;
+}
+
+.trip-image{
+    position:absolute;
+
+    inset:0;
+
+    background-size:cover;
+
+    background-position:center;
+
+    transition:
+        transform .9s
+        cubic-bezier(.2,.7,.2,1);
+}
+
+.trip-card:hover .trip-image{
+    transform:scale(1.07);
+}
+
+.trip-overlay{
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            0deg,
+            rgba(2,7,12,.95),
+            transparent 67%
+        );
+}
+
+.trip-number{
+    position:absolute;
+
+    top:22px;
+    left:24px;
+
+    z-index:2;
+
+    color:var(--accent);
+
+    font-size:10px;
+
+    letter-spacing:.15em;
+}
+
+.trip-duration{
+    position:absolute;
+
+    top:22px;
+    right:24px;
+
+    z-index:2;
+
+    font-size:9px;
+
+    letter-spacing:.15em;
+}
+
+.trip-content{
+    position:absolute;
+
+    left:25px;
+    right:25px;
+    bottom:24px;
+
+    z-index:3;
+}
+
+.trip-category{
+    font-size:9px;
+
+    letter-spacing:.17em;
+
+    color:#c5cdd0;
+}
+
+.trip-content h3{
+    margin:10px 0 23px;
+
+    font-family:Manrope;
+
+    font-size:
+        clamp(38px,4.7vw,70px);
+
+    line-height:.86;
+
+    letter-spacing:-.07em;
+}
+
+.trip-content h3 span{
+    display:block;
+    color:var(--accent);
+}
+
+.trip-footer{
+    display:flex;
+
+    justify-content:space-between;
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+    padding-top:14px;
+
+    font-size:12px;
+}
+
+.trip-footer span:last-child{
+    color:var(--accent);
+}
+
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee{
+    overflow:hidden;
+
+    padding:25px 0;
+
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+
+.marquee-track{
+    width:max-content;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:35px;
+
+    font-family:Manrope;
+
+    font-size:
+        clamp(35px,5vw,75px);
+
+    font-weight:800;
+
+    letter-spacing:-.06em;
+
+    animation:
+        marquee 25s linear infinite;
+}
+
+.marquee-track b{
+    color:var(--accent);
+}
+
+@keyframes marquee{
+
+    to{
+        transform:translateX(-50%);
+    }
+
+}
+
+
+/* =========================================================
+   EXPERIENCE
+========================================================= */
+
+.experience{
+    background:var(--bg3);
+}
+
+.experience-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10vw;
+
+    margin-top:50px;
+}
+
+.experience h2{
+    font-family:Manrope;
+
+    font-size:
+        clamp(45px,6vw,85px);
+
+    line-height:.92;
+
+    letter-spacing:-.07em;
+}
+
+.experience h2 span{
+    display:block;
+    color:var(--accent);
+}
+
+.experience-description{
+    max-width:500px;
+
+    margin:30px 0;
+
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+.feature-list{
+    border-top:1px solid var(--line);
+}
+
+.feature{
+    display:grid;
+
+    grid-template-columns:45px 1fr;
+
+    gap:20px;
+
+    padding:26px 0;
+
+    border-bottom:1px solid var(--line);
+}
+
+.feature-number{
+    color:var(--accent);
+
+    font-size:10px;
+}
+
+.feature h3{
+    font-family:Manrope;
+
+    font-size:23px;
+
+    margin-bottom:8px;
+}
+
+.feature p{
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta-section{
+    position:relative;
+
+    min-height:70vh;
+
+    display:grid;
+
+    place-items:center;
+
+    text-align:center;
+
+    overflow:hidden;
+}
+
+.cta-background{
+    position:absolute;
+
+    inset:0;
+
+    background:
+        url(
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2200&q=90"
+        )
+        center/cover;
+}
+
+.cta-overlay{
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(2,7,12,.80);
+}
+
+.cta-content{
+    position:relative;
+
+    z-index:2;
+
+    padding:50px 20px;
+}
+
+.cta-content h2{
+    font-family:Manrope;
+
+    font-size:
+        clamp(60px,9vw,135px);
+
+    line-height:.85;
+
+    letter-spacing:-.07em;
+
+    margin:20px 0 25px;
+}
+
+.cta-content h2 span{
+    display:block;
+
+    color:var(--accent);
+}
+
+.cta-content p{
+    color:var(--muted);
+
+    margin-bottom:30px;
+}
+
+.cta-buttons{
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    padding:60px 0 25px;
+
+    border-top:1px solid var(--line);
+
+    background:#03080c;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:
+        2fr 1fr 1.5fr 1fr;
+
+    gap:40px;
+}
+
+.footer-brand p{
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-top:15px;
+}
+
+.footer-column{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+}
+
+.footer-column h4{
+    color:white;
+
+    font-size:11px;
+
+    letter-spacing:.15em;
+
+    margin-bottom:8px;
+}
+
+.footer-column a{
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.footer-column a:hover{
+    color:var(--accent);
+}
+
+.footer-bottom{
+    width:min(90%,var(--max));
+
+    margin:50px auto 0;
+
+    padding-top:20px;
+
+    border-top:1px solid var(--line);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#6f7c82;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+    .nav-links,
+    .nav-button{
+        display:none;
+    }
+
+    .menu-button{
+        display:block;
+    }
+
+    .hero{
+        min-height:780px;
+    }
+
+    .hero h1{
+        font-size:70px;
+    }
+
+    .hero-location{
+        display:none;
+    }
+
+    .hero-bottom{
+        bottom:25px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:16px;
+    }
+
+    .section{
+        padding:90px 0;
+    }
+
+    .intro-grid,
+    .experience-grid{
+        grid-template-columns:1fr;
+
+        gap:40px;
+    }
+
+    .section-header{
+        display:block;
+    }
+
+    .view-all{
+        display:inline-block;
+
+        margin-top:20px;
+    }
+
+    .trip-grid{
+        display:block;
+    }
+
+    .trip-card,
+    .trip-card.large{
+        height:480px;
+
+        margin-bottom:15px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+
+        gap:10px;
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .hero h1{
+        font-size:60px;
+    }
+
+    .hero-description{
+        font-size:14px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .cta-buttons{
+        flex-direction:column;
+
+        align-items:center;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-<!-- ================= HEADER ================= -->
 
-<header class="header">
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
-  <a href="index.html" class="logo">
-    <span class="logo-mark">UC</span>
-    <span class="logo-text">
-      unbox<span>crew</span>
-    </span>
-  </a>
+<header class="navbar">
 
-  <nav class="nav">
-    <a href="index.html">Home</a>
-    <a href="trips.html">Trips</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+<div class="nav-container">
 
-  <a href="trips.html" class="header-btn">
-    Explore Trips <span>↗</span>
-  </a>
+<a href="#" class="logo">
+
+<div class="logo-box">
+UC
+</div>
+
+<div class="logo-text">
+unbox<span>crew</span>
+</div>
+
+</a>
+
+
+<nav class="nav-links">
+
+<a href="#home">
+Home
+</a>
+
+<a href="#trips">
+Trips
+</a>
+
+<a href="#experience">
+Experience
+</a>
+
+<a href="#contact">
+Contact
+</a>
+
+</nav>
+
+
+<a href="#trips" class="nav-button">
+Explore Trips ↗
+</a>
+
+
+<button
+class="menu-button"
+id="menuButton"
+>
+☰
+</button>
+
+</div>
+
+
+<div class="mobile-menu" id="mobileMenu">
+
+<a href="#home">
+Home
+</a>
+
+<a href="#trips">
+Trips
+</a>
+
+<a href="#experience">
+Experience
+</a>
+
+<a href="#contact">
+Contact
+</a>
+
+<a href="#trips">
+Book a Trip
+</a>
+
+</div>
 
 </header>
 
 
-<!-- ================= HERO ================= -->
 
-<section class="hero">
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-  <div class="hero-background"></div>
+<section class="hero" id="home">
 
-  <div class="hero-overlay"></div>
+<div class="hero-image"></div>
 
-  <div class="hero-content">
-
-    <div class="eyebrow">
-      <span></span>
-      CURATED GROUP TRAVEL • INDIA
-    </div>
-
-    <h1>
-      Your next
-      <em>escape</em>
-      starts here.
-    </h1>
-
-    <p>
-      Curated journeys, new people and stories worth bringing home.
-      Leave Delhi. Unbox the world. Together.
-    </p>
-
-    <div class="hero-buttons">
-
-      <a href="trips.html" class="btn-primary">
-        Explore Trips
-        <span>↗</span>
-      </a>
-
-      <a href="#story" class="text-button">
-        Discover UnboxCrew
-        <span>↓</span>
-      </a>
-
-    </div>
-
-  </div>
+<div class="hero-overlay"></div>
 
 
-  <div class="hero-location">
-    DELHI → EVERYWHERE
-  </div>
+<div class="hero-content">
+
+<div class="hero-label">
+
+<span class="hero-dot"></span>
+
+CURATED GROUP TRAVEL
+
+<span class="separator">
+•
+</span>
+
+INDIA
+
+</div>
 
 
-  <div class="hero-bottom">
+<h1>
 
-    <span class="slide-number">
-      01
-    </span>
+Your next
 
-    <div class="slide-line"></div>
+<span>
+escape
+</span>
 
-    <span>
-      SCROLL TO EXPLORE
-    </span>
+starts here.
 
-  </div>
-
-</section>
+</h1>
 
 
+<p class="hero-description">
 
-<!-- ================= STORY ================= -->
+Curated journeys. New people.
+Incredible places and stories worth
+bringing home.
 
-<section class="story section" id="story">
+</p>
 
-  <div class="container story-grid">
 
-    <div class="eyebrow">
-      01 — THE UNBOXCREW WAY
-    </div>
+<div class="hero-actions">
 
-    <div class="story-content">
+<a
+href="#trips"
+class="btn btn-primary"
+>
+Explore Trips ↗
+</a>
 
-      <h2>
-        Don't just visit a place.
-        <span>Live the journey.</span>
-      </h2>
 
-      <p>
-        UnboxCrew creates thoughtfully planned group journeys
-        where the route matters, but the moments between destinations
-        matter even more.
-      </p>
+<a
+href="#experience"
+class="hero-link"
+>
+Discover UnboxCrew ↓
+</a>
 
-      <p>
-        Meet people, chase views, eat local, laugh too much
-        and come back with a story.
-      </p>
+</div>
 
-    </div>
+</div>
 
-  </div>
+
+<div class="hero-location">
+
+DELHI → EVERYWHERE
+
+</div>
+
+
+<div class="hero-bottom">
+
+<strong>
+01
+</strong>
+
+<div class="hero-line"></div>
+
+<span>
+SCROLL TO EXPLORE
+</span>
+
+</div>
 
 </section>
 
 
 
-<!-- ================= TRIPS ================= -->
+<!-- =====================================================
+     INTRO
+===================================================== -->
 
-<section class="trips section" id="trips">
+<section class="section intro">
 
-  <div class="container">
+<div class="container intro-grid">
 
-    <div class="section-heading">
+<div class="eyebrow">
 
-      <div>
+01 — THE UNBOXCREW WAY
 
-        <div class="eyebrow">
-          02 — UPCOMING ESCAPES
-        </div>
+</div>
 
-        <h2>
-          Pick your
-          <span>escape.</span>
-        </h2>
 
-      </div>
+<div>
 
-      <a href="trips.html" class="text-button">
-        View all trips ↗
-      </a>
+<h2>
 
-    </div>
+Don't just visit a place.
 
+<span>
+Live the journey.
+</span>
 
+</h2>
 
-    <div class="trip-grid">
 
+<p>
 
-      <!-- MUSSOORIE -->
+UnboxCrew creates thoughtfully planned
+group journeys where the destination
+is only part of the story.
 
-      <article class="trip-card large">
+</p>
 
-        <div
-          class="trip-image"
-          style="
-          background-image:
-          url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=90');
-          "
-        ></div>
 
-        <div class="trip-overlay"></div>
+<p>
 
-        <div class="trip-number">
-          01
-        </div>
+Meet people, chase views, discover
+local experiences, laugh too much
+and come back with memories that last.
 
-        <div class="trip-duration">
-          3 DAYS / 2 NIGHTS
-        </div>
+</p>
 
-        <div class="trip-content">
+</div>
 
-          <small>
-            MOUNTAINS • ADVENTURE
-          </small>
-
-          <h3>
-            Mussoorie
-            <em>Escape</em>
-          </h3>
-
-          <div class="trip-footer">
-
-            <span>
-              From ₹4,700
-            </span>
-
-            <a href="trip.html?trip=mussoorie">
-              View Trip ↗
-            </a>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- RISHIKESH -->
-
-      <article class="trip-card">
-
-        <div
-          class="trip-image"
-          style="
-          background-image:
-          url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=90');
-          "
-        ></div>
-
-        <div class="trip-overlay"></div>
-
-        <div class="trip-number">
-          02
-        </div>
-
-        <div class="trip-duration">
-          2 DAYS / 1 NIGHT
-        </div>
-
-        <div class="trip-content">
-
-          <small>
-            RIVER • ADVENTURE
-          </small>
-
-          <h3>
-            Rishikesh
-            <em>Unplugged</em>
-          </h3>
-
-          <div class="trip-footer">
-
-            <span>
-              From ₹2,999
-            </span>
-
-            <a href="trip.html?trip=rishikesh">
-              View Trip ↗
-            </a>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- BRAJ -->
-
-      <article class="trip-card">
-
-        <div
-          class="trip-image"
-          style="
-          background-image:
-          url('https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1400&q=90');
-          "
-        ></div>
-
-        <div class="trip-overlay"></div>
-
-        <div class="trip-number">
-          03
-        </div>
-
-        <div class="trip-duration">
-          2 DAYS / 1 NIGHT
-        </div>
-
-        <div class="trip-content">
-
-          <small>
-            HERITAGE • CULTURE
-          </small>
-
-          <h3>
-            Heart of
-            <em>Braj</em>
-          </h3>
-
-          <div class="trip-footer">
-
-            <span>
-              From ₹3,999
-            </span>
-
-            <a href="trip.html?trip=braj">
-              View Trip ↗
-            </a>
-
-          </div>
-
-        </div>
-
-      </article>
-
-    </div>
-
-  </div>
+</div>
 
 </section>
 
 
 
-<!-- ================= MARQUEE ================= -->
+<!-- =====================================================
+     TRIPS
+===================================================== -->
+
+<section
+class="section trips"
+id="trips"
+>
+
+<div class="container">
+
+
+<div class="section-header">
+
+<div>
+
+<div class="eyebrow">
+02 — UPCOMING ESCAPES
+</div>
+
+<h2>
+
+Pick your
+
+<span>
+escape.
+</span>
+
+</h2>
+
+</div>
+
+
+<a
+href="#trips"
+class="view-all"
+>
+View all trips ↗
+</a>
+
+</div>
+
+
+
+<div class="trip-grid">
+
+
+<!-- MUSSOORIE -->
+
+<article class="trip-card large">
+
+<a href="#mussoorie">
+
+
+<div
+class="trip-image"
+style="
+background-image:url(
+'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=90'
+);
+"
+></div>
+
+
+<div class="trip-overlay"></div>
+
+
+<div class="trip-number">
+01
+</div>
+
+
+<div class="trip-duration">
+3 DAYS / 2 NIGHTS
+</div>
+
+
+<div class="trip-content">
+
+<div class="trip-category">
+MOUNTAINS • ADVENTURE
+</div>
+
+
+<h3>
+
+Mussoorie
+
+<span>
+Escape
+</span>
+
+</h3>
+
+
+<div class="trip-footer">
+
+<strong>
+From ₹4,700
+</strong>
+
+<span>
+View Trip ↗
+</span>
+
+</div>
+
+</div>
+
+</a>
+
+</article>
+
+
+
+<!-- RISHIKESH -->
+
+<article class="trip-card">
+
+<a href="#rishikesh">
+
+<div
+class="trip-image"
+style="
+background-image:url(
+'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=90'
+);
+"
+></div>
+
+
+<div class="trip-overlay"></div>
+
+
+<div class="trip-number">
+02
+</div>
+
+
+<div class="trip-duration">
+2 DAYS / 1 NIGHT
+</div>
+
+
+<div class="trip-content">
+
+<div class="trip-category">
+RIVER • ADVENTURE
+</div>
+
+
+<h3>
+
+Rishikesh
+
+<span>
+Unplugged
+</span>
+
+</h3>
+
+
+<div class="trip-footer">
+
+<strong>
+From ₹2,999
+</strong>
+
+<span>
+View Trip ↗
+</span>
+
+</div>
+
+</div>
+
+</a>
+
+</article>
+
+
+
+<!-- BRAJ -->
+
+<article class="trip-card">
+
+<a href="#braj">
+
+<div
+class="trip-image"
+style="
+background-image:url(
+'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1400&q=90'
+);
+"
+></div>
+
+
+<div class="trip-overlay"></div>
+
+
+<div class="trip-number">
+03
+</div>
+
+
+<div class="trip-duration">
+2 DAYS / 1 NIGHT
+</div>
+
+
+<div class="trip-content">
+
+<div class="trip-category">
+HERITAGE • CULTURE
+</div>
+
+
+<h3>
+
+Heart of
+
+<span>
+Braj
+</span>
+
+</h3>
+
+
+<div class="trip-footer">
+
+<strong>
+From ₹3,999
+</strong>
+
+<span>
+View Trip ↗
+</span>
+
+</div>
+
+</div>
+
+</a>
+
+</article>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MARQUEE
+===================================================== -->
 
 <section class="marquee">
 
-  <div class="marquee-track">
+<div class="marquee-track">
 
-    <span>UNBOX THE WORLD</span>
-    <b>✦</b>
+<span>
+UNBOX THE WORLD
+</span>
 
-    <span>MEET YOUR PEOPLE</span>
-    <b>✦</b>
+<b>✦</b>
 
-    <span>MAKE STORIES</span>
-    <b>✦</b>
+<span>
+MEET YOUR PEOPLE
+</span>
 
-    <span>GO SOMEWHERE NEW</span>
-    <b>✦</b>
+<b>✦</b>
 
-    <span>UNBOX THE WORLD</span>
-    <b>✦</b>
+<span>
+MAKE STORIES
+</span>
 
-  </div>
+<b>✦</b>
 
-</section>
+<span>
+GO SOMEWHERE NEW
+</span>
 
+<b>✦</b>
 
+<span>
+UNBOX THE WORLD
+</span>
 
-<!-- ================= EXPERIENCE ================= -->
+<b>✦</b>
 
-<section class="experience section">
-
-  <div class="container">
-
-    <div class="eyebrow">
-      03 — THE EXPERIENCE
-    </div>
-
-
-    <div class="experience-grid">
-
-      <div>
-
-        <h2>
-          Less itinerary.
-          <span>More memories.</span>
-        </h2>
-
-        <p>
-          We handle the route, stays, transport and little details
-          so you can focus on the people, places and moments
-          that make a trip yours.
-        </p>
-
-        <a href="contact.html" class="outline-button">
-          Talk to UnboxCrew ↗
-        </a>
-
-      </div>
-
-
-      <div class="features">
-
-        <div class="feature">
-
-          <strong>01</strong>
-
-          <div>
-
-            <h3>
-              Curated Routes
-            </h3>
-
-            <p>
-              Places worth stopping for,
-              not just ticking off.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="feature">
-
-          <strong>02</strong>
-
-          <div>
-
-            <h3>
-              Good People
-            </h3>
-
-            <p>
-              Meet fellow travellers
-              and make the journey personal.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="feature">
-
-          <strong>03</strong>
-
-          <div>
-
-            <h3>
-              Everything Planned
-            </h3>
-
-            <p>
-              Transport, stays and
-              trip coordination handled.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="feature">
-
-          <strong>04</strong>
-
-          <div>
-
-            <h3>
-              One Crew
-            </h3>
-
-            <p>
-              One team from booking
-              until you return home.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 </section>
 
 
 
-<!-- ================= CTA ================= -->
+<!-- =====================================================
+     EXPERIENCE
+===================================================== -->
 
-<section class="cta-section">
+<section
+class="section experience"
+id="experience"
+>
 
-  <div class="cta">
+<div class="container">
 
-    <div class="eyebrow">
-      READY?
-    </div>
+<div class="eyebrow">
+03 — THE EXPERIENCE
+</div>
 
-    <h2>
-      Let's plan your
-      <span>next story.</span>
-    </h2>
 
-    <p>
-      Have a question or ready to book?
-    </p>
+<div class="experience-grid">
 
-    <div class="cta-buttons">
 
-      <a
-        href="https://wa.me/919625131595"
-        target="_blank"
-        class="btn-primary"
-      >
-        WhatsApp Us ↗
-      </a>
+<div>
 
-      <a
-        href="mailto:bookings@unboxcrew.com"
-        class="outline-button"
-      >
-        Email Us
-      </a>
+<h2>
 
-    </div>
+Less itinerary.
 
-  </div>
+<span>
+More memories.
+</span>
+
+</h2>
+
+
+<p class="experience-description">
+
+We handle the route, stays,
+transport and trip coordination.
+
+You focus on the people,
+places and moments that make
+the journey yours.
+
+</p>
+
+
+<a
+href="https://wa.me/919625131595?text=Hi%20UnboxCrew%2C%20I%20want%20to%20know%20more%20about%20your%20trips."
+target="_blank"
+class="btn btn-outline"
+>
+
+Talk to UnboxCrew ↗
+
+</a>
+
+</div>
+
+
+
+<div class="feature-list">
+
+
+<div class="feature">
+
+<div class="feature-number">
+01
+</div>
+
+<div>
+
+<h3>
+Curated Routes
+</h3>
+
+<p>
+Places worth stopping for,
+not just ticking off.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="feature">
+
+<div class="feature-number">
+02
+</div>
+
+<div>
+
+<h3>
+Small Group Energy
+</h3>
+
+<p>
+Meet fellow travellers
+and make the journey personal.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="feature">
+
+<div class="feature-number">
+03
+</div>
+
+<div>
+
+<h3>
+Everything Planned
+</h3>
+
+<p>
+Transport, stays and
+coordination handled.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="feature">
+
+<div class="feature-number">
+04
+</div>
+
+<div>
+
+<h3>
+One Crew
+</h3>
+
+<p>
+One team from booking
+until you return home.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
 
 </section>
 
 
 
-<!-- ================= FOOTER ================= -->
+<!-- =====================================================
+     CONTACT / CTA
+===================================================== -->
+
+<section
+class="cta-section"
+id="contact"
+>
+
+<div class="cta-background"></div>
+
+<div class="cta-overlay"></div>
+
+
+<div class="cta-content">
+
+<div class="eyebrow">
+READY?
+</div>
+
+
+<h2>
+
+Let's plan your
+
+<span>
+next story.
+</span>
+
+</h2>
+
+
+<p>
+Questions or ready to book?
+We're just one message away.
+</p>
+
+
+<div class="cta-buttons">
+
+
+<a
+href="https://wa.me/919625131595?text=Hi%20UnboxCrew%2C%20I%20want%20to%20know%20about%20your%20upcoming%20trips."
+target="_blank"
+class="btn btn-primary"
+>
+WhatsApp Us ↗
+</a>
+
+
+<a
+href="mailto:bookings@unboxcrew.com"
+class="btn btn-outline"
+>
+bookings@unboxcrew.com
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
-  <div class="footer-brand">
-
-    <div class="logo">
-      <span class="logo-mark">
-        UC
-      </span>
-
-      <span class="logo-text">
-        unbox<span>crew</span>
-      </span>
-    </div>
-
-    <p>
-      Unbox the world. Together.
-    </p>
-
-  </div>
+<div class="container footer-grid">
 
 
-  <div class="footer-links">
+<div>
 
-    <a href="trips.html">
-      Trips
-    </a>
+<a href="#" class="logo">
 
-    <a href="about.html">
-      About
-    </a>
+<div class="logo-box">
+UC
+</div>
 
-    <a href="contact.html">
-      Contact
-    </a>
+<div class="logo-text">
+unbox<span>crew</span>
+</div>
 
-    <a href="mailto:bookings@unboxcrew.com">
-      bookings@unboxcrew.com
-    </a>
-
-  </div>
+</a>
 
 
-  <div class="footer-bottom">
+<p class="footer-description">
+Unbox the world. Together.
+</p>
 
-    <a href="tel:+919625131595">
-      +91 96251 31595
-    </a>
+</div>
 
-    <span>
-      © 2026 UnboxCrew
-    </span>
 
-  </div>
+
+<div class="footer-column">
+
+<h4>
+EXPLORE
+</h4>
+
+<a href="#home">
+Home
+</a>
+
+<a href="#trips">
+Trips
+</a>
+
+<a href="#experience">
+Experience
+</a>
+
+</div>
+
+
+
+<div class="footer-column">
+
+<h4>
+CONTACT
+</h4>
+
+<a href="tel:+919625131595">
++91 96251 31595
+</a>
+
+<a href="mailto:bookings@unboxcrew.com">
+bookings@unboxcrew.com
+</a>
+
+<a
+href="https://wa.me/919625131595"
+target="_blank"
+>
+WhatsApp ↗
+</a>
+
+</div>
+
+
+
+<div class="footer-column">
+
+<h4>
+BRAND
+</h4>
+
+<a href="#">
+Instagram ↗
+</a>
+
+<a href="#">
+Facebook ↗
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="footer-bottom">
+
+<span>
+© 2026 UnboxCrew
+</span>
+
+<span>
+Unbox the world. Together.
+</span>
+
+</div>
 
 </footer>
 
 
-<script src="script.js"></script>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+const menuButton =
+document.getElementById("menuButton");
+
+const mobileMenu =
+document.getElementById("mobileMenu");
+
+
+menuButton.addEventListener(
+"click",
+function(){
+
+mobileMenu.classList.toggle("active");
+
+}
+);
+
+
+/* CLOSE MENU AFTER CLICK */
+
+document
+.querySelectorAll(".mobile-menu a")
+.forEach(function(link){
+
+link.addEventListener(
+"click",
+function(){
+
+mobileMenu.classList.remove("active");
+
+}
+);
+
+});
+
+
+
+/* =====================================================
+   HERO PARALLAX
+===================================================== */
+
+const heroImage =
+document.querySelector(".hero-image");
+
+
+window.addEventListener(
+"scroll",
+function(){
+
+const scroll =
+window.scrollY;
+
+if(heroImage){
+
+heroImage.style.transform =
+`translateY(${scroll * .10}px) scale(1.02)`;
+
+}
+
+}
+);
+
+
+
+/* =====================================================
+   TRIP CARD CLICK
+===================================================== */
+
+const tripCards =
+document.querySelectorAll(".trip-card");
+
+
+tripCards.forEach(function(card){
+
+card.addEventListener(
+"mouseenter",
+function(){
+
+card.style.transform =
+"translateY(-4px)";
+
+}
+);
+
+
+card.addEventListener(
+"mouseleave",
+function(){
+
+card.style.transform =
+"translateY(0)";
+
+}
+);
+
+});
+
+
+</script>
 
 </body>
 </html>
