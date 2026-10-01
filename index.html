@@ -6,44 +6,48 @@
 
 <title>UnboxCrew — Unbox the World. Together.</title>
 
-<meta name="description"
-content="UnboxCrew creates cinematic group travel experiences, adventures and unforgettable escapes.">
+<meta name="description" content="UnboxCrew — aesthetic small group travel experiences.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 
 <style>
 
 /* =========================================================
-   UNBOXCREW — PREMIUM TRAVEL EXPERIENCE
-   Single File Version
-   ========================================================= */
+   UNBOXCREW
+   PREMIUM LIGHT / GEN-Z / TRAVEL
+========================================================= */
 
 :root{
-    --bg:#071016;
-    --bg-soft:#0b171e;
-    --card:rgba(255,255,255,.055);
-    --card-border:rgba(255,255,255,.11);
+    --white:#ffffff;
+    --cream:#f8faf8;
+    --cream2:#f1f6f5;
 
-    --white:#f5f8f9;
-    --muted:#9caeb7;
+    --ink:#142c35;
+    --ink2:#26444d;
+    --muted:#71848a;
 
-    --blue:#55b7ff;
-    --blue2:#177cc4;
-    --gold:#d8ad67;
+    --blue:#6ca8cc;
+    --blue2:#bcdced;
+    --blue3:#e8f4fa;
 
-    --radius:24px;
-    --nav-height:82px;
+    --mint:#dceee9;
+    --green:#376b63;
 
-    --shadow:0 25px 70px rgba(0,0,0,.35);
+    --line:rgba(20,44,53,.10);
+
+    --shadow:0 25px 80px rgba(34,67,78,.12);
+    --soft-shadow:0 12px 45px rgba(34,67,78,.08);
+
+    --radius:28px;
 }
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 html{
@@ -51,13 +55,13 @@ html{
 }
 
 body{
-    background:var(--bg);
-    color:var(--white);
+    background:var(--cream);
+    color:var(--ink);
     font-family:"DM Sans",sans-serif;
     overflow-x:hidden;
 }
 
-body.locked{
+body.modal-open{
     overflow:hidden;
 }
 
@@ -66,524 +70,606 @@ a{
     text-decoration:none;
 }
 
+button,
+input,
+textarea{
+    font:inherit;
+}
+
 button{
-    font-family:inherit;
+    cursor:pointer;
 }
 
-img{
-    max-width:100%;
+img,
+video{
     display:block;
+    max-width:100%;
 }
 
-/* =========================
-   BACKGROUND
-========================= */
 
-body::before{
-    content:"";
+/* =========================================================
+   PAGE TRANSITION
+========================================================= */
+
+#app{
+    min-height:100vh;
+}
+
+.page-transition{
+    animation:pageIn .55s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================================================
+   GLASS NAVBAR — ONLY GLASS ELEMENT
+========================================================= */
+
+.navbar-wrap{
     position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:
-        radial-gradient(circle at 10% 10%,rgba(40,150,220,.08),transparent 30%),
-        radial-gradient(circle at 90% 30%,rgba(216,173,103,.06),transparent 25%);
-    z-index:-2;
-}
-
-.noise{
-    position:fixed;
-    inset:0;
-    opacity:.025;
-    pointer-events:none;
-    z-index:1000;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
-}
-
-/* =========================
-   CURSOR
-========================= */
-
-.cursor{
-    position:fixed;
-    width:18px;
-    height:18px;
-    border:1px solid rgba(255,255,255,.65);
-    border-radius:50%;
-    pointer-events:none;
-    z-index:9999;
-    transform:translate(-50%,-50%);
-    transition:width .25s,height .25s,background .25s;
-    mix-blend-mode:difference;
-}
-
-.cursor.active{
-    width:55px;
-    height:55px;
-    background:#fff;
-}
-
-/* =========================
-   NAVBAR
-========================= */
-
-.navbar{
-    position:fixed;
-    top:0;
+    top:18px;
     left:0;
     right:0;
-    height:var(--nav-height);
-    z-index:500;
+    z-index:1000;
+}
+
+.navbar{
+    width:min(1240px,92%);
+    height:70px;
+    margin:auto;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    padding:0 5vw;
+    padding:0 12px 0 20px;
 
-    background:rgba(5,13,18,.52);
+    background:rgba(255,255,255,.68);
+    border:1px solid rgba(255,255,255,.8);
+
     backdrop-filter:blur(22px);
     -webkit-backdrop-filter:blur(22px);
 
-    border-bottom:1px solid rgba(255,255,255,.07);
+    border-radius:22px;
+
+    box-shadow:0 12px 45px rgba(30,66,79,.09);
 
     transition:.35s ease;
 }
 
 .navbar.scrolled{
-    background:rgba(5,13,18,.88);
+    background:rgba(255,255,255,.91);
 }
 
 .logo{
     display:flex;
     align-items:center;
     gap:10px;
-    font-family:"Manrope",sans-serif;
-    font-size:22px;
-    font-weight:800;
-    letter-spacing:-1px;
+    min-width:205px;
 }
 
 .logo-mark{
-    width:34px;
-    height:34px;
-    border:1px solid rgba(255,255,255,.35);
-    border-radius:10px;
-    display:grid;
-    place-items:center;
-    transform:rotate(-8deg);
+    width:42px;
+    height:42px;
+    flex-shrink:0;
 }
 
-.logo-mark::after{
-    content:"";
-    width:12px;
-    height:12px;
-    border-radius:50%;
-    background:linear-gradient(135deg,var(--blue),var(--gold));
+.logo-mark svg{
+    width:100%;
+    height:100%;
+}
+
+.logo-name{
+    font-family:"Manrope",sans-serif;
+    font-size:21px;
+    font-weight:800;
+    letter-spacing:-1.5px;
+    line-height:1;
+}
+
+.logo-name span{
+    color:#5b9ac0;
+}
+
+.logo-sub{
+    font-size:7px;
+    font-weight:700;
+    letter-spacing:2.3px;
+    color:#789096;
+    margin-top:5px;
 }
 
 .nav-links{
     display:flex;
     align-items:center;
-    gap:28px;
+    gap:22px;
 }
 
 .nav-links a{
-    color:#c8d3d8;
-    font-size:13px;
-    font-weight:600;
+    font-size:12px;
+    font-weight:700;
+    color:#385058;
     position:relative;
     transition:.25s;
 }
 
-.nav-links a::after{
+.nav-links a:after{
     content:"";
     position:absolute;
-    bottom:-8px;
-    left:0;
+    height:2px;
     width:0;
-    height:1px;
-    background:var(--blue);
-    transition:.3s;
+    left:50%;
+    bottom:-7px;
+    background:#5d9fc2;
+    transform:translateX(-50%);
+    transition:.25s;
 }
 
 .nav-links a:hover{
-    color:white;
+    color:#3d87ad;
 }
 
-.nav-links a:hover::after{
+.nav-links a:hover:after{
     width:100%;
 }
 
-.nav-cta{
-    padding:11px 18px;
-    border:1px solid rgba(255,255,255,.18);
-    border-radius:999px;
-    background:rgba(255,255,255,.07);
-}
-
-.menu{
-    display:none;
-    background:none;
+.nav-book{
     border:0;
     color:white;
-    font-size:26px;
-    cursor:pointer;
+    background:#173943;
+    padding:12px 17px;
+    border-radius:14px;
+    font-weight:700;
+    font-size:12px;
+    transition:.3s;
 }
 
-/* =========================
+.nav-book:hover{
+    transform:translateY(-2px);
+    background:#255561;
+}
+
+.mobile-menu{
+    display:none;
+    border:0;
+    background:none;
+    font-size:25px;
+    color:var(--ink);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.container{
+    width:min(1220px,92%);
+    margin:auto;
+}
+
+section{
+    padding:115px 0;
+}
+
+.section-top{
+    margin-bottom:50px;
+}
+
+.kicker{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    color:#68909d;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:4px;
+    text-transform:uppercase;
+
+    margin-bottom:15px;
+}
+
+.kicker:before{
+    content:"";
+    width:30px;
+    height:1px;
+    background:#72a7bd;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-weight:600;
+    font-size:clamp(42px,5vw,68px);
+    line-height:.98;
+    letter-spacing:-2.5px;
+}
+
+.section-title em{
+    color:#4d8eaa;
+    font-weight:500;
+}
+
+.section-description{
+    max-width:560px;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:14px;
+    margin-top:18px;
+}
+
+.center{
+    text-align:center;
+}
+
+.center .kicker{
+    justify-content:center;
+}
+
+.center .section-description{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+
+/* =========================================================
+   MOTION TEXT
+========================================================= */
+
+.motion-text{
+    opacity:0;
+    transform:translateY(32px);
+    filter:blur(5px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.2,.8,.2,1),
+        filter .8s ease;
+}
+
+.motion-text.visible{
+    opacity:1;
+    transform:none;
+    filter:blur(0);
+}
+
+.delay-1{transition-delay:.08s}
+.delay-2{transition-delay:.16s}
+.delay-3{transition-delay:.24s}
+.delay-4{transition-delay:.32s}
+
+
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero{
     min-height:100vh;
+    height:850px;
+    max-height:950px;
+
     position:relative;
-    display:flex;
-    align-items:flex-end;
-    padding:150px 5vw 75px;
     overflow:hidden;
+
+    display:flex;
+    align-items:center;
+
+    background:#e9f5fa;
 }
 
-.hero-video{
+.hero-image{
     position:absolute;
     inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
-    z-index:-4;
-    filter:saturate(.9);
+    object-position:center;
+    transform:scale(1.03);
 }
 
-.hero-fallback{
+.hero-light{
     position:absolute;
     inset:0;
-    z-index:-5;
 
     background:
-        linear-gradient(180deg,rgba(3,11,16,.25),rgba(3,10,14,.92)),
-        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=90")
-        center/cover;
+        linear-gradient(
+            90deg,
+            rgba(248,251,250,.96) 0%,
+            rgba(248,251,250,.80) 28%,
+            rgba(248,251,250,.25) 60%,
+            rgba(248,251,250,.03) 100%
+        );
+
+    z-index:1;
 }
 
-.hero-overlay{
+.hero-bottom{
     position:absolute;
-    inset:0;
-    background:
-        linear-gradient(90deg,rgba(2,9,13,.85),rgba(2,9,13,.18) 65%),
-        linear-gradient(0deg,#071016 0%,transparent 42%);
-    z-index:-3;
-}
+    left:0;
+    right:0;
+    bottom:0;
+    height:180px;
 
-.hero-grid{
-    position:absolute;
-    inset:0;
-    opacity:.12;
-    background-image:
-        linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
-    background-size:100px 100px;
-    mask-image:linear-gradient(to bottom,transparent,#000 30%,transparent);
+    background:linear-gradient(
+        transparent,
+        var(--cream)
+    );
+
+    z-index:1;
 }
 
 .hero-content{
-    max-width:920px;
     position:relative;
+    z-index:2;
+    width:min(1220px,92%);
+    margin:auto;
+    padding-top:90px;
 }
 
-.eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:8px 12px;
-    border:1px solid rgba(255,255,255,.14);
-    border-radius:999px;
-    background:rgba(255,255,255,.055);
-    backdrop-filter:blur(15px);
-    color:#dce8ec;
+.hero-small{
+    color:#5b7e89;
     font-size:11px;
-    letter-spacing:1.7px;
-    text-transform:uppercase;
-    margin-bottom:25px;
-}
-
-.eyebrow-dot{
-    width:6px;
-    height:6px;
-    background:#72d5ff;
-    border-radius:50%;
-    box-shadow:0 0 16px #72d5ff;
-}
-
-.hero-title{
-    font-family:"Manrope",sans-serif;
-    font-size:clamp(52px,8vw,125px);
-    line-height:.88;
-    letter-spacing:-6px;
     font-weight:800;
-    max-width:950px;
+    letter-spacing:4px;
+    text-transform:uppercase;
 }
 
-.hero-title span{
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(62px,8vw,112px);
+    line-height:.88;
+    letter-spacing:-5px;
+    max-width:750px;
+    margin:22px 0;
+}
+
+.hero h1 span{
     display:block;
-    overflow:hidden;
+    color:#4c8fae;
+    font-style:italic;
 }
 
-.hero-title .outline{
-    color:transparent;
-    -webkit-text-stroke:1px rgba(255,255,255,.65);
-}
-
-.hero-title .gradient{
-    background:linear-gradient(100deg,#fff,#9bd9ff 50%,#d8ad67);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-}
-
-.hero-subtitle{
-    margin-top:28px;
-    max-width:620px;
-    color:#b9c8ce;
-    line-height:1.7;
-    font-size:16px;
+.hero-description{
+    max-width:500px;
+    color:#526b73;
+    line-height:1.8;
+    font-size:15px;
 }
 
 .hero-actions{
-    margin-top:34px;
     display:flex;
-    gap:13px;
+    gap:12px;
+    margin-top:30px;
     flex-wrap:wrap;
 }
 
 .btn{
     border:0;
-    cursor:pointer;
-    padding:15px 23px;
-    border-radius:999px;
-    font-weight:700;
-    font-size:13px;
-    transition:.3s ease;
+    border-radius:16px;
+    padding:15px 21px;
     display:inline-flex;
     align-items:center;
     justify-content:center;
     gap:9px;
+    font-size:13px;
+    font-weight:800;
+    transition:.3s cubic-bezier(.2,.8,.2,1);
 }
 
 .btn-primary{
-    background:white;
-    color:#061015;
+    color:white;
+    background:#173b45;
+    box-shadow:0 15px 35px rgba(23,59,69,.17);
 }
 
 .btn-primary:hover{
-    transform:translateY(-3px);
-    box-shadow:0 12px 35px rgba(255,255,255,.16);
+    transform:translateY(-4px);
+    box-shadow:0 20px 45px rgba(23,59,69,.23);
 }
 
-.btn-glass{
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.18);
-    color:white;
-    backdrop-filter:blur(15px);
+.btn-soft{
+    color:#23434d;
+    background:rgba(255,255,255,.75);
+    border:1px solid rgba(255,255,255,.95);
 }
 
-.btn-glass:hover{
-    background:rgba(255,255,255,.14);
-    transform:translateY(-3px);
+.btn-soft:hover{
+    transform:translateY(-4px);
 }
 
-.hero-bottom{
+.hero-mini-stats{
+    display:flex;
+    gap:35px;
+    margin-top:42px;
+}
+
+.hero-stat strong{
+    display:block;
+    font-family:"Manrope";
+    font-size:22px;
+}
+
+.hero-stat span{
+    color:#6b7f84;
+    font-size:10px;
+}
+
+.hero-scroll{
     position:absolute;
-    bottom:35px;
-    right:5vw;
-    display:flex;
-    align-items:center;
-    gap:13px;
-    color:#92a2aa;
-    font-size:11px;
-    letter-spacing:1px;
-    text-transform:uppercase;
-}
-
-.scroll-line{
-    width:50px;
-    height:1px;
-    background:#71818a;
-}
-
-/* =========================
-   GENERAL
-========================= */
-
-.section{
-    padding:120px 5vw;
-    position:relative;
-}
-
-.section-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-    gap:30px;
-    margin-bottom:55px;
-}
-
-.section-label{
-    color:var(--blue);
-    font-size:11px;
+    z-index:3;
+    bottom:36px;
+    right:5%;
+    text-align:center;
+    color:#53727c;
+    font-size:9px;
+    font-weight:700;
     letter-spacing:2px;
     text-transform:uppercase;
-    margin-bottom:12px;
 }
 
-.section-title{
-    font-family:"Manrope",sans-serif;
-    font-size:clamp(35px,5vw,70px);
-    line-height:.95;
-    letter-spacing:-3px;
-}
-
-.section-description{
-    max-width:430px;
-    color:var(--muted);
-    line-height:1.7;
-    font-size:14px;
-}
-
-/* =========================
-   MARQUEE
-========================= */
-
-.marquee{
-    overflow:hidden;
-    border-top:1px solid rgba(255,255,255,.08);
-    border-bottom:1px solid rgba(255,255,255,.08);
-    padding:19px 0;
-    background:#09141a;
-}
-
-.marquee-track{
-    width:max-content;
+.scroll-dot{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:1px solid #83a9b6;
     display:flex;
-    animation:marquee 25s linear infinite;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 8px;
+    animation:bounce 2s infinite;
 }
 
-.marquee-item{
-    padding:0 35px;
-    font-family:"Manrope",sans-serif;
-    font-size:15px;
-    font-weight:700;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color:#a7b7be;
+@keyframes bounce{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(7px)}
 }
 
-.marquee-item span{
-    color:var(--gold);
+
+/* =========================================================
+   HOME TRIP SECTION
+========================================================= */
+
+.trips-home{
+    background:var(--cream);
 }
 
-@keyframes marquee{
-    from{transform:translateX(0)}
-    to{transform:translateX(-50%)}
+.trip-slider-wrap{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    padding:30px 0 80px;
 }
 
-/* =========================
-   TRIP CARDS
-========================= */
+.trip-stage{
+    position:relative;
+    width:100%;
+    height:510px;
 
-.trips-grid{
-    display:grid;
-    grid-template-columns:repeat(12,1fr);
-    gap:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    perspective:1400px;
+    touch-action:pan-y;
+    cursor:grab;
 }
 
-.trip-card{
-    grid-column:span 6;
-    height:560px;
+.trip-stage.dragging{
+    cursor:grabbing;
+}
+
+.trip-slide{
+    position:absolute;
+
+    width:min(430px,72vw);
+    height:490px;
+
+    border-radius:31px;
+    overflow:hidden;
+
+    background:white;
+
+    box-shadow:0 25px 70px rgba(31,68,81,.16);
+
+    transform-style:preserve-3d;
+
+    user-select:none;
+
+    transition:
+        transform .65s cubic-bezier(.2,.8,.2,1),
+        opacity .55s ease,
+        filter .55s ease;
+
+    will-change:transform;
+}
+
+.trip-slide-image{
+    height:300px;
     position:relative;
     overflow:hidden;
-    border-radius:var(--radius);
-    border:1px solid var(--card-border);
-    background:#0c181e;
-    cursor:pointer;
-    transform-style:preserve-3d;
-    transition:transform .15s ease;
 }
 
-.trip-card.large{
-    grid-column:span 7;
-}
-
-.trip-card.small{
-    grid-column:span 5;
-}
-
-.trip-card img{
-    position:absolute;
-    inset:0;
+.trip-slide-image img,
+.trip-slide-image video{
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:transform .8s cubic-bezier(.2,.8,.2,1);
 }
 
-.trip-card:hover img{
-    transform:scale(1.09);
-}
-
-.trip-card::after{
+.trip-slide-image:after{
     content:"";
     position:absolute;
     inset:0;
-    background:
-        linear-gradient(0deg,rgba(2,8,11,.92),rgba(2,8,11,.05) 65%),
-        linear-gradient(90deg,rgba(0,0,0,.18),transparent);
+    background:linear-gradient(transparent 55%,rgba(8,31,38,.25));
 }
 
-.trip-content{
+.trip-badge{
     position:absolute;
     z-index:2;
-    bottom:28px;
-    left:28px;
-    right:28px;
-    transform:translateZ(45px);
-}
+    top:17px;
+    left:17px;
 
-.trip-meta{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-bottom:12px;
-}
+    padding:8px 12px;
+    border-radius:11px;
 
-.pill{
-    padding:7px 10px;
-    border:1px solid rgba(255,255,255,.16);
-    border-radius:999px;
-    background:rgba(0,0,0,.22);
-    backdrop-filter:blur(12px);
+    color:#244650;
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(10px);
+
     font-size:10px;
-    color:#d4e0e5;
+    font-weight:800;
 }
 
-.trip-name{
-    font-family:"Manrope",sans-serif;
-    font-size:clamp(27px,4vw,48px);
-    line-height:1;
-    letter-spacing:-2px;
-    margin-bottom:12px;
+.trip-slide-content{
+    padding:21px;
 }
 
-.trip-desc{
-    color:#b5c1c6;
-    font-size:13px;
-    line-height:1.55;
-    max-width:480px;
+.trip-location{
+    color:#719099;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
 }
 
-.trip-bottom{
-    margin-top:18px;
+.trip-slide h3{
+    font-family:"Playfair Display",serif;
+    font-size:29px;
+    margin:7px 0;
+}
+
+.trip-one-line{
+    color:#718187;
+    font-size:12px;
+    line-height:1.6;
+    min-height:39px;
+}
+
+.trip-details{
+    display:flex;
+    gap:15px;
+    margin-top:13px;
+    font-size:10px;
+    color:#688087;
+}
+
+.trip-footer{
     display:flex;
     align-items:center;
     justify-content:space-between;
+
+    margin-top:18px;
+    padding-top:14px;
+
+    border-top:1px solid var(--line);
 }
 
 .trip-price{
@@ -592,388 +678,665 @@ body::before{
 }
 
 .trip-price small{
-    color:#94a5ad;
-    font-size:11px;
+    font-size:9px;
+    color:#809095;
     font-weight:500;
 }
 
-.arrow-btn{
-    width:45px;
-    height:45px;
+.trip-arrow{
+    width:43px;
+    height:43px;
+    border:0;
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.2);
-    display:grid;
-    place-items:center;
-    background:rgba(255,255,255,.09);
+    background:#173b45;
+    color:white;
+    font-size:18px;
 }
 
-/* =========================
-   EXPERIENCE
-========================= */
-
-.experience{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:70px;
-    align-items:center;
+.slider-hint{
+    text-align:center;
+    color:#789096;
+    font-size:10px;
+    letter-spacing:1.5px;
+    margin-top:12px;
 }
 
-.experience-visual{
-    min-height:650px;
+.slider-progress{
+    width:160px;
+    height:3px;
+    background:#d8e5e7;
+    margin:14px auto 0;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.slider-progress span{
+    display:block;
+    height:100%;
+    width:33.33%;
+    background:#4e91ae;
+    transition:.4s;
+}
+
+
+/* =========================================================
+   ADVENTURES
+========================================================= */
+
+.adventures{
+    background:#edf5f3;
+}
+
+.adventure-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.adventure-card{
     position:relative;
+    min-height:220px;
+
+    border-radius:25px;
+    overflow:hidden;
+
+    background:white;
+
+    box-shadow:0 10px 35px rgba(31,68,81,.06);
+
+    transition:.4s;
 }
 
-.orb{
-    position:absolute;
-    width:430px;
-    height:430px;
-    border-radius:50%;
-    background:
-        radial-gradient(circle at 30% 30%,rgba(112,211,255,.55),transparent 25%),
-        radial-gradient(circle at 65% 65%,rgba(216,173,103,.25),transparent 35%),
-        rgba(20,91,130,.22);
-    filter:blur(2px);
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    animation:float 7s ease-in-out infinite;
-}
-
-@keyframes float{
-    0%,100%{transform:translate(-50%,-50%) rotate(0deg)}
-    50%{transform:translate(-50%,-56%) rotate(8deg)}
-}
-
-.floating-card{
-    position:absolute;
-    width:250px;
-    padding:16px;
-    background:rgba(255,255,255,.065);
-    border:1px solid rgba(255,255,255,.13);
-    backdrop-filter:blur(18px);
-    border-radius:22px;
+.adventure-card:hover{
+    transform:translateY(-7px);
     box-shadow:var(--shadow);
 }
 
-.floating-card img{
-    width:100%;
-    height:170px;
-    object-fit:cover;
-    border-radius:15px;
-}
-
-.floating-card:nth-child(2){
-    top:55px;
-    left:0;
-    transform:rotate(-7deg);
-    animation:floatCard1 6s ease-in-out infinite;
-}
-
-.floating-card:nth-child(3){
-    right:0;
-    bottom:80px;
-    transform:rotate(7deg);
-    animation:floatCard2 7s ease-in-out infinite;
-}
-
-@keyframes floatCard1{
-    50%{transform:rotate(-4deg) translateY(-18px)}
-}
-
-@keyframes floatCard2{
-    50%{transform:rotate(4deg) translateY(18px)}
-}
-
-.float-label{
-    padding-top:12px;
-    font-size:12px;
-    color:#c9d5da;
-}
-
-.experience-copy h2{
-    font-family:"Manrope",sans-serif;
-    font-size:clamp(40px,5vw,72px);
-    line-height:.96;
-    letter-spacing:-3px;
-}
-
-.experience-copy h2 em{
-    color:var(--gold);
-    font-style:normal;
-}
-
-.experience-copy p{
-    margin-top:25px;
-    color:var(--muted);
-    line-height:1.8;
-    max-width:520px;
-}
-
-.feature-list{
-    margin-top:35px;
-    display:grid;
-    gap:13px;
-}
-
-.feature{
+.adventure-icon{
+    width:55px;
+    height:55px;
+    border-radius:17px;
+    background:var(--blue3);
     display:flex;
     align-items:center;
-    gap:13px;
-    padding:14px 0;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    color:#cad5d9;
-    font-size:13px;
+    justify-content:center;
+    font-size:25px;
 }
 
-.feature-number{
-    width:29px;
-    height:29px;
-    border:1px solid rgba(255,255,255,.16);
-    border-radius:50%;
-    display:grid;
-    place-items:center;
-    color:var(--blue);
-    font-size:10px;
+.adventure-inner{
+    padding:28px;
 }
 
-/* =========================
+.adventure-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:27px;
+    margin:20px 0 8px;
+}
+
+.adventure-card p{
+    color:#75858a;
+    font-size:12px;
+    line-height:1.65;
+}
+
+
+/* =========================================================
    GALLERY
-========================= */
+========================================================= */
+
+.gallery-section{
+    background:#fff;
+}
 
 .gallery-grid{
-    columns:3 250px;
-    column-gap:14px;
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    grid-auto-rows:160px;
+    gap:13px;
 }
 
 .gallery-item{
-    break-inside:avoid;
-    margin-bottom:14px;
-    overflow:hidden;
-    border-radius:17px;
-    cursor:pointer;
     position:relative;
+    overflow:hidden;
+    border-radius:22px;
+    cursor:pointer;
+    background:#dcebee;
 }
 
-.gallery-item img{
+.gallery-item:nth-child(1){
+    grid-column:span 5;
+    grid-row:span 2;
+}
+
+.gallery-item:nth-child(2){
+    grid-column:span 4;
+    grid-row:span 2;
+}
+
+.gallery-item:nth-child(3){
+    grid-column:span 3;
+}
+
+.gallery-item:nth-child(4){
+    grid-column:span 3;
+}
+
+.gallery-item:nth-child(5){
+    grid-column:span 4;
+}
+
+.gallery-item:nth-child(6){
+    grid-column:span 5;
+}
+
+.gallery-item img,
+.gallery-item video{
     width:100%;
-    transition:.7s ease;
+    height:100%;
+    object-fit:cover;
+    transition:.65s cubic-bezier(.2,.8,.2,1);
 }
 
 .gallery-item:hover img{
-    transform:scale(1.06);
+    transform:scale(1.08);
 }
 
-/* =========================
-   REVIEWS
-========================= */
+.gallery-shade{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent 55%,rgba(15,39,48,.38));
+    opacity:.4;
+    transition:.3s;
+}
 
-.reviews-grid{
+.gallery-item:hover .gallery-shade{
+    opacity:1;
+}
+
+.gallery-play{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+
+    width:54px;
+    height:54px;
+
+    border-radius:50%;
+    background:rgba(255,255,255,.84);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:18px;
+}
+
+
+/* =========================================================
+   REVIEWS
+========================================================= */
+
+.reviews{
+    background:#f4f8f7;
+}
+
+.review-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:17px;
 }
 
-.review{
+.review-card{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:25px;
     padding:28px;
-    min-height:250px;
-    border:1px solid var(--card-border);
-    border-radius:22px;
-    background:var(--card);
     cursor:pointer;
     transition:.35s;
 }
 
-.review:hover{
+.review-card:hover{
     transform:translateY(-7px);
-    background:rgba(255,255,255,.075);
+    box-shadow:var(--soft-shadow);
 }
 
 .stars{
-    color:var(--gold);
+    color:#d29c44;
     letter-spacing:3px;
-    font-size:12px;
-}
-
-.review-text{
-    margin-top:25px;
-    color:#c4d0d5;
-    line-height:1.7;
-    font-size:14px;
-}
-
-.reviewer{
-    margin-top:25px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.avatar{
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    display:grid;
-    place-items:center;
-    background:linear-gradient(135deg,#1a6e9e,#d8ad67);
-    font-size:12px;
-    font-weight:800;
-}
-
-.reviewer-info{
-    font-size:12px;
-}
-
-.reviewer-info small{
-    display:block;
-    color:#7f929b;
-    margin-top:3px;
-}
-
-/* =========================
-   CTA
-========================= */
-
-.final-cta{
-    margin:30px 5vw 100px;
-    min-height:500px;
-    border-radius:30px;
-    overflow:hidden;
-    position:relative;
-    display:flex;
-    align-items:center;
-    padding:70px;
-
-    background:
-        linear-gradient(90deg,rgba(2,9,13,.95),rgba(2,9,13,.3)),
-        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=85")
-        center/cover;
-}
-
-.final-cta h2{
-    font-family:"Manrope",sans-serif;
-    font-size:clamp(45px,7vw,95px);
-    letter-spacing:-5px;
-    line-height:.9;
-    max-width:780px;
-}
-
-.final-cta p{
-    color:#b4c1c6;
-    max-width:480px;
-    line-height:1.7;
-    margin:25px 0;
-}
-
-/* =========================
-   CONTACT
-========================= */
-
-.contact-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:50px;
-}
-
-.contact-info h2{
-    font-family:"Manrope",sans-serif;
-    font-size:55px;
-    letter-spacing:-3px;
-}
-
-.contact-info p{
-    margin-top:20px;
-    color:var(--muted);
-    line-height:1.8;
-    max-width:480px;
-}
-
-.contact-form{
-    display:grid;
-    gap:13px;
-}
-
-.input,
-.textarea{
-    width:100%;
-    padding:16px 17px;
-    background:rgba(255,255,255,.045);
-    border:1px solid rgba(255,255,255,.12);
-    color:white;
-    border-radius:13px;
-    outline:none;
-    font-family:inherit;
-}
-
-.input:focus,
-.textarea:focus{
-    border-color:rgba(85,183,255,.7);
-}
-
-.textarea{
-    min-height:150px;
-    resize:vertical;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-    padding:50px 5vw 30px;
-    border-top:1px solid rgba(255,255,255,.08);
-}
-
-.footer-top{
-    display:flex;
-    justify-content:space-between;
-    gap:30px;
-}
-
-.footer-brand{
-    max-width:350px;
-}
-
-.footer-brand p{
-    margin-top:15px;
-    color:#7e919a;
-    line-height:1.7;
     font-size:13px;
 }
 
-.footer-links{
-    display:flex;
-    gap:40px;
+.review-quote{
+    font-family:"Playfair Display",serif;
+    font-size:22px;
+    line-height:1.4;
+    margin:20px 0 25px;
 }
 
-.footer-links a{
-    color:#8da0a9;
+.reviewer{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.avatar{
+    width:41px;
+    height:41px;
+    border-radius:50%;
+    background:#dceef2;
+    color:#3e778b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+}
+
+.reviewer strong{
+    display:block;
     font-size:12px;
 }
 
-.footer-bottom{
-    margin-top:50px;
-    padding-top:20px;
-    border-top:1px solid rgba(255,255,255,.07);
-    display:flex;
-    justify-content:space-between;
-    color:#63757e;
-    font-size:11px;
+.reviewer small{
+    display:block;
+    color:#7d8d92;
+    margin-top:3px;
+    font-size:10px;
 }
 
-/* =========================
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about{
+    background:#fff;
+}
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:75px;
+    align-items:center;
+}
+
+.about-image{
+    height:600px;
+    border-radius:31px;
+    overflow:hidden;
+    position:relative;
+}
+
+.about-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.about-image-label{
+    position:absolute;
+    left:22px;
+    right:22px;
+    bottom:22px;
+
+    padding:21px;
+
+    background:rgba(255,255,255,.84);
+    backdrop-filter:blur(14px);
+
+    border-radius:19px;
+}
+
+.about-image-label strong{
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.about-image-label span{
+    display:block;
+    margin-top:5px;
+    font-size:10px;
+    color:#73868b;
+}
+
+.about-copy p{
+    color:#708187;
+    font-size:14px;
+    line-height:1.85;
+    margin-top:20px;
+}
+
+.about-features{
+    display:grid;
+    gap:10px;
+    margin-top:27px;
+}
+
+.about-feature{
+    padding:16px 17px;
+    border-radius:15px;
+    background:#f4f8f7;
+    border:1px solid var(--line);
+    font-size:12px;
+    font-weight:700;
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faq{
+    background:#edf5f3;
+}
+
+.faq-wrap{
+    max-width:900px;
+    margin:auto;
+}
+
+.faq-item{
+    border-bottom:1px solid rgba(20,44,53,.12);
+}
+
+.faq-question{
+    width:100%;
+    border:0;
+    background:none;
+    padding:25px 4px;
+
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+
+    text-align:left;
+
+    color:var(--ink);
+    font-weight:800;
+    font-size:14px;
+}
+
+.faq-plus{
+    font-size:22px;
+    font-weight:400;
+    transition:.3s;
+}
+
+.faq-answer{
+    max-height:0;
+    overflow:hidden;
+    color:#728187;
+    line-height:1.8;
+    font-size:13px;
+    transition:max-height .4s ease;
+}
+
+.faq-item.open .faq-answer{
+    max-height:180px;
+    padding-bottom:22px;
+}
+
+.faq-item.open .faq-plus{
+    transform:rotate(45deg);
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact{
+    background:#fff;
+}
+
+.contact-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.contact-card{
+    background:#f1f7f6;
+    border-radius:29px;
+    padding:42px;
+}
+
+.contact-card h2{
+    font-family:"Playfair Display",serif;
+    font-size:48px;
+    line-height:1;
+}
+
+.contact-card p{
+    color:#718187;
+    font-size:13px;
+    line-height:1.8;
+    margin:18px 0 25px;
+}
+
+.contact-links{
+    display:grid;
+    gap:11px;
+}
+
+.contact-link{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:15px;
+    border-radius:14px;
+    background:white;
+    border:1px solid var(--line);
+    font-size:12px;
+    font-weight:700;
+}
+
+.contact-form{
+    padding:42px;
+    border:1px solid var(--line);
+    border-radius:29px;
+    background:white;
+    box-shadow:var(--soft-shadow);
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+.field label{
+    display:block;
+    color:#536c74;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:7px;
+}
+
+.field input,
+.field textarea{
+    width:100%;
+    border:1px solid var(--line);
+    outline:none;
+    border-radius:13px;
+    padding:14px;
+    background:#f9fbfa;
+    color:var(--ink);
+    transition:.2s;
+}
+
+.field textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus{
+    border-color:#76a9bd;
+    background:white;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    background:#f1f6f5;
+    border-top:1px solid var(--line);
+    padding:65px 0 25px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr 1fr;
+    gap:45px;
+}
+
+.footer-brand p{
+    color:#718187;
+    max-width:310px;
+    font-size:12px;
+    line-height:1.8;
+    margin-top:17px;
+}
+
+.footer-title{
+    font-weight:800;
+    font-size:12px;
+    margin-bottom:17px;
+}
+
+.footer-links{
+    display:grid;
+    gap:11px;
+}
+
+.footer-links a{
+    color:#718187;
+    font-size:12px;
+    transition:.2s;
+}
+
+.footer-links a:hover{
+    color:#3f849f;
+}
+
+.footer-bottom{
+    border-top:1px solid var(--line);
+    margin-top:50px;
+    padding-top:20px;
+
+    display:flex;
+    justify-content:space-between;
+
+    color:#849398;
+    font-size:10px;
+}
+
+
+/* =========================================================
+   INNER PAGES
+========================================================= */
+
+.inner-page{
+    padding-top:150px;
+    min-height:80vh;
+}
+
+.inner-hero{
+    padding:60px 0 80px;
+}
+
+.inner-title{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(50px,7vw,90px);
+    line-height:.92;
+    letter-spacing:-4px;
+}
+
+.inner-title em{
+    color:#5894ae;
+}
+
+
+/* =========================================================
+   ALL TRIPS PAGE
+========================================================= */
+
+.all-trips-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.standard-trip-card{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:26px;
+    overflow:hidden;
+    box-shadow:var(--soft-shadow);
+    transition:.35s;
+}
+
+.standard-trip-card:hover{
+    transform:translateY(-7px);
+    box-shadow:var(--shadow);
+}
+
+.standard-trip-image{
+    height:280px;
+    overflow:hidden;
+}
+
+.standard-trip-image img,
+.standard-trip-image video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.standard-trip-content{
+    padding:22px;
+}
+
+.standard-trip-content h3{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+    margin:8px 0;
+}
+
+.standard-trip-content p{
+    color:#74848a;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.standard-trip-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+
+
+/* =========================================================
    MODALS
-========================= */
+========================================================= */
 
 .modal{
     position:fixed;
     inset:0;
-    z-index:1000;
+    z-index:3000;
+
     display:none;
     align-items:center;
     justify-content:center;
-    padding:25px;
-    background:rgba(0,0,0,.78);
-    backdrop-filter:blur(20px);
+
+    padding:20px;
+
+    background:rgba(25,48,57,.38);
+    backdrop-filter:blur(13px);
 }
 
 .modal.active{
@@ -981,1250 +1344,884 @@ footer{
 }
 
 .modal-box{
-    width:min(950px,100%);
+    width:min(980px,100%);
     max-height:90vh;
     overflow:auto;
-    background:#0b171d;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:27px;
-    box-shadow:0 40px 120px rgba(0,0,0,.6);
+
     position:relative;
+
+    background:white;
+    border-radius:30px;
+
+    padding:25px;
+
+    box-shadow:0 30px 100px rgba(20,50,62,.25);
+
+    animation:modalIn .45s cubic-bezier(.2,.8,.2,1);
 }
 
-.close{
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:scale(.93) translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.modal-close{
     position:absolute;
-    top:18px;
-    right:18px;
-    width:40px;
-    height:40px;
-    border:1px solid rgba(255,255,255,.18);
+    right:15px;
+    top:15px;
+
+    width:43px;
+    height:43px;
+
+    border:0;
     border-radius:50%;
-    background:rgba(0,0,0,.35);
-    color:white;
-    z-index:3;
-    cursor:pointer;
+
+    background:white;
+    color:#173b45;
+
+    font-size:23px;
+
+    z-index:5;
+
+    box-shadow:0 7px 25px rgba(20,50,62,.15);
+}
+
+.modal-image{
+    width:100%;
+    max-height:62vh;
+    object-fit:cover;
+    border-radius:22px;
 }
 
 .trip-detail-image{
+    height:400px;
+    border-radius:23px;
+    overflow:hidden;
+    margin-bottom:28px;
+}
+
+.trip-detail-image img,
+.trip-detail-image video{
     width:100%;
-    height:370px;
+    height:100%;
     object-fit:cover;
 }
 
-.trip-detail-content{
-    padding:35px;
+.detail-kicker{
+    color:#65909d;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:3px;
+    text-transform:uppercase;
 }
 
-.trip-detail-content h2{
-    font-family:"Manrope",sans-serif;
-    font-size:48px;
-    letter-spacing:-2px;
+.detail-title{
+    font-family:"Playfair Display",serif;
+    font-size:55px;
+    line-height:.98;
+    margin:10px 0;
 }
 
-.detail-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin:25px 0;
+.detail-line{
+    font-family:"Playfair Display",serif;
+    font-style:italic;
+    color:#568ba2;
+    font-size:20px;
+    margin:15px 0;
 }
 
-.detail-box{
-    padding:15px;
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:15px;
-    background:rgba(255,255,255,.035);
-}
-
-.detail-box small{
-    color:#78909b;
-    display:block;
-    margin-bottom:5px;
-}
-
-.detail-box strong{
-    font-size:14px;
-}
-
-.itinerary{
-    margin-top:30px;
-}
-
-.itinerary h3{
-    margin-bottom:15px;
-}
-
-.itinerary-item{
-    padding:14px 0;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    display:flex;
-    gap:15px;
-    color:#bbc9ce;
+.detail-description{
+    max-width:700px;
+    color:#718187;
+    line-height:1.8;
     font-size:13px;
 }
 
-.itinerary-item b{
-    color:var(--blue);
+.detail-pills{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:22px 0;
 }
 
-/* =========================
-   LIGHTBOX
-========================= */
-
-.lightbox img{
-    max-width:92vw;
-    max-height:85vh;
-    border-radius:15px;
+.detail-pill{
+    background:#edf5f3;
+    padding:9px 12px;
+    border-radius:10px;
+    color:#42636c;
+    font-size:10px;
+    font-weight:800;
 }
 
-/* =========================
+.itinerary-title{
+    font-family:"Playfair Display",serif;
+    font-size:30px;
+    margin:30px 0 15px;
+}
+
+.day-row{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:9px;
+}
+
+.day-row strong{
+    display:block;
+    font-size:11px;
+    letter-spacing:1px;
+    margin-bottom:5px;
+}
+
+.day-row span{
+    color:#718187;
+    font-size:12px;
+    line-height:1.6;
+}
+
+.review-modal-quote{
+    font-family:"Playfair Display",serif;
+    font-size:30px;
+    line-height:1.4;
+    margin:25px 0;
+}
+
+
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
 .toast{
     position:fixed;
-    bottom:25px;
     left:50%;
-    transform:translateX(-50%) translateY(100px);
-    padding:14px 20px;
-    border:1px solid rgba(255,255,255,.14);
-    border-radius:999px;
-    background:rgba(10,22,28,.9);
-    backdrop-filter:blur(15px);
-    z-index:2000;
-    color:#dce8ec;
+    bottom:25px;
+    z-index:5000;
+
+    padding:13px 19px;
+
+    color:white;
+    background:#173b45;
+
+    border-radius:14px;
+
     font-size:12px;
-    transition:.4s;
+
+    transform:translate(-50%,120px);
+    transition:.35s;
 }
 
 .toast.show{
-    transform:translateX(-50%) translateY(0);
+    transform:translate(-50%,0);
 }
 
-/* =========================
-   REVEAL ANIMATION
-========================= */
 
-.reveal{
-    opacity:0;
-    transform:translateY(35px);
-    transition:opacity .8s ease,transform .8s ease;
-}
-
-.reveal.visible{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
-@media(max-width:850px){
+@media(max-width:1000px){
+
+    .nav-links{
+        gap:14px;
+    }
+
+    .nav-links a{
+        font-size:10px;
+    }
+
+    .adventure-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .all-trips-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .review-grid{
+        grid-template-columns:1fr;
+    }
+
+    .about-grid,
+    .contact-layout{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:2fr 1fr 1fr;
+    }
+
+}
+
+
+@media(max-width:760px){
+
+    .navbar-wrap{
+        top:10px;
+    }
 
     .navbar{
-        padding:0 20px;
+        height:63px;
+        padding:0 11px 0 15px;
+        border-radius:18px;
+    }
+
+    .logo{
+        min-width:auto;
+    }
+
+    .logo-name{
+        font-size:18px;
+    }
+
+    .logo-sub{
+        display:none;
+    }
+
+    .mobile-menu{
+        display:block;
     }
 
     .nav-links{
-        position:fixed;
-        top:var(--nav-height);
-        left:15px;
-        right:15px;
-        padding:20px;
-        background:rgba(7,16,22,.96);
-        backdrop-filter:blur(20px);
-        border:1px solid rgba(255,255,255,.1);
-        border-radius:18px;
+        position:absolute;
+        top:72px;
+        left:0;
+        right:0;
 
+        width:92%;
+        margin:auto;
+
+        display:none;
         flex-direction:column;
-        align-items:flex-start;
+        align-items:stretch;
+        gap:0;
 
-        opacity:0;
-        pointer-events:none;
-        transform:translateY(-10px);
-        transition:.3s;
+        padding:15px;
+
+        background:rgba(255,255,255,.96);
+        border:1px solid rgba(255,255,255,.9);
+
+        backdrop-filter:blur(20px);
+
+        border-radius:20px;
+
+        box-shadow:var(--shadow);
     }
 
     .nav-links.open{
-        opacity:1;
-        pointer-events:auto;
-        transform:translateY(0);
+        display:flex;
     }
 
-    .menu{
-        display:block;
+    .nav-links a{
+        padding:12px;
+        font-size:12px;
     }
 
-    .nav-cta{
+    .nav-links a:after{
         display:none;
+    }
+
+    .nav-book{
+        margin-top:8px;
+    }
+
+    section{
+        padding:82px 0;
     }
 
     .hero{
-        padding:140px 22px 70px;
-        min-height:95vh;
+        height:800px;
+        min-height:800px;
     }
 
-    .hero-title{
+    .hero-image{
+        object-position:62% center;
+    }
+
+    .hero-light{
+        background:
+            linear-gradient(
+                180deg,
+                rgba(248,251,250,.18) 0%,
+                rgba(248,251,250,.60) 47%,
+                rgba(248,251,250,.98) 80%
+            );
+    }
+
+    .hero-content{
+        padding-top:210px;
+    }
+
+    .hero h1{
+        font-size:58px;
         letter-spacing:-3px;
-        font-size:clamp(48px,15vw,75px);
     }
 
-    .hero-subtitle{
-        font-size:14px;
+    .hero-mini-stats{
+        gap:22px;
+        flex-wrap:wrap;
     }
 
-    .hero-bottom{
+    .hero-scroll{
         display:none;
     }
 
-    .section{
-        padding:85px 22px;
+    .trip-stage{
+        height:470px;
     }
 
-    .section-head{
-        display:block;
-        margin-bottom:35px;
+    .trip-slide{
+        width:82vw;
+        height:450px;
     }
 
-    .section-description{
-        margin-top:18px;
-    }
-
-    .trips-grid{
-        display:block;
-    }
-
-    .trip-card,
-    .trip-card.large,
-    .trip-card.small{
-        width:100%;
-        height:500px;
-        margin-bottom:15px;
-    }
-
-    .experience{
-        display:flex;
-        flex-direction:column;
-    }
-
-    .experience-visual{
-        width:100%;
-        min-height:480px;
-    }
-
-    .floating-card{
-        width:190px;
-    }
-
-    .floating-card img{
-        height:130px;
-    }
-
-    .reviews-grid{
-        grid-template-columns:1fr;
-    }
-
-    .contact-grid{
-        grid-template-columns:1fr;
-    }
-
-    .final-cta{
-        margin:10px 22px 70px;
-        padding:45px 25px;
-        min-height:460px;
-    }
-
-    .final-cta h2{
-        letter-spacing:-3px;
-    }
-
-    .footer-top{
-        flex-direction:column;
-    }
-
-    .footer-links{
-        flex-wrap:wrap;
-        gap:18px;
-    }
-
-    .footer-bottom{
-        flex-direction:column;
-        gap:10px;
-    }
-
-    .detail-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .trip-detail-image{
+    .trip-slide-image{
         height:260px;
     }
 
-    .trip-detail-content{
-        padding:24px;
+    .trip-slide-content{
+        padding:17px;
     }
 
-    .trip-detail-content h2{
-        font-size:36px;
+    .adventure-grid{
+        grid-template-columns:1fr 1fr;
     }
 
-    .cursor{
-        display:none;
+    .gallery-grid{
+        grid-template-columns:1fr 1fr;
+        grid-auto-rows:145px;
     }
+
+    .gallery-item:nth-child(n){
+        grid-column:span 1;
+        grid-row:span 1;
+    }
+
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(4){
+        grid-column:span 2;
+    }
+
+    .all-trips-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:span 2;
+    }
+
+    .detail-title{
+        font-size:42px;
+    }
+
+    .trip-detail-image{
+        height:270px;
+    }
+
+    .contact-card h2{
+        font-size:40px;
+    }
+
 }
+
 
 @media(max-width:480px){
 
-    .detail-grid{
-        grid-template-columns:1fr;
+    .hero h1{
+        font-size:48px;
+    }
+
+    .hero-description{
+        font-size:13px;
     }
 
     .hero-actions{
         flex-direction:column;
-        align-items:stretch;
     }
 
     .btn{
         width:100%;
     }
+
+    .adventure-grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-grid{
+        grid-auto-rows:130px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-brand{
+        grid-column:auto;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        gap:7px;
+    }
+
 }
 
 </style>
 </head>
 
+
 <body>
 
-<div class="noise"></div>
-<div class="cursor"></div>
 
-<!-- =========================================================
+<!-- =====================================================
      NAVBAR
-========================================================= -->
+===================================================== -->
 
-<header class="navbar" id="navbar">
+<header class="navbar-wrap">
 
-    <a href="#home" class="logo">
-        <span class="logo-mark"></span>
-        UNBOXCREW
-    </a>
+<nav class="navbar" id="navbar">
 
-    <nav class="nav-links" id="navLinks">
+<a href="#home" class="logo">
 
-        <a href="#home">Home</a>
-        <a href="#trips">Trips</a>
-        <a href="#adventures">Adventures</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#about">About</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact</a>
+<div class="logo-mark">
 
-    </nav>
+<!-- AESTHETIC TRAVEL WORDMARK SYMBOL -->
+<svg viewBox="0 0 100 100" fill="none">
 
-    <a href="#trips" class="nav-cta">Explore Trips →</a>
+    <path
+        d="M10 78 L35 34 L48 54 L68 20 L92 78"
+        stroke="#173B45"
+        stroke-width="7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
 
-    <button class="menu" id="menu">☰</button>
+    <path
+        d="M10 78 H92"
+        stroke="#619FC0"
+        stroke-width="7"
+        stroke-linecap="round"
+    />
+
+    <path
+        d="M43 78 C52 65 60 59 72 51"
+        stroke="#619FC0"
+        stroke-width="5"
+        stroke-linecap="round"
+    />
+
+</svg>
+
+</div>
+
+<div>
+    <div class="logo-name">unbox<span>crew</span></div>
+    <div class="logo-sub">UNBOX THE WORLD · TOGETHER</div>
+</div>
+
+</a>
+
+
+<div class="nav-links" id="navLinks">
+
+<a href="#home">Home</a>
+<a href="#trips">Trips</a>
+<a href="#adventures">Adventure</a>
+<a href="#gallery">Gallery</a>
+<a href="#reviews">Reviews</a>
+<a href="#faq">FAQ</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+
+<button class="nav-book" onclick="generalBooking()">
+Book Now →
+</button>
+
+</div>
+
+
+<button class="mobile-menu" onclick="toggleMobileMenu()">
+☰
+</button>
+
+</nav>
 
 </header>
 
 
-<!-- =========================================================
-     HERO
-========================================================= -->
+<!-- =====================================================
+     APP
+===================================================== -->
 
-<main>
+<div id="app"></div>
 
-<section class="hero" id="home">
 
-    <!--
-        FUTURE ADMIN FIELD:
-        hero.video
-        hero.poster
-    -->
-
-    <div class="hero-fallback"></div>
-
-    <!--
-        Replace this URL later with your own cinematic
-        mountain MP4/video.
-    -->
-
-    <video
-        class="hero-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        poster="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=90">
-
-        <!-- Example:
-        <source src="YOUR-MOUNTAIN-VIDEO.mp4" type="video/mp4">
-        -->
-
-    </video>
-
-    <div class="hero-overlay"></div>
-    <div class="hero-grid"></div>
-
-    <div class="hero-content reveal">
-
-        <div class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            Travel differently
-        </div>
-
-        <h1 class="hero-title">
-
-            <span>DON'T JUST</span>
-
-            <span class="outline">
-                TRAVEL.
-            </span>
-
-            <span class="gradient">
-                UNBOX IT.
-            </span>
-
-        </h1>
-
-        <p class="hero-subtitle">
-            Curated escapes, wild adventures and unforgettable
-            stories — built for people who'd rather collect
-            moments than things.
-        </p>
-
-        <div class="hero-actions">
-
-            <a href="#trips" class="btn btn-primary">
-                Explore the journey →
-            </a>
-
-            <a href="#about" class="btn btn-glass">
-                Why UnboxCrew
-            </a>
-
-        </div>
-
-    </div>
-
-    <div class="hero-bottom">
-        Scroll to explore
-        <span class="scroll-line"></span>
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     MARQUEE
-========================================================= -->
-
-<div class="marquee">
-
-    <div class="marquee-track">
-
-        <div class="marquee-item">
-            <span>01</span> Adventure
-        </div>
-
-        <div class="marquee-item">
-            <span>02</span> Mountains
-        </div>
-
-        <div class="marquee-item">
-            <span>03</span> New People
-        </div>
-
-        <div class="marquee-item">
-            <span>04</span> Wild Stories
-        </div>
-
-        <div class="marquee-item">
-            <span>05</span> Unforgettable Nights
-        </div>
-
-        <div class="marquee-item">
-            <span>06</span> Adventure
-        </div>
-
-        <div class="marquee-item">
-            <span>07</span> Mountains
-        </div>
-
-        <div class="marquee-item">
-            <span>08</span> New People
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     TRIPS
-========================================================= -->
-
-<section class="section" id="trips">
-
-    <div class="section-head reveal">
-
-        <div>
-
-            <div class="section-label">
-                Upcoming escapes
-            </div>
-
-            <h2 class="section-title">
-                Pick your<br>
-                next story.
-            </h2>
-
-        </div>
-
-        <p class="section-description">
-            Not another generic tour package.
-            Every UnboxCrew trip is designed around
-            experiences, people and places you'll actually
-            remember.
-        </p>
-
-    </div>
-
-
-    <div class="trips-grid" id="tripGrid">
-
-        <!-- JavaScript dynamically creates trips -->
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     EXPERIENCE / ADVENTURES
-========================================================= -->
-
-<section class="section" id="adventures">
-
-    <div class="experience">
-
-        <div class="experience-visual reveal">
-
-            <div class="orb"></div>
-
-            <div class="floating-card">
-
-                <img
-                src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=85"
-                alt="Mountain Adventure">
-
-                <div class="float-label">
-                    Find your people.
-                </div>
-
-            </div>
-
-            <div class="floating-card">
-
-                <img
-                src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=900&q=85"
-                alt="Travel Experience">
-
-                <div class="float-label">
-                    Leave ordinary behind.
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="experience-copy reveal">
-
-            <div class="section-label">
-                The UnboxCrew mindset
-            </div>
-
-            <h2>
-                The trip is not
-                the destination.
-                It's the <em>story.</em>
-            </h2>
-
-            <p>
-                We create trips for curious people who want
-                more than sightseeing. Mountains, music,
-                strangers becoming friends, spontaneous plans
-                and stories you'll still talk about months later.
-            </p>
-
-            <div class="feature-list">
-
-                <div class="feature">
-                    <span class="feature-number">01</span>
-                    Curated destinations
-                </div>
-
-                <div class="feature">
-                    <span class="feature-number">02</span>
-                    Small-group experiences
-                </div>
-
-                <div class="feature">
-                    <span class="feature-number">03</span>
-                    Adventure-first itineraries
-                </div>
-
-                <div class="feature">
-                    <span class="feature-number">04</span>
-                    People you'll actually vibe with
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     GALLERY
-========================================================= -->
-
-<section class="section" id="gallery">
-
-    <div class="section-head reveal">
-
-        <div>
-
-            <div class="section-label">
-                From the road
-            </div>
-
-            <h2 class="section-title">
-                Moments<br>
-                we unboxed.
-            </h2>
-
-        </div>
-
-        <p class="section-description">
-            The best travel memories rarely fit inside
-            a perfectly planned itinerary.
-        </p>
-
-    </div>
-
-
-    <div class="gallery-grid reveal" id="galleryGrid">
-
-        <!-- Gallery dynamically generated -->
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     REVIEWS
-========================================================= -->
-
-<section class="section" id="reviews">
-
-    <div class="section-head reveal">
-
-        <div>
-
-            <div class="section-label">
-                Traveller stories
-            </div>
-
-            <h2 class="section-title">
-                Don't take<br>
-                our word for it.
-            </h2>
-
-        </div>
-
-        <p class="section-description">
-            Real experiences from people who chose
-            to leave the ordinary behind.
-        </p>
-
-    </div>
-
-
-    <div class="reviews-grid" id="reviewsGrid">
-
-        <!-- Reviews dynamically generated -->
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     FINAL CTA
-========================================================= -->
-
-<section class="final-cta reveal">
-
-    <div>
-
-        <div class="section-label">
-            Your next escape
-        </div>
-
-        <h2>
-            Your next story
-            starts here.
-        </h2>
-
-        <p>
-            One trip. New places. New people.
-            Maybe a version of yourself you haven't met yet.
-        </p>
-
-        <a href="#trips" class="btn btn-primary">
-            Find my trip →
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     CONTACT
-========================================================= -->
-
-<section class="section" id="contact">
-
-    <div class="contact-grid">
-
-        <div class="contact-info reveal">
-
-            <div class="section-label">
-                Let's talk
-            </div>
-
-            <h2>
-                Have a trip
-                in mind?
-            </h2>
-
-            <p>
-                Want to join a trip, plan a private group escape,
-                collaborate with UnboxCrew or simply ask something?
-                Drop us a message.
-            </p>
-
-            <br>
-
-            <p>
-                <strong>Email</strong><br>
-                hello@unboxcrew.com
-            </p>
-
-            <br>
-
-            <p>
-                <strong>WhatsApp</strong><br>
-                +91 XXXXX XXXXX
-            </p>
-
-        </div>
-
-
-        <form class="contact-form reveal" id="contactForm">
-
-            <input
-                class="input"
-                type="text"
-                placeholder="Your name"
-                required>
-
-            <input
-                class="input"
-                type="email"
-                placeholder="Email address"
-                required>
-
-            <input
-                class="input"
-                type="tel"
-                placeholder="WhatsApp number">
-
-            <textarea
-                class="textarea"
-                placeholder="Tell us what you're looking for..."
-                required></textarea>
-
-            <button class="btn btn-primary" type="submit">
-                Send message →
-            </button>
-
-        </form>
-
-    </div>
-
-</section>
-
-</main>
-
-
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-
-<footer>
-
-    <div class="footer-top">
-
-        <div class="footer-brand">
-
-            <a href="#home" class="logo">
-                <span class="logo-mark"></span>
-                UNBOXCREW
-            </a>
-
-            <p>
-                Unbox the world. Together.
-                Modern travel experiences for people
-                who want stories, not souvenirs.
-            </p>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <a href="#trips">Trips</a>
-            <a href="#adventures">Adventures</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#about">About</a>
-            <a href="#reviews">Reviews</a>
-            <a href="#contact">Contact</a>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer-bottom">
-
-        <span>
-            © 2026 UnboxCrew. All rights reserved.
-        </span>
-
-        <span>
-            Unbox the world. Together.
-        </span>
-
-    </div>
-
-</footer>
-
-
-<!-- =========================================================
-     TRIP MODAL
-========================================================= -->
+<!-- =====================================================
+     MODALS
+===================================================== -->
 
 <div class="modal" id="tripModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <button class="close" onclick="closeModal('tripModal')">
-            ×
-        </button>
+<button class="modal-close" onclick="closeModal('tripModal')">
+×
+</button>
 
-        <img
-            class="trip-detail-image"
-            id="detailImage"
-            src=""
-            alt="Trip">
+<div id="tripModalContent"></div>
 
-        <div class="trip-detail-content">
-
-            <div class="section-label">
-                Trip details
-            </div>
-
-            <h2 id="detailTitle"></h2>
-
-            <p
-                id="detailDescription"
-                style="margin-top:15px;color:#aebdc3;line-height:1.7">
-            </p>
-
-
-            <div class="detail-grid">
-
-                <div class="detail-box">
-                    <small>Duration</small>
-                    <strong id="detailDuration"></strong>
-                </div>
-
-                <div class="detail-box">
-                    <small>Starting from</small>
-                    <strong id="detailPrice"></strong>
-                </div>
-
-                <div class="detail-box">
-                    <small>Group</small>
-                    <strong id="detailGroup"></strong>
-                </div>
-
-            </div>
-
-
-            <div class="itinerary">
-
-                <h3>
-                    Itinerary
-                </h3>
-
-                <div id="detailItinerary"></div>
-
-            </div>
-
-
-            <br>
-
-            <button
-                class="btn btn-primary"
-                onclick="bookCurrentTrip()">
-
-                Book this adventure →
-
-            </button>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 
-<!-- =========================================================
-     REVIEW MODAL
-========================================================= -->
+<div class="modal" id="galleryModal">
+
+<div class="modal-box">
+
+<button class="modal-close" onclick="closeModal('galleryModal')">
+×
+</button>
+
+<div id="galleryModalContent"></div>
+
+</div>
+
+</div>
+
 
 <div class="modal" id="reviewModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <button class="close" onclick="closeModal('reviewModal')">
-            ×
-        </button>
+<button class="modal-close" onclick="closeModal('reviewModal')">
+×
+</button>
 
-        <div class="trip-detail-content">
+<div id="reviewModalContent"></div>
 
-            <div class="section-label">
-                Traveller review
-            </div>
-
-            <h2 id="reviewName"></h2>
-
-            <div
-                class="stars"
-                style="margin-top:15px">
-                ★★★★★
-            </div>
-
-            <p
-                id="reviewFull"
-                style="margin-top:25px;color:#b9c7cc;line-height:1.8">
-            </p>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 
-<!-- =========================================================
-     LIGHTBOX
-========================================================= -->
-
-<div class="modal lightbox" id="lightbox">
-
-    <button
-        class="close"
-        onclick="closeModal('lightbox')">
-        ×
-    </button>
-
-    <img id="lightboxImage" src="" alt="Gallery">
-
-</div>
-
-
-<div class="toast" id="toast">
-    Message sent successfully.
-</div>
+<div class="toast" id="toast"></div>
 
 
 <script>
 
 /* =========================================================
-   UNBOXCREW DATA LAYER
-
-   IMPORTANT:
-   This section is intentionally centralized.
-
-   TODAY:
-   Website reads data from JavaScript.
-
-   FUTURE:
-   Admin panel → API → Database → this frontend.
-
-   Therefore don't scatter trip information throughout
-   HTML. Keep content here.
-   ========================================================= */
-
-
-/* =========================
-   SITE SETTINGS
-========================= */
+   CENTRAL DATA
+   FUTURE HOSTINGER ADMIN PANEL CAN CONTROL ALL OF THIS
+========================================================= */
 
 const siteData = {
 
     brand:{
         name:"UnboxCrew",
+
         tagline:"Unbox the world. Together.",
-        email:"hello@unboxcrew.com",
-        whatsapp:"919999999999"
+
+        phone:"+919625131595",
+
+        email:"bookings@unboxcrew.com",
+
+        whatsapp:"https://wa.me/919625131595",
+
+        logo:{
+            type:"svg-wordmark",
+            image:""
+        }
     },
 
-
-    /* =========================
-       HERO
-    ========================= */
 
     hero:{
-        eyebrow:"Travel differently",
-
-        titleLine1:"DON'T JUST",
-        titleLine2:"TRAVEL.",
-        titleLine3:"UNBOX IT.",
-
+        title:"Travel Beyond Limits.",
         description:
-        "Curated escapes, wild adventures and unforgettable stories — built for people who'd rather collect moments than things.",
+        "Handpicked trips, real experiences and unforgettable stories. Leave the ordinary behind and find the places that become memories.",
+        mediaType:"image",
 
-        video:"",
-        poster:
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=90"
+        image:
+        "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2400&q=92",
+
+        video:""
     },
 
-
-    /* =========================
-       TRIPS
-
-       Future Admin:
-       Add/Edit/Delete trips here
-       will eventually happen from
-       Admin Panel.
-    ========================= */
 
     trips:[
 
         {
-            id:"rishikesh-adventure",
-
-            name:"Rishikesh Adventure",
-
-            location:"Rishikesh, Uttarakhand",
-
+            id:"rishikesh",
+            title:"Rishikesh Adventure",
+            location:"Rishikesh · Uttarakhand",
             category:"Adventure",
-
             duration:"2 Days / 1 Night",
-
             price:"₹3,499",
-
             group:"Small Group",
 
             image:
-            "https://images.unsplash.com/photo-1596178060810-72f53ce9a65d?auto=format&fit=crop&w=1400&q=85",
+            "https://images.unsplash.com/photo-1596178060810-72f53ce9a65d?auto=format&fit=crop&w=1600&q=90",
 
             video:"",
 
+            mediaType:"image",
+
+            short:
+            "Rafting, riverside sunsets, adventure activities and a crew you'll remember.",
+
+            aestheticLine:
+            "Some weekends are for resting. This one is for stories.",
+
             description:
-            "Rafting, mountains, riverside sunsets, music and a crew you'll remember. A high-energy escape into the adventure capital of India.",
+            "A quick escape into the energy of Rishikesh — river adventures, sunsets, cafés and the kind of moments that make a short trip feel much longer.",
 
             itinerary:[
-
-                {
-                    day:"01",
-                    text:"Delhi → Rishikesh → Check-in → River Rafting → Riverside sunset"
-                },
-
-                {
-                    day:"02",
-                    text:"Adventure activities → Café hopping → Triveni Ghat Aarti → Delhi"
-                }
-
+                ["DAY 01","Delhi → Rishikesh → Check-in → River Rafting → Riverside sunset"],
+                ["DAY 02","Adventure activities → Café hopping → Triveni Ghat Aarti → Delhi"]
             ]
-
         },
 
 
         {
-            id:"mussoorie-escape",
-
-            name:"Mussoorie Escape",
-
-            location:"Mussoorie • Landour",
-
+            id:"mussoorie",
+            title:"Mussoorie Escape",
+            location:"Mussoorie · Landour",
             category:"Mountains",
-
             duration:"3 Days / 2 Nights",
-
             price:"₹4,700",
-
             group:"Small Group",
 
             image:
-            "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1400&q=85",
+            "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1600&q=90",
 
             video:"",
 
-            description:
+            mediaType:"image",
+
+            short:
             "Mountain roads, old cafés, misty viewpoints and the slow charm of Landour.",
 
+            aestheticLine:
+            "For the mornings you wish could last a little longer.",
+
+            description:
+            "A slow mountain escape through Mussoorie and Landour — beautiful roads, quiet cafés, viewpoints and enough time to actually feel the place.",
+
             itinerary:[
-
-                {
-                    day:"01",
-                    text:"Delhi → Mussoorie → Hotel → Mall Road → Evening exploration"
-                },
-
-                {
-                    day:"02",
-                    text:"Kempty Falls → Company Garden → George Everest → Landour"
-                },
-
-                {
-                    day:"03",
-                    text:"Lal Tibba → Char Dukan → Rishikesh → Delhi"
-                }
-
+                ["DAY 01","Delhi → Mussoorie → Hotel → Mall Road → Evening exploration"],
+                ["DAY 02","Kempty Falls → Company Garden → George Everest → Landour"],
+                ["DAY 03","Lal Tibba → Char Dukan → Rishikesh → Delhi"]
             ]
-
         },
 
 
         {
-            id:"braj-darshan",
-
-            name:"Braj Experience",
-
-            location:"Barsana • Vrindavan",
-
+            id:"braj",
+            title:"Braj Experience",
+            location:"Barsana · Vrindavan",
             category:"Culture",
-
             duration:"2 Days / 1 Night",
-
             price:"₹3,999",
-
             group:"Small Group",
 
             image:
-            "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1400&q=85",
+            "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1600&q=90",
 
             video:"",
 
+            mediaType:"image",
+
+            short:
+            "Colours, temples, stories and the energy of Braj.",
+
+            aestheticLine:
+            "Some journeys don't just take you somewhere. They stay with you.",
+
             description:
-            "A soulful journey through the colours, temples, stories and energy of Braj.",
+            "A soulful journey through Barsana and Vrindavan, built around the culture, stories, temples and atmosphere that make Braj unforgettable.",
 
             itinerary:[
-
-                {
-                    day:"01",
-                    text:"Delhi → Barsana → Radha Rani Temple → Man Mandir → Vrindavan"
-                },
-
-                {
-                    day:"02",
-                    text:"Banke Bihari → Nidhivan → Kesi Ghat → Prem Mandir → Delhi"
-                }
-
+                ["DAY 01","Delhi → Barsana → Radha Rani Temple → Man Mandir → Vrindavan"],
+                ["DAY 02","Banke Bihari → Nidhivan → Kesi Ghat → Prem Mandir → Delhi"]
             ]
-
         }
 
     ],
 
 
-    /* =========================
-       GALLERY
-    ========================= */
+    adventures:[
 
-    gallery:[
+        {
+            icon:"🥾",
+            title:"Trekking",
+            description:"Walk beyond the usual roads and discover places worth the climb."
+        },
 
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85",
+        {
+            icon:"🚐",
+            title:"Road Trips",
+            description:"Long drives, mountain roads, playlists and spontaneous stops."
+        },
 
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1000&q=85",
+        {
+            icon:"⛺",
+            title:"Camping",
+            description:"Slow evenings, open skies and stories around the fire."
+        },
 
-        "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=85",
+        {
+            icon:"❄️",
+            title:"Snow Trips",
+            description:"Cold air, white landscapes and a completely different kind of escape."
+        },
 
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=85",
+        {
+            icon:"👥",
+            title:"Group Trips",
+            description:"Meet people, share experiences and come back with new stories."
+        },
 
-        "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1000&q=85",
-
-        "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=85",
-
-        "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1000&q=85",
-
-        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1000&q=85"
+        {
+            icon:"🧭",
+            title:"Custom Trips",
+            description:"Your people. Your dates. Your route. Your kind of adventure."
+        }
 
     ],
 
 
-    /* =========================
-       REVIEWS
-    ========================= */
+    gallery:[
+
+        {
+            type:"image",
+            url:
+            "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=90"
+        },
+
+        {
+            type:"image",
+            url:
+            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=90"
+        },
+
+        {
+            type:"image",
+            url:
+            "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=90"
+        },
+
+        {
+            type:"image",
+            url:
+            "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1600&q=90"
+        },
+
+        {
+            type:"image",
+            url:
+            "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=90"
+        },
+
+        {
+            type:"image",
+            url:
+            "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1600&q=90"
+        }
+
+        /*
+        FUTURE ADMIN PANEL EXAMPLE:
+
+        {
+            type:"video",
+            url:"/uploads/gallery/video.mp4"
+        }
+
+        */
+    ],
+
 
     reviews:[
 
         {
             name:"Aarav",
-
             trip:"Rishikesh Adventure",
 
             short:
-            "The trip didn't feel like a tour. It felt like a group of friends randomly decided to disappear for a weekend.",
+            "Everything felt effortless. The rafting, people and sunset were unreal.",
 
             full:
-            "The entire Rishikesh experience was energetic from the beginning. Rafting, cafés, the river, music and meeting completely new people made it feel less like a packaged tour and more like a spontaneous adventure with friends."
+            "I honestly didn't expect a group trip to feel this comfortable. The rafting was crazy fun, the group was amazing and the whole journey felt like hanging out with friends rather than going on a planned tour."
         },
-
 
         {
             name:"Mehak",
-
             trip:"Mussoorie Escape",
 
             short:
-            "Landour was beautiful, but honestly the people and vibe made the trip.",
+            "The Landour morning was something I will genuinely remember.",
 
             full:
-            "I had been to Mussoorie before, but this experience felt completely different. The itinerary wasn't rushed and there was enough time to actually enjoy the cafés, viewpoints and conversations."
+            "Mussoorie was beautiful but Landour was the highlight for me. The cafés, roads, weather and people made the entire trip feel cinematic."
         },
-
 
         {
             name:"Rohan",
-
             trip:"Braj Experience",
 
             short:
-            "Beautiful planning and a really fun group. Would definitely travel with them again.",
+            "Different from every normal weekend trip. Loved the vibe.",
 
             full:
-            "The Braj trip had a great balance of temples, local experiences and time to explore. The group energy was amazing and the coordination made everything easy."
+            "The Braj experience had a completely different energy. The temples, streets, stories and overall atmosphere made it feel much more meaningful."
+        }
+
+    ],
+
+
+    faq:[
+
+        {
+            q:"How do I book a trip?",
+
+            a:
+            "Open the trip you like and click the booking button. Our team will guide you through availability, payment and confirmation on WhatsApp."
+        },
+
+        {
+            q:"Can I travel solo?",
+
+            a:
+            "Yes. Solo travellers are welcome. Many UnboxCrew travellers join without knowing anyone before the trip."
+        },
+
+        {
+            q:"Can I add my own images or videos later?",
+
+            a:
+            "Yes. The website data structure already separates image and video media. The future Hostinger admin panel can let you upload either one."
+        },
+
+        {
+            q:"Can I plan a private group trip?",
+
+            a:
+            "Yes. Private trips can be planned for friends, birthdays, college groups, office teams and custom journeys."
+        },
+
+        {
+            q:"How can I contact UnboxCrew?",
+
+            a:
+            "WhatsApp +91 96251 31595 or email bookings@unboxcrew.com."
         }
 
     ]
@@ -2233,177 +2230,905 @@ const siteData = {
 
 
 /* =========================================================
-   DOM
+   APP TEMPLATE
 ========================================================= */
 
-const tripGrid =
-document.getElementById("tripGrid");
-
-const galleryGrid =
-document.getElementById("galleryGrid");
-
-const reviewsGrid =
-document.getElementById("reviewsGrid");
+const app=document.getElementById("app");
 
 
-/* =========================================================
-   RENDER TRIPS
-========================================================= */
+function footerHTML(){
 
-function renderTrips(){
+return `
 
-    tripGrid.innerHTML = "";
+<footer>
 
-    siteData.trips.forEach((trip,index)=>{
+<div class="container">
 
-        const card = document.createElement("article");
+<div class="footer-grid">
 
-        card.className =
-        `trip-card ${index === 0 ? "large" : "small"} reveal`;
+<div class="footer-brand">
 
-        card.innerHTML = `
+<a href="#home" class="logo">
 
-            <img
-                src="${trip.image}"
-                alt="${trip.name}"
-                loading="lazy">
+<div class="logo-mark">
 
-            <div class="trip-content">
+<svg viewBox="0 0 100 100" fill="none">
 
-                <div class="trip-meta">
+<path
+d="M10 78 L35 34 L48 54 L68 20 L92 78"
+stroke="#173B45"
+stroke-width="7"
+stroke-linecap="round"
+stroke-linejoin="round"/>
 
-                    <span class="pill">
-                        ${trip.category}
-                    </span>
+<path
+d="M10 78 H92"
+stroke="#619FC0"
+stroke-width="7"
+stroke-linecap="round"/>
 
-                    <span class="pill">
-                        ${trip.duration}
-                    </span>
+<path
+d="M43 78 C52 65 60 59 72 51"
+stroke="#619FC0"
+stroke-width="5"
+stroke-linecap="round"/>
 
-                </div>
+</svg>
 
-                <h3 class="trip-name">
-                    ${trip.name}
-                </h3>
+</div>
 
-                <p class="trip-desc">
-                    ${trip.description}
-                </p>
+<div>
+<div class="logo-name">unbox<span>crew</span></div>
+<div class="logo-sub">UNBOX THE WORLD · TOGETHER</div>
+</div>
 
-                <div class="trip-bottom">
+</a>
 
-                    <div class="trip-price">
-                        ${trip.price}
-                        <small>/ person</small>
-                    </div>
+<p>
+Curated travel experiences for people who want
+better roads, better stories and unforgettable moments.
+</p>
 
-                    <div class="arrow-btn">
-                        ↗
-                    </div>
-
-                </div>
-
-            </div>
-
-        `;
-
-        card.addEventListener("click",()=>{
-
-            openTrip(trip.id);
-
-        });
+</div>
 
 
-        tripGrid.appendChild(card);
+<div>
 
-        addTilt(card);
+<div class="footer-title">Explore</div>
 
-    });
+<div class="footer-links">
+<a href="#trips">Trips</a>
+<a href="#adventures">Adventure</a>
+<a href="#gallery">Gallery</a>
+</div>
 
-    observeReveals();
+</div>
+
+
+<div>
+
+<div class="footer-title">Discover</div>
+
+<div class="footer-links">
+<a href="#reviews">Reviews</a>
+<a href="#about">About</a>
+<a href="#faq">FAQ</a>
+</div>
+
+</div>
+
+
+<div>
+
+<div class="footer-title">Connect</div>
+
+<div class="footer-links">
+<a href="#contact">Contact</a>
+<a href="${siteData.brand.whatsapp}" target="_blank">WhatsApp</a>
+<a href="mailto:${siteData.brand.email}">${siteData.brand.email}</a>
+<a href="tel:${siteData.brand.phone}">${siteData.brand.phone}</a>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="footer-bottom">
+
+<span>© 2026 UnboxCrew. All rights reserved.</span>
+
+<span>Unbox the world. Together.</span>
+
+</div>
+
+</div>
+
+</footer>
+
+`;
 
 }
 
 
 /* =========================================================
-   OPEN TRIP
+   HOME PAGE
 ========================================================= */
 
-let currentTrip = null;
+function homePage(){
 
-function openTrip(id){
+return `
 
-    const trip =
-    siteData.trips.find(t=>t.id === id);
+<div class="page-transition">
 
-    if(!trip) return;
+<section class="hero" id="home">
 
-    currentTrip = trip;
+<img
+class="hero-image"
+src="${siteData.hero.image}"
+alt="Mountain travel landscape"
+>
 
-    document.getElementById("detailImage").src =
-    trip.image;
-
-    document.getElementById("detailTitle").textContent =
-    trip.name;
-
-    document.getElementById("detailDescription").textContent =
-    trip.description;
-
-    document.getElementById("detailDuration").textContent =
-    trip.duration;
-
-    document.getElementById("detailPrice").textContent =
-    trip.price;
-
-    document.getElementById("detailGroup").textContent =
-    trip.group;
+<div class="hero-light"></div>
+<div class="hero-bottom"></div>
 
 
-    const itinerary =
-    document.getElementById("detailItinerary");
+<div class="hero-content">
 
-    itinerary.innerHTML = "";
-
-    trip.itinerary.forEach(item=>{
-
-        const row =
-        document.createElement("div");
-
-        row.className =
-        "itinerary-item";
-
-        row.innerHTML = `
-            <b>${item.day}</b>
-            <span>${item.text}</span>
-        `;
-
-        itinerary.appendChild(row);
-
-    });
+<div class="hero-small motion-text">
+EXPLORE · EXPERIENCE · BELONG
+</div>
 
 
-    openModal("tripModal");
+<h1 class="motion-text delay-1">
+Travel Beyond
+<span>Limits.</span>
+</h1>
+
+
+<p class="hero-description motion-text delay-2">
+${siteData.hero.description}
+</p>
+
+
+<div class="hero-actions motion-text delay-3">
+
+<a href="#trips" class="btn btn-primary">
+Explore Trips →
+</a>
+
+<a href="#gallery" class="btn btn-soft">
+See The Vibe
+</a>
+
+</div>
+
+
+<div class="hero-mini-stats motion-text delay-4">
+
+<div class="hero-stat">
+<strong>15+</strong>
+<span>Destinations</span>
+</div>
+
+<div class="hero-stat">
+<strong>500+</strong>
+<span>Travellers</span>
+</div>
+
+<div class="hero-stat">
+<strong>4.9★</strong>
+<span>Experience</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="hero-scroll">
+
+<div class="scroll-dot">↓</div>
+
+Scroll to explore
+
+</div>
+
+</section>
+
+
+<!-- TRIPS -->
+
+<section class="trips-home" id="trips">
+
+<div class="container">
+
+<div class="section-top motion-text">
+
+<div class="kicker">
+FEATURED TRIPS
+</div>
+
+<h2 class="section-title">
+Pick a place.<br>
+<span style="color:#5894ae">Make a memory.</span>
+</h2>
+
+<p class="section-description">
+Swipe the trips like a playlist. Every card is a different
+escape waiting to become your next story.
+</p>
+
+</div>
+
+
+<div class="trip-slider-wrap">
+
+<div class="trip-stage" id="tripStage"></div>
+
+<div class="slider-hint">
+← DRAG / SWIPE → · TAP A TRIP TO EXPLORE
+</div>
+
+<div class="slider-progress">
+<span id="tripProgress"></span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ADVENTURES -->
+
+<section class="adventures" id="adventures">
+
+<div class="container">
+
+<div class="section-top motion-text">
+
+<div class="kicker">
+CHOOSE YOUR VIBE
+</div>
+
+<h2 class="section-title">
+What kind of<br>
+<em>escape</em> are you?
+</h2>
+
+<p class="section-description">
+Not everyone travels the same way. Pick your kind of
+energy and we'll build the journey around it.
+</p>
+
+</div>
+
+
+<div class="adventure-grid">
+
+${siteData.adventures.map((a,i)=>`
+
+<div class="adventure-card motion-text delay-${(i%4)+1}">
+
+<div class="adventure-inner">
+
+<div class="adventure-icon">
+${a.icon}
+</div>
+
+<h3>${a.title}</h3>
+
+<p>${a.description}</p>
+
+</div>
+
+</div>
+
+`).join("")}
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- GALLERY -->
+
+<section class="gallery-section" id="gallery">
+
+<div class="container">
+
+<div class="section-top motion-text">
+
+<div class="kicker">
+THE VIBE
+</div>
+
+<h2 class="section-title">
+Moments worth<br>
+<em>coming back for.</em>
+</h2>
+
+<p class="section-description">
+Mountains, roads, sunsets and people.
+This is what the journey feels like.
+</p>
+
+</div>
+
+
+<div class="gallery-grid">
+
+${galleryHTML()}
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REVIEWS -->
+
+<section class="reviews" id="reviews">
+
+<div class="container">
+
+<div class="section-top center motion-text">
+
+<div class="kicker">
+TRAVELLER STORIES
+</div>
+
+<h2 class="section-title">
+They went.<br>
+<em>They remember.</em>
+</h2>
+
+<p class="section-description">
+Real words from people who chose to take the road with us.
+</p>
+
+</div>
+
+
+<div class="review-grid">
+
+${reviewsHTML()}
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+
+<div class="container about-grid">
+
+<div class="about-image motion-text">
+
+<img
+src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1700&q=90"
+alt="Mountain landscape"
+>
+
+<div class="about-image-label">
+
+<strong>Unbox the world. Together.</strong>
+
+<span>
+Small groups · Real experiences · Better stories
+</span>
+
+</div>
+
+</div>
+
+
+<div class="about-copy motion-text">
+
+<div class="kicker">
+ABOUT UNBOXCREW
+</div>
+
+<h2 class="section-title">
+Travel should feel<br>
+<em>like a story.</em>
+</h2>
+
+
+<p>
+UnboxCrew is built around one simple idea:
+travel should be more than moving from one
+place to another.
+</p>
+
+<p>
+It's the road, the people you meet, the random
+laugh at 2 AM, the mountain view you didn't expect
+and the story you keep talking about later.
+</p>
+
+
+<div class="about-features">
+
+<div class="about-feature">
+✦ Curated routes & experiences
+</div>
+
+<div class="about-feature">
+✦ Small-group travel
+</div>
+
+<div class="about-feature">
+✦ Friendly booking support
+</div>
+
+<div class="about-feature">
+✦ Memories over checklists
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section class="faq" id="faq">
+
+<div class="container">
+
+<div class="section-top center motion-text">
+
+<div class="kicker">
+BEFORE YOU GO
+</div>
+
+<h2 class="section-title">
+Questions?<br>
+<em>We've got you.</em>
+</h2>
+
+</div>
+
+
+<div class="faq-wrap">
+
+${faqHTML()}
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section class="contact" id="contact">
+
+<div class="container">
+
+<div class="contact-layout">
+
+
+<div class="contact-card motion-text">
+
+<div class="kicker">
+READY?
+</div>
+
+<h2>
+Your next<br>
+escape starts<br>
+here.
+</h2>
+
+<p>
+Tell us where you want to go, who you're travelling
+with, or simply say "I want to travel."
+</p>
+
+
+<div class="contact-links">
+
+<a
+class="contact-link"
+href="${siteData.brand.whatsapp}"
+target="_blank"
+>
+💬 Chat on WhatsApp
+</a>
+
+<a
+class="contact-link"
+href="mailto:${siteData.brand.email}"
+>
+✉ ${siteData.brand.email}
+</a>
+
+<a
+class="contact-link"
+href="tel:${siteData.brand.phone}"
+>
+☎ ${siteData.brand.phone}
+</a>
+
+</div>
+
+</div>
+
+
+<div class="contact-form motion-text">
+
+<div class="kicker">
+SAY HELLO
+</div>
+
+<h2 class="section-title" style="font-size:42px">
+Let's plan<br>
+something.
+</h2>
+
+
+<div class="field">
+
+<label>Your Name</label>
+
+<input
+id="contactName"
+type="text"
+placeholder="Your name"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Phone</label>
+
+<input
+id="contactPhone"
+type="tel"
+placeholder="+91..."
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Message</label>
+
+<textarea
+id="contactMessage"
+placeholder="Where do you want to go?"
+></textarea>
+
+</div>
+
+
+<button
+class="btn btn-primary"
+style="width:100%"
+onclick="sendContactMessage()"
+>
+Send on WhatsApp →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+${footerHTML()}
+
+</div>
+
+`;
 
 }
 
 
 /* =========================================================
-   BOOK TRIP
+   TRIP CAROUSEL HTML
 ========================================================= */
 
-function bookCurrentTrip(){
+function renderTripCarousel(){
 
-    if(!currentTrip) return;
+const stage=document.getElementById("tripStage");
 
-    const message =
-    encodeURIComponent(
-        `Hi UnboxCrew! I want to book ${currentTrip.name}. Please share booking details.`
-    );
+if(!stage)return;
 
-    window.open(
-        `https://wa.me/${siteData.brand.whatsapp}?text=${message}`,
-        "_blank"
-    );
+stage.innerHTML=siteData.trips.map((trip,index)=>`
+
+<article
+class="trip-slide"
+data-index="${index}"
+onclick="tripCardClicked(${index})"
+>
+
+<div class="trip-slide-image">
+
+${
+trip.mediaType==="video" && trip.video
+?
+`<video src="${trip.video}" muted autoplay loop playsinline></video>`
+:
+`<img src="${trip.image}" alt="${trip.title}">`
+}
+
+<div class="trip-badge">
+${trip.category}
+</div>
+
+</div>
+
+
+<div class="trip-slide-content">
+
+<div class="trip-location">
+${trip.location}
+</div>
+
+<h3>
+${trip.title}
+</h3>
+
+<p class="trip-one-line">
+${trip.short}
+</p>
+
+<div class="trip-details">
+<span>◷ ${trip.duration}</span>
+<span>◉ ${trip.group}</span>
+</div>
+
+
+<div class="trip-footer">
+
+<div class="trip-price">
+${trip.price}
+<small>/ person</small>
+</div>
+
+<button
+class="trip-arrow"
+onclick="event.stopPropagation(); openTrip(${index})"
+>
+→
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+`).join("");
+
+
+setup3DCarousel();
+
+}
+
+
+/* =========================================================
+   3D SONG-LIKE CAROUSEL
+========================================================= */
+
+let currentTrip=0;
+let tripDragStart=0;
+let tripDragging=false;
+let tripDragDistance=0;
+
+
+function setup3DCarousel(){
+
+const stage=document.getElementById("tripStage");
+
+if(!stage)return;
+
+const slides=[...stage.querySelectorAll(".trip-slide")];
+
+function updateSlides(){
+
+const total=slides.length;
+
+slides.forEach((slide,index)=>{
+
+let offset=index-currentTrip;
+
+if(offset>total/2){
+    offset-=total;
+}
+
+if(offset<-total/2){
+    offset+=total;
+}
+
+const abs=Math.abs(offset);
+
+let x=offset*350;
+
+let rotate=offset*-23;
+
+let scale=1-abs*.13;
+
+let z=100-abs*100;
+
+let opacity=abs>2?0:1;
+
+let blur=abs>1?"blur(2px)":"blur(0)";
+
+slide.style.transform=
+`translateX(${x}px) translateZ(${z}px) rotateY(${rotate}deg) scale(${scale})`;
+
+slide.style.opacity=opacity;
+
+slide.style.filter=blur;
+
+slide.style.zIndex=100-abs;
+
+});
+
+const progress=document.getElementById("tripProgress");
+
+if(progress){
+    progress.style.width=
+    `${((currentTrip+1)/total)*100}%`;
+}
+
+}
+
+stage.updateCarousel=updateSlides;
+
+updateSlides();
+
+
+/* pointer drag */
+
+stage.addEventListener("pointerdown",e=>{
+
+tripDragging=true;
+
+tripDragStart=e.clientX;
+
+tripDragDistance=0;
+
+stage.classList.add("dragging");
+
+stage.setPointerCapture(e.pointerId);
+
+});
+
+
+stage.addEventListener("pointermove",e=>{
+
+if(!tripDragging)return;
+
+tripDragDistance=e.clientX-tripDragStart;
+
+});
+
+
+stage.addEventListener("pointerup",()=>{
+
+if(!tripDragging)return;
+
+tripDragging=false;
+
+stage.classList.remove("dragging");
+
+if(Math.abs(tripDragDistance)>55){
+
+if(tripDragDistance<0){
+    nextTrip();
+}else{
+    previousTrip();
+}
+
+}
+
+});
+
+
+stage.addEventListener("pointercancel",()=>{
+
+tripDragging=false;
+
+stage.classList.remove("dragging");
+
+});
+
+
+/* wheel */
+
+stage.addEventListener("wheel",e=>{
+
+if(Math.abs(e.deltaX)>20 || Math.abs(e.deltaY)>30){
+
+e.preventDefault();
+
+if(e.deltaX>0 || e.deltaY>0){
+    nextTrip();
+}else{
+    previousTrip();
+}
+
+}
+
+},{passive:false});
+
+}
+
+
+function nextTrip(){
+
+const total=siteData.trips.length;
+
+currentTrip=(currentTrip+1)%total;
+
+const stage=document.getElementById("tripStage");
+
+if(stage && stage.updateCarousel){
+    stage.updateCarousel();
+}
+
+}
+
+
+function previousTrip(){
+
+const total=siteData.trips.length;
+
+currentTrip=(currentTrip-1+total)%total;
+
+const stage=document.getElementById("tripStage");
+
+if(stage && stage.updateCarousel){
+    stage.updateCarousel();
+}
+
+}
+
+
+function tripCardClicked(index){
+
+if(tripDragging)return;
+
+if(index===currentTrip){
+
+openTrip(index);
+
+}else{
+
+currentTrip=index;
+
+const stage=document.getElementById("tripStage");
+
+if(stage && stage.updateCarousel){
+    stage.updateCarousel();
+}
+
+}
 
 }
 
@@ -2412,37 +3137,71 @@ function bookCurrentTrip(){
    GALLERY
 ========================================================= */
 
-function renderGallery(){
+function galleryHTML(){
 
-    galleryGrid.innerHTML = "";
+return siteData.gallery.map((item,index)=>`
 
-    siteData.gallery.forEach((image,index)=>{
+<div
+class="gallery-item motion-text"
+onclick="openGallery(${index})"
+>
 
-        const item =
-        document.createElement("div");
+${
+item.type==="video"
+?
+`<video src="${item.url}" muted></video>
+<div class="gallery-play">▶</div>`
+:
+`<img
+src="${item.url}"
+alt="UnboxCrew travel"
+loading="lazy"
+>`
+}
 
-        item.className =
-        "gallery-item";
+<div class="gallery-shade"></div>
 
-        item.innerHTML = `
-            <img
-                src="${image}"
-                alt="UnboxCrew travel moment ${index+1}"
-                loading="lazy">
-        `;
+</div>
 
-        item.addEventListener("click",()=>{
+`).join("");
 
-            document.getElementById("lightboxImage").src =
-            image;
+}
 
-            openModal("lightbox");
 
-        });
+function openGallery(index){
 
-        galleryGrid.appendChild(item);
+const item=siteData.gallery[index];
 
-    });
+const content=document.getElementById("galleryModalContent");
+
+if(item.type==="video"){
+
+content.innerHTML=`
+
+<video
+class="modal-image"
+src="${item.url}"
+controls
+autoplay
+></video>
+
+`;
+
+}else{
+
+content.innerHTML=`
+
+<img
+class="modal-image"
+src="${item.url}"
+alt="UnboxCrew travel moment"
+>
+
+`;
+
+}
+
+openModal("galleryModal");
 
 }
 
@@ -2451,71 +3210,806 @@ function renderGallery(){
    REVIEWS
 ========================================================= */
 
-function renderReviews(){
+function reviewsHTML(){
 
-    reviewsGrid.innerHTML = "";
+return siteData.reviews.map((review,index)=>`
 
-    siteData.reviews.forEach(review=>{
+<article
+class="review-card motion-text"
+onclick="openReview(${index})"
+>
 
-        const card =
-        document.createElement("article");
+<div class="stars">
+★★★★★
+</div>
 
-        card.className =
-        "review reveal";
+<div class="review-quote">
+“${review.short}”
+</div>
 
-        const initials =
-        review.name
-        .split(" ")
-        .map(n=>n[0])
-        .join("");
+<div class="reviewer">
 
-        card.innerHTML = `
+<div class="avatar">
+${review.name.charAt(0)}
+</div>
 
-            <div class="stars">
-                ★★★★★
-            </div>
+<div>
+<strong>${review.name}</strong>
+<small>${review.trip}</small>
+</div>
 
-            <p class="review-text">
-                “${review.short}”
-            </p>
+</div>
 
-            <div class="reviewer">
+</article>
 
-                <div class="avatar">
-                    ${initials}
-                </div>
+`).join("");
 
-                <div class="reviewer-info">
+}
 
-                    ${review.name}
 
-                    <small>
-                        ${review.trip}
-                    </small>
+function openReview(index){
 
-                </div>
+const review=siteData.reviews[index];
 
-            </div>
+document.getElementById("reviewModalContent").innerHTML=`
 
-        `;
+<div class="kicker">
+TRAVELLER STORY
+</div>
 
-        card.addEventListener("click",()=>{
+<div class="stars">
+★★★★★
+</div>
 
-            document.getElementById("reviewName")
-            .textContent =
-            review.name;
+<div class="review-modal-quote">
+“${review.full}”
+</div>
 
-            document.getElementById("reviewFull")
-            .textContent =
-            review.full;
+<strong>${review.name}</strong>
 
-            openModal("reviewModal");
+<div style="color:#77888d;font-size:11px;margin-top:5px">
+${review.trip}
+</div>
 
-        });
+`;
 
-        reviewsGrid.appendChild(card);
+openModal("reviewModal");
 
-    });
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+function faqHTML(){
+
+return siteData.faq.map(item=>`
+
+<div class="faq-item">
+
+<button
+class="faq-question"
+onclick="toggleFAQ(this)"
+>
+
+<span>${item.q}</span>
+
+<span class="faq-plus">+</span>
+
+</button>
+
+<div class="faq-answer">
+${item.a}
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+function toggleFAQ(button){
+
+const current=button.parentElement;
+
+document.querySelectorAll(".faq-item").forEach(item=>{
+
+if(item!==current){
+    item.classList.remove("open");
+}
+
+});
+
+current.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   TRIPS PAGE
+========================================================= */
+
+function tripsPage(){
+
+return `
+
+<div class="inner-page page-transition">
+
+<div class="container">
+
+<div class="inner-hero">
+
+<div class="kicker">
+ALL JOURNEYS
+</div>
+
+<h1 class="inner-title">
+Find your<br>
+<em>next escape.</em>
+</h1>
+
+<p class="section-description">
+Every trip is designed to feel easy, social and memorable.
+Choose your road.
+</p>
+
+</div>
+
+
+<div class="all-trips-grid">
+
+${siteData.trips.map((trip,index)=>`
+
+<article class="standard-trip-card motion-text">
+
+<div class="standard-trip-image">
+
+${
+trip.mediaType==="video" && trip.video
+?
+`<video src="${trip.video}" muted autoplay loop></video>`
+:
+`<img src="${trip.image}" alt="${trip.title}">`
+}
+
+</div>
+
+<div class="standard-trip-content">
+
+<div class="trip-location">
+${trip.category} · ${trip.location}
+</div>
+
+<h3>
+${trip.title}
+</h3>
+
+<p>
+${trip.short}
+</p>
+
+<div class="standard-trip-bottom">
+
+<strong>
+${trip.price}
+</strong>
+
+<button
+class="btn btn-primary"
+onclick="openTrip(${index})"
+>
+Explore →
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+`).join("")}
+
+</div>
+
+</div>
+
+${footerHTML()}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   ADVENTURES PAGE
+========================================================= */
+
+function adventuresPage(){
+
+return `
+
+<div class="inner-page page-transition">
+
+<div class="container">
+
+<div class="inner-hero">
+
+<div class="kicker">
+ADVENTURES
+</div>
+
+<h1 class="inner-title">
+Choose your<br>
+<em>kind of crazy.</em>
+</h1>
+
+<p class="section-description">
+Slow mornings, long drives, mountain climbs or completely
+unplanned adventures. Pick your energy.
+</p>
+
+</div>
+
+
+<div class="adventure-grid">
+
+${siteData.adventures.map(a=>`
+
+<div class="adventure-card">
+
+<div class="adventure-inner">
+
+<div class="adventure-icon">
+${a.icon}
+</div>
+
+<h3>${a.title}</h3>
+
+<p>${a.description}</p>
+
+</div>
+
+</div>
+
+`).join("")}
+
+</div>
+
+</div>
+
+${footerHTML()}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   GALLERY PAGE
+========================================================= */
+
+function galleryPage(){
+
+return `
+
+<div class="inner-page page-transition">
+
+<div class="container">
+
+<div class="inner-hero">
+
+<div class="kicker">
+GALLERY
+</div>
+
+<h1 class="inner-title">
+A little taste of<br>
+<em>the journey.</em>
+</h1>
+
+<p class="section-description">
+Tap any moment to open it.
+Images and videos can both be managed from the future admin panel.
+</p>
+
+</div>
+
+
+<div class="gallery-grid">
+
+${galleryHTML()}
+
+</div>
+
+</div>
+
+${footerHTML()}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   REVIEWS PAGE
+========================================================= */
+
+function reviewsPage(){
+
+return `
+
+<div class="inner-page page-transition">
+
+<div class="container">
+
+<div class="inner-hero">
+
+<div class="kicker">
+REVIEWS
+</div>
+
+<h1 class="inner-title">
+Stories from<br>
+<em>our people.</em>
+</h1>
+
+</div>
+
+
+<div class="review-grid">
+
+${reviewsHTML()}
+
+</div>
+
+</div>
+
+${footerHTML()}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   ABOUT PAGE
+========================================================= */
+
+function aboutPage(){
+
+return `
+
+<div class="inner-page page-transition">
+
+<div class="container">
+
+<div class="inner-hero">
+
+<div class="kicker">
+ABOUT UNBOXCREW
+</div>
+
+<h1 class="inner-title">
+More than a trip.<br>
+<em>It's the story.</em>
+</h1>
+
+</div>
+
+
+<div class="about-grid">
+
+<div class="about-image">
+
+<img
+src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=90"
+alt="Travel mountains"
+>
+
+</div>
+
+
+<div class="about-copy">
+
+<div class="kicker">
+OUR IDEA
+</div>
+
+<h2 class="section-title">
+Travel should<br>
+feel alive.
+</h2>
+
+<p>
+UnboxCrew is built for people who want to experience
+a destination instead of simply checking it off a list.
+</p>
+
+<p>
+We create small-group journeys around beautiful routes,
+real experiences, good people and moments worth remembering.
+</p>
+
+<div class="about-features">
+
+<div class="about-feature">
+✦ Curated experiences
+</div>
+
+<div class="about-feature">
+✦ Small groups
+</div>
+
+<div class="about-feature">
+✦ Comfortable travel
+</div>
+
+<div class="about-feature">
+✦ Friendly support
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+${footerHTML()}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   FAQ PAGE
+========================================================= */
+
+function faqPage(){
+
+return `
+
+<div class="inner-page page-transition">
+
+<div class="container">
+
+<div class="inner-hero">
+
+<div class="kicker">
+FAQ
+</div>
+
+<h1 class="inner-title">
+Before you go,<br>
+<em>ask anything.</em>
+</h1>
+
+</div>
+
+
+<div class="faq-wrap">
+
+${faqHTML()}
+
+</div>
+
+</div>
+
+${footerHTML()}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   CONTACT PAGE
+========================================================= */
+
+function contactPage(){
+
+return `
+
+<div class="inner-page page-transition">
+
+<div class="container">
+
+<div class="inner-hero">
+
+<div class="kicker">
+CONTACT
+</div>
+
+<h1 class="inner-title">
+Let's plan<br>
+<em>something.</em>
+</h1>
+
+</div>
+
+
+<div class="contact-layout">
+
+<div class="contact-card">
+
+<div class="kicker">
+SAY HELLO
+</div>
+
+<h2>
+Your next<br>
+escape starts<br>
+here.
+</h2>
+
+<p>
+Tell us where you want to go and we'll take it from there.
+</p>
+
+<div class="contact-links">
+
+<a class="contact-link"
+href="${siteData.brand.whatsapp}"
+target="_blank">
+💬 WhatsApp
+</a>
+
+<a class="contact-link"
+href="mailto:${siteData.brand.email}">
+✉ ${siteData.brand.email}
+</a>
+
+<a class="contact-link"
+href="tel:${siteData.brand.phone}">
+☎ ${siteData.brand.phone}
+</a>
+
+</div>
+
+</div>
+
+
+<div class="contact-form">
+
+<div class="field">
+
+<label>Your Name</label>
+
+<input
+id="contactName"
+type="text"
+placeholder="Your name"
+>
+
+</div>
+
+<div class="field">
+
+<label>Phone</label>
+
+<input
+id="contactPhone"
+type="tel"
+placeholder="+91..."
+>
+
+</div>
+
+<div class="field">
+
+<label>Message</label>
+
+<textarea
+id="contactMessage"
+placeholder="Tell us where you want to go..."
+></textarea>
+
+</div>
+
+<button
+class="btn btn-primary"
+style="width:100%"
+onclick="sendContactMessage()"
+>
+Send on WhatsApp →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+${footerHTML()}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   TRIP DETAIL PAGE / MODAL
+========================================================= */
+
+function openTrip(index){
+
+const trip=siteData.trips[index];
+
+if(!trip)return;
+
+document.getElementById("tripModalContent").innerHTML=`
+
+<div class="trip-detail-image">
+
+${
+trip.mediaType==="video" && trip.video
+?
+`<video
+src="${trip.video}"
+controls
+autoplay
+muted
+></video>`
+:
+`<img
+src="${trip.image}"
+alt="${trip.title}"
+>`
+}
+
+</div>
+
+
+<div class="detail-kicker">
+${trip.category} · ${trip.location}
+</div>
+
+
+<h1 class="detail-title">
+${trip.title}
+</h1>
+
+
+<div class="detail-line">
+“${trip.aestheticLine}”
+</div>
+
+
+<p class="detail-description">
+${trip.description}
+</p>
+
+
+<div class="detail-pills">
+
+<div class="detail-pill">
+◷ ${trip.duration}
+</div>
+
+<div class="detail-pill">
+👥 ${trip.group}
+</div>
+
+<div class="detail-pill">
+₹ ${trip.price.replace("₹","")} / PERSON
+</div>
+
+</div>
+
+
+<h3 class="itinerary-title">
+The Journey
+</h3>
+
+
+${trip.itinerary.map(day=>`
+
+<div class="day-row">
+
+<strong>
+${day[0]}
+</strong>
+
+<span>
+${day[1]}
+</span>
+
+</div>
+
+`).join("")}
+
+
+<div style="margin-top:25px">
+
+<button
+class="btn btn-primary"
+onclick="bookTrip('${trip.title}')"
+>
+Book This Trip →
+</button>
+
+</div>
+
+`;
+
+openModal("tripModal");
+
+}
+
+
+/* =========================================================
+   BOOKING
+========================================================= */
+
+function generalBooking(){
+
+const text=
+"Hi UnboxCrew! 👋%0A%0AI want to know more about your trips.";
+
+window.open(
+siteData.brand.whatsapp+"?text="+text,
+"_blank"
+);
+
+}
+
+
+function bookTrip(tripName){
+
+const text=
+`Hi UnboxCrew! 👋%0A%0AI am interested in booking: ${tripName}%0A%0APlease share the availability and booking details.`;
+
+window.open(
+siteData.brand.whatsapp+"?text="+text,
+"_blank"
+);
+
+}
+
+
+function sendContactMessage(){
+
+const name=document.getElementById("contactName")?.value.trim();
+
+const phone=document.getElementById("contactPhone")?.value.trim();
+
+const message=document.getElementById("contactMessage")?.value.trim();
+
+
+if(!name){
+
+showToast("Please enter your name.");
+
+return;
+
+}
+
+
+const text=
+`Hi UnboxCrew! 👋%0A%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AMessage: ${encodeURIComponent(message || "I want to plan a trip.")}`;
+
+window.open(
+siteData.brand.whatsapp+"?text="+text,
+"_blank"
+);
 
 }
 
@@ -2526,55 +4020,48 @@ function renderReviews(){
 
 function openModal(id){
 
-    document
-    .getElementById(id)
-    .classList.add("active");
+document.getElementById(id).classList.add("active");
 
-    document.body.classList.add("locked");
+document.body.classList.add("modal-open");
 
 }
+
 
 function closeModal(id){
 
-    document
-    .getElementById(id)
-    .classList.remove("active");
+document.getElementById(id).classList.remove("active");
 
-    document.body.classList.remove("locked");
+document.body.classList.remove("modal-open");
 
 }
 
 
-document.querySelectorAll(".modal")
-.forEach(modal=>{
+document.querySelectorAll(".modal").forEach(modal=>{
 
-    modal.addEventListener("click",(e)=>{
+modal.addEventListener("click",e=>{
 
-        if(e.target === modal){
+if(e.target===modal){
 
-            modal.classList.remove("active");
+closeModal(modal.id);
 
-            document.body.classList.remove("locked");
+}
 
-        }
-
-    });
+});
 
 });
 
 
-document.addEventListener("keydown",(e)=>{
+document.addEventListener("keydown",e=>{
 
-    if(e.key === "Escape"){
+if(e.key==="Escape"){
 
-        document.querySelectorAll(".modal")
-        .forEach(modal=>{
-            modal.classList.remove("active");
-        });
+document.querySelectorAll(".modal.active").forEach(modal=>{
 
-        document.body.classList.remove("locked");
+closeModal(modal.id);
 
-    }
+});
+
+}
 
 });
 
@@ -2583,260 +4070,238 @@ document.addEventListener("keydown",(e)=>{
    MOBILE MENU
 ========================================================= */
 
-const menu =
-document.getElementById("menu");
+function toggleMobileMenu(){
 
-const navLinks =
-document.getElementById("navLinks");
+document.getElementById("navLinks").classList.toggle("open");
 
-menu.addEventListener("click",()=>{
-
-    navLinks.classList.toggle("open");
-
-});
+}
 
 
-navLinks.querySelectorAll("a")
-.forEach(link=>{
+function closeMobileMenu(){
 
-    link.addEventListener("click",()=>{
+document.getElementById("navLinks").classList.remove("open");
 
-        navLinks.classList.remove("open");
-
-    });
-
-});
+}
 
 
 /* =========================================================
-   NAVBAR SCROLL
+   SCROLL NAVBAR
 ========================================================= */
 
 window.addEventListener("scroll",()=>{
 
-    const navbar =
-    document.getElementById("navbar");
+const nav=document.getElementById("navbar");
 
-    if(window.scrollY > 50){
+if(window.scrollY>40){
 
-        navbar.classList.add("scrolled");
+nav.classList.add("scrolled");
 
-    }else{
+}else{
 
-        navbar.classList.remove("scrolled");
-
-    }
-
-});
-
-
-/* =========================================================
-   REVEAL ANIMATION
-========================================================= */
-
-function observeReveals(){
-
-    const elements =
-    document.querySelectorAll(".reveal:not(.observed)");
-
-    const observer =
-    new IntersectionObserver(
-
-        entries=>{
-
-            entries.forEach(entry=>{
-
-                if(entry.isIntersecting){
-
-                    entry.target
-                    .classList.add("visible");
-
-                    entry.target
-                    .classList.add("observed");
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold:.12
-        }
-
-    );
-
-    elements.forEach(el=>{
-
-        observer.observe(el);
-
-    });
+nav.classList.remove("scrolled");
 
 }
 
+});
+
 
 /* =========================================================
-   3D TILT EFFECT
+   MOTION OBSERVER
 ========================================================= */
 
-function addTilt(element){
+function activateMotion(){
 
-    element.addEventListener("mousemove",(e)=>{
+const observer=new IntersectionObserver(
 
-        if(window.innerWidth < 850) return;
+entries=>{
 
-        const rect =
-        element.getBoundingClientRect();
+entries.forEach(entry=>{
 
-        const x =
-        e.clientX - rect.left;
+if(entry.isIntersecting){
 
-        const y =
-        e.clientY - rect.top;
-
-        const centerX =
-        rect.width / 2;
-
-        const centerY =
-        rect.height / 2;
-
-        const rotateX =
-        ((y-centerY)/centerY)*-4;
-
-        const rotateY =
-        ((x-centerX)/centerX)*4;
-
-        element.style.transform =
-        `perspective(1000px)
-         rotateX(${rotateX}deg)
-         rotateY(${rotateY}deg)
-         scale3d(1.015,1.015,1.015)`;
-
-    });
-
-
-    element.addEventListener("mouseleave",()=>{
-
-        element.style.transform =
-        "";
-
-    });
+entry.target.classList.add("visible");
 
 }
 
-
-/* =========================================================
-   CUSTOM CURSOR
-========================================================= */
-
-const cursor =
-document.querySelector(".cursor");
-
-window.addEventListener("mousemove",(e)=>{
-
-    cursor.style.left =
-    e.clientX + "px";
-
-    cursor.style.top =
-    e.clientY + "px";
-
 });
 
+},
 
-document.querySelectorAll("a,button,.trip-card,.review,.gallery-item")
-.forEach(el=>{
+{
+threshold:.10
+}
 
-    el.addEventListener("mouseenter",()=>{
-        cursor.classList.add("active");
-    });
+);
 
-    el.addEventListener("mouseleave",()=>{
-        cursor.classList.remove("active");
-    });
-
-});
-
-
-/* =========================================================
-   CONTACT FORM
-========================================================= */
 
 document
-.getElementById("contactForm")
-.addEventListener("submit",(e)=>{
+.querySelectorAll(".motion-text")
+.forEach(el=>observer.observe(el));
 
-    e.preventDefault();
+}
 
-    showToast(
-        "Thanks! We'll get back to you shortly."
-    );
 
-    e.target.reset();
+/* =========================================================
+   ROUTER
+========================================================= */
 
+function renderRoute(){
+
+let route=location.hash.replace("#","");
+
+if(!route){
+    route="home";
+}
+
+
+/* close menu */
+
+closeMobileMenu();
+
+
+/* close modal */
+
+document
+.querySelectorAll(".modal.active")
+.forEach(modal=>closeModal(modal.id));
+
+
+/* page */
+
+if(route==="home"){
+
+app.innerHTML=homePage();
+
+renderTripCarousel();
+
+}
+
+else if(route==="trips"){
+
+app.innerHTML=tripsPage();
+
+}
+
+else if(route==="adventures"){
+
+app.innerHTML=adventuresPage();
+
+}
+
+else if(route==="gallery"){
+
+app.innerHTML=galleryPage();
+
+}
+
+else if(route==="reviews"){
+
+app.innerHTML=reviewsPage();
+
+}
+
+else if(route==="about"){
+
+app.innerHTML=aboutPage();
+
+}
+
+else if(route==="faq"){
+
+app.innerHTML=faqPage();
+
+}
+
+else if(route==="contact"){
+
+app.innerHTML=contactPage();
+
+}
+
+else if(route.startsWith("trip/")){
+
+const id=route.split("/")[1];
+
+const index=siteData.trips.findIndex(t=>t.id===id);
+
+if(index>=0){
+
+app.innerHTML=tripsPage();
+
+setTimeout(()=>openTrip(index),100);
+
+}else{
+
+app.innerHTML=homePage();
+
+renderTripCarousel();
+
+}
+
+}
+
+else{
+
+app.innerHTML=homePage();
+
+renderTripCarousel();
+
+}
+
+
+/* page always starts from top */
+
+window.scrollTo({
+top:0,
+behavior:"instant"
 });
+
+
+/* activate text */
+
+setTimeout(activateMotion,50);
+
+}
+
+
+/* =========================================================
+   HASH NAVIGATION
+========================================================= */
+
+window.addEventListener("hashchange",renderRoute);
 
 
 /* =========================================================
    TOAST
 ========================================================= */
 
+let toastTimer;
+
 function showToast(message){
 
-    const toast =
-    document.getElementById("toast");
+const toast=document.getElementById("toast");
 
-    toast.textContent =
-    message;
+toast.textContent=message;
 
-    toast.classList.add("show");
+toast.classList.add("show");
 
-    setTimeout(()=>{
+clearTimeout(toastTimer);
 
-        toast.classList.remove("show");
+toastTimer=setTimeout(()=>{
 
-    },3500);
+toast.classList.remove("show");
+
+},2500);
 
 }
 
 
 /* =========================================================
-   INITIALIZE
+   START
 ========================================================= */
 
-renderTrips();
-renderGallery();
-renderReviews();
+renderRoute();
 
-observeReveals();
-
-
-/* =========================================================
-   SMOOTH HASH NAVIGATION
-========================================================= */
-
-document.querySelectorAll('a[href^="#"]')
-.forEach(link=>{
-
-    link.addEventListener("click",(e)=>{
-
-        const target =
-        document.querySelector(
-            link.getAttribute("href")
-        );
-
-        if(target){
-
-            e.preventDefault();
-
-            target.scrollIntoView({
-                behavior:"smooth"
-            });
-
-        }
-
-    });
-
-});
 
 </script>
 
