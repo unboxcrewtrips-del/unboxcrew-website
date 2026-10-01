@@ -1834,7 +1834,7 @@ footer{
 <div class="nav-links" id="navLinks">
 
 <a href="#home">Home</a>
-<a href="#trips">Trips</a>
+<a href="#trips-page">Trips</a>
 <a href="#adventures">Adventure</a>
 <a href="#gallery">Gallery</a>
 <a href="#reviews">Reviews</a>
@@ -2381,8 +2381,8 @@ EXPLORE · EXPERIENCE · BELONG
 
 
 <h1 class="motion-text delay-1">
-    Go Where
-    <span>You Feel Alive.</span>
+Go Where
+<span>You Feel Alive.</span>
 </h1>
 
 
@@ -2510,7 +2510,11 @@ energy and we'll build the journey around it.
 
 ${siteData.adventures.map((a,i)=>`
 
-<div class="adventure-card motion-text delay-${(i%4)+1}">
+<div
+class="adventure-card motion-text delay-${(i%4)+1}"
+onclick="openAdventure(${i})"
+style="cursor:pointer"
+>
 
 <div class="adventure-inner">
 
@@ -2521,6 +2525,17 @@ ${a.icon}
 <h3>${a.title}</h3>
 
 <p>${a.description}</p>
+
+<div style="
+margin-top:18px;
+font-size:10px;
+letter-spacing:1.5px;
+text-transform:uppercase;
+color:#5894ae;
+font-weight:700;
+">
+Explore ${a.title} →
+</div>
 
 </div>
 
@@ -3457,9 +3472,13 @@ unplanned adventures. Pick your energy.
 
 <div class="adventure-grid">
 
-${siteData.adventures.map(a=>`
+${siteData.adventures.map((a,index)=>`
 
-<div class="adventure-card">
+<div
+class="adventure-card"
+onclick="openAdventure(${index})"
+style="cursor:pointer"
+>
 
 <div class="adventure-inner">
 
@@ -3470,6 +3489,17 @@ ${a.icon}
 <h3>${a.title}</h3>
 
 <p>${a.description}</p>
+
+<div style="
+margin-top:18px;
+font-size:10px;
+letter-spacing:1.5px;
+text-transform:uppercase;
+color:#5894ae;
+font-weight:700;
+">
+Explore ${a.title} →
+</div>
 
 </div>
 
@@ -3849,6 +3879,132 @@ ${footerHTML()}
    TRIP DETAIL PAGE / MODAL
 ========================================================= */
 
+function openAdventure(index){
+
+const adventure=siteData.adventures[index];
+
+if(!adventure)return;
+
+const relatedMap={
+
+"Trekking":["mussoorie"],
+
+"Road Trips":["mussoorie","rishikesh"],
+
+"Camping":["rishikesh"],
+
+"Snow Trips":["mussoorie"],
+
+"Group Trips":["rishikesh","mussoorie","braj"],
+
+"Custom Trips":["rishikesh","mussoorie","braj"]
+
+};
+
+const relatedIds=relatedMap[adventure.title] || [];
+
+const relatedTrips=siteData.trips.filter(
+trip=>relatedIds.includes(trip.id)
+);
+
+document.getElementById("tripModalContent").innerHTML=`
+
+<div class="kicker">
+${adventure.title.toUpperCase()}
+</div>
+
+<h2 class="detail-title">
+${adventure.title}
+</h2>
+
+<div class="detail-line">
+“${adventure.description}”
+</div>
+
+<p class="detail-description">
+Explore journeys curated around your kind of adventure.
+Choose a trip and discover the full experience.
+</p>
+
+<div style="
+margin-top:28px;
+margin-bottom:14px;
+font-size:11px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:#789096;
+font-weight:700;
+">
+Related Trips
+</div>
+
+<div style="
+display:grid;
+gap:12px;
+">
+
+${relatedTrips.map(trip=>`
+
+<div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+padding:16px;
+border:1px solid #dce8ea;
+border-radius:18px;
+background:#f8fbfb;
+">
+
+<div>
+
+<div style="
+font-size:10px;
+letter-spacing:1.5px;
+text-transform:uppercase;
+color:#5894ae;
+margin-bottom:5px;
+">
+${trip.category} · ${trip.location}
+</div>
+
+<strong style="
+font-family:'Playfair Display',serif;
+font-size:20px;
+">
+${trip.title}
+</strong>
+
+<div style="
+font-size:11px;
+color:#77888d;
+margin-top:5px;
+">
+${trip.aestheticLine}
+</div>
+
+</div>
+
+<button
+class="btn btn-primary"
+onclick="openTrip(${siteData.trips.indexOf(trip)})"
+>
+Explore →
+</button>
+
+</div>
+
+`).join("")}
+
+</div>
+
+`;
+
+openModal("tripModal");
+
+}
+
+
 function openTrip(index){
 
 const trip=siteData.trips[index];
@@ -4176,7 +4332,7 @@ renderTripCarousel();
 
 }
 
-else if(route==="trips"){
+else if(route==="trips" || route==="trips-page"){
 
 app.innerHTML=tripsPage();
 
